@@ -22,7 +22,12 @@ def generate_trial_vector(x, P, A, p, N, CR, F):
   random.randomerange(0, N)
   xp = x2 #応急処理
   v = x+F*(xp-x)+F*(x2-x3)#xpは最良個体にしないといけない（個体評価の関数を作る必要があり）
-  return v
+  #ミュータントベクター精製後CRをりようして生成
+  if random.uniform(0, 1) <= CR :
+    u = v
+  else:
+    u = x
+  return u
 
 def evaluation(x):
   #ベンチマーク関数にするんだお
@@ -74,11 +79,17 @@ for var in range(0, 51):
   for i in range(0, N):
     if evaluation(u[i]) <= evaluation(population[i]):
       population[i] = u[i]
+      A.append(copy.deepcopy(population[ii]))
       SCR.append(copy.deepcopy(CR[i]))
       SF.append(copy.deepcopy(F[i]))
     else:
       population[i] = population[i]
-    if evaluation(u[i]) < evaluation(population[]):
+    # if evaluation(u[i]) < evaluation(population[]):
+  #whenever the size of the archive exceeds |A| randomly selected individuals are deleted so that
+  num = len(popualtion) - len(A)
+  if num < 0:
+    random.shuffle(A)
+    del A[0:num]
 
 
 
