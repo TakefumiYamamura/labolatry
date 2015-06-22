@@ -37,6 +37,8 @@ def evaluation(x):
   return sum
 
 
+
+
 G = 0
 population = []
 N = 100
@@ -69,6 +71,7 @@ for var in range(0, 51):
   F = []
   p = []
   u = []
+  deltaf = []
   for var1 in range(0, N):
     r = random.randrange(0, N)
     CR.append(rand_normal(MCR[var1],math.sqrt(0.1)))
@@ -77,6 +80,7 @@ for var in range(0, 51):
     u.append(generate_trial_vector)#current to pbest/1/bin
 
   for i in range(0, N):
+    deltaf.append(math.fabs(evaluation(u[i]) - evaluation(population[i])))
     if evaluation(u[i]) <= evaluation(population[i]):
       population[i] = u[i]
       A.append(copy.deepcopy(population[ii]))
@@ -91,7 +95,11 @@ for var in range(0, 51):
     random.shuffle(A)
     del A[0:num]
 
-
-
-
-
+  if len(SCR) == 0 & len(SF) == 0:
+    #updated mcr mf based on scr sf
+    #ここwkの取り方がいまいちわからん
+    MCR[k-1] = meanw(SCR)
+    MF[k-1] = meanw(SF)
+    k += 1
+    if k > 100 :
+      k =1
