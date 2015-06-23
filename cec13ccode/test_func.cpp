@@ -8,7 +8,7 @@
 // #include <WINDOWS.H>      
 #include <stdio.h>
 #include <math.h>
-#include "malloc.h"
+// #include "malloc.h"
 #include <stdlib.h>
 
 #define INF 1.0e99

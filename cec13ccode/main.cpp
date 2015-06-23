@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <"malloc.h">
+// #include "malloc.h"
 
 
 void test_func(double *, double *,int,int,int);
