@@ -6,7 +6,7 @@ from scipy.stats import cauchy
 import numpy as np
 
 random.seed(0)
-
+eva_count = 0
 def rand_normal(ave, var):
   ran = random.normalvariate(ave, math.sqrt(var))
   while ran <= 0:
@@ -23,12 +23,22 @@ def rand_cauthy(ave, var):
 def generate_trial_vector(x, P, A, p, N, CR, F):
   li = copy.deepcopy(P)
   if len(A) != 0:
-   li.append(copy.deepcopy(A))
+   li.extend(copy.deepcopy(A))
   two_vector = random.sample(li, 2)
   x2 = two_vector[0]
   x3 = two_vector[1]
 
-  xp = x2 #応急処理
+  #RANDOMに選択した個体100*p個の中から最良個体を選ぶ
+  # print int(p*100)
+  ran_G = random.sample(li, int(p*100))
+  # print ran_G
+  xp = []
+  mini_evaluation = 1001001001
+  for x in ran_G :
+    if mini_evaluation > evaluation(x):
+      mini_evaluation = evaluation(x)
+      xp = copy.deepcopy(x)
+  # print xp
   v = list(np.array(x)+F*(np.array(xp)-np.array(x))+F*(np.array(x2)-np.array(x3)))#xpは最良個体にしないといけない（個体評価の関数を作る必要があり）
   #ミュータントベクター精製後CRをりようして生成
   if (random.uniform(0, 1) < CR):
@@ -40,13 +50,16 @@ def generate_trial_vector(x, P, A, p, N, CR, F):
 
 def evaluation(x):
   #ベンチマーク関数にするんだお
-  sum = 0
-  print "kokoniiruyo"
-  print x
+  # print x
+  su = 0
+  global eva_count
+  eva_count += 1
+  # print eva_count
   for a in x :
-    sum += (a*a)
-  sum  -= 1400
-  return sum
+    # print a
+    su += (a*a)
+  # su  -= 1400
+  return su
 
 def meanwa(SCR, wk):
   sum = 0
@@ -83,6 +96,7 @@ for var in range(0, NP):
   MCR.append(0.5)
   MF.append(0.5)
 
+# print len(MCR)
 A = []
 # index counter
 k = 1
@@ -106,11 +120,17 @@ for var in range(0, 51):
     p = random.uniform(2.0/NP, 0.2)
     # generate_trial_vector(x, P, A, p, N, CR, F)
     u.append(generate_trial_vector(population[var1], population, A, p, N, CR[var1], F[var1]))#current to pbest/1/bin
+  test_count = 0
 
+  # print len(u)
   for i in range(0, len(population)):
-    print u[i]
+    test_count += 1
+    # print len(u)
+    # print len(population)
+    # print test_count
+    # print u[i]
     # print u
-    print population[i]
+    # print population[i]
     alldeltaf.append(math.fabs(evaluation(u[i]) - evaluation(population[i])))
     if evaluation(u[i]) <= evaluation(population[i]):
       population[i] = u[i]
@@ -136,6 +156,15 @@ for var in range(0, 51):
     wk = alldeltaf[k-1]/sumdeltaf
     MCR[k-1] = meanwa(SCR, wk)
     MF[k-1] = meanwl(SF, wk)
-    k += 1
-    if k > 100 :
-      k =1
+
+  k += 1
+  print k
+  if k > 100 :
+    k =1
+
+mini_evaluation = 1010111111
+for x in population :
+  if mini_evaluation > evaluation(x):
+    mini_evaluation = evaluation(x)
+    xp = copy.deepcopy(x)
+print mini_evaluation
