@@ -3,6 +3,8 @@ import random
 import copy
 import math
 from scipy.stats import cauchy
+import numpy as np
+
 random.seed(0)
 
 def rand_normal(ave, var):
@@ -19,24 +21,29 @@ def rand_cauthy(ave, var):
 
 #親ベクトル、ベクトル集団(Pとアーカイブを合わせたもの), p current-to-p-best
 def generate_trial_vector(x, P, A, p, N, CR, F):
-  list = copy.deepcopy(P)
-  list.append(copy.deepcopy(A))
-  x2, x3 = random.sample(list, 2)
-  # random.random.range(0, N)
+  li = copy.deepcopy(P)
+  if len(A) != 0:
+   li.append(copy.deepcopy(A))
+  two_vector = random.sample(li, 2)
+  x2 = two_vector[0]
+  x3 = two_vector[1]
+
   xp = x2 #応急処理
-  v = x+F*(xp-x)+F*(x2-x3)#xpは最良個体にしないといけない（個体評価の関数を作る必要があり）
+  v = list(np.array(x)+F*(np.array(xp)-np.array(x))+F*(np.array(x2)-np.array(x3)))#xpは最良個体にしないといけない（個体評価の関数を作る必要があり）
   #ミュータントベクター精製後CRをりようして生成
-  if random.uniform(0, 1) <= CR :
+  if (random.uniform(0, 1) < CR):
     u = v
   else:
     u = x
-    print u
+    # print u
   return u
 
 def evaluation(x):
   #ベンチマーク関数にするんだお
   sum = 0
-  for a in x:
+  print "kokoniiruyo"
+  print x
+  for a in x :
     sum += (a*a)
   sum  -= 1400
   return sum
@@ -55,9 +62,6 @@ def meanwl(SF, wk):
     sum1 += wk*SF
 
   return sum1/sum2
-
-
-
 
 G = 0
 population = []
@@ -83,6 +87,8 @@ A = []
 # index counter
 k = 1
 
+bag_count = 0
+
 #51は試行回数
 for var in range(0, 51):
   SCR = []
@@ -99,14 +105,16 @@ for var in range(0, 51):
     F.append(cauchy.rvs()) #コーシー乱数発生よく分かっておらず そもそもなんでコーシー乱数？
     p = random.uniform(2.0/NP, 0.2)
     # generate_trial_vector(x, P, A, p, N, CR, F)
-    u.append(generate_trial_vector(population[var1], population, A, p, N, CR, F))#current to pbest/1/bin
+    u.append(generate_trial_vector(population[var1], population, A, p, N, CR[var1], F[var1]))#current to pbest/1/bin
 
-  for i in range(0, N):
+  for i in range(0, len(population)):
     print u[i]
+    # print u
+    print population[i]
     alldeltaf.append(math.fabs(evaluation(u[i]) - evaluation(population[i])))
     if evaluation(u[i]) <= evaluation(population[i]):
       population[i] = u[i]
-      A.append(copy.deepcopy(population[ii]))
+      A.append(copy.deepcopy(population[i]))
       SCR.append(copy.deepcopy(CR[i]))
       SF.append(copy.deepcopy(F[i]))
       deltaf.append(math.fabs(evaluation(u[i]) - evaluation(population[i])))
@@ -114,7 +122,7 @@ for var in range(0, 51):
       population[i] = population[i]
     # if evaluation(u[i]) < evaluation(population[]):
   #whenever the size of the archive exceeds |A| randomly selected individuals are deleted so that
-  num = len(popualtion) - len(A)
+  num = len(population) - len(A)
   if num < 0:
     random.shuffle(A)
     del A[0:num]
