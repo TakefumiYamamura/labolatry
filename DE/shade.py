@@ -59,6 +59,7 @@ def evaluation(x):
     # print a
     su += (a*a)
   # su  -= 1400
+  # print su
   return su
 
 def meanwa(SCR, wk):
@@ -104,7 +105,7 @@ k = 1
 bag_count = 0
 
 #51は試行回数
-for var in range(0, 51):
+for var in range(0, 3577):
   SCR = []
   SF = []
   CR = []
@@ -158,13 +159,14 @@ for var in range(0, 51):
     MF[k-1] = meanwl(SF, wk)
 
   k += 1
-  print k
+  # print k
   if k > 100 :
     k =1
 
-mini_evaluation = 1010111111
-for x in population :
-  if mini_evaluation > evaluation(x):
-    mini_evaluation = evaluation(x)
-    xp = copy.deepcopy(x)
-print mini_evaluation
+  print var
+  mini_ev = 1010111111
+  for x in population :
+    if mini_ev > evaluation(x):
+      mini_ev = evaluation(x)
+      xp = copy.deepcopy(x)
+  print mini_ev
