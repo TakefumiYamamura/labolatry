@@ -34,18 +34,27 @@ def generate_trial_vector(x, P, A, p, N, CR, F):
   # print ran_G
   xp = []
   mini_evaluation = 1001001001
-  for x in ran_G :
-    if mini_evaluation > evaluation(x):
-      mini_evaluation = evaluation(x)
-      xp = copy.deepcopy(x)
+  for i in ran_G :
+    if mini_evaluation > evaluation(i):
+      mini_evaluation = evaluation(i)
+      xp = copy.deepcopy(i)
   # print xp
   v = list(np.array(x)+F*(np.array(xp)-np.array(x))+F*(np.array(x2)-np.array(x3)))#xpは最良個体にしないといけない（個体評価の関数を作る必要があり）
-  #ミュータントベクター精製後CRをりようして生成
-  if (random.uniform(0, 1) < CR):
-    u = v
-  else:
-    u = x
+  #ミュータントベクター精製後CRをりようしてbinomial crossover
+  # print len(v)
+  # print len(x)
+  u = []
+  i = 0
+  # print v[3]
+  while i < len(v):
+    # print v[i]
+    if (random.uniform(0, 1) < CR):
+      u.append(copy.deepcopy(v[i]))
+    else:
+      u.append(copy.deepcopy(x[i]))
     # print u
+    i += 1
+  # print u
   return u
 
 def evaluation(x):
@@ -74,7 +83,6 @@ def meanwl(SF, wk):
     sum1 += wk*SF*SF
   for j in range(0, len(SF)):
     sum1 += wk*SF
-
   return sum1/sum2
 
 G = 0
@@ -116,8 +124,22 @@ for var in range(0, 3577):
   deltaf = []
   for var1 in range(0, N):
     r = random.randrange(0, N)
-    CR.append(rand_normal(MCR[var1], math.sqrt(0.1)))
-    F.append(cauchy.rvs()) #コーシー乱数発生よく分かっておらず そもそもなんでコーシー乱数？
+    cr = rand_normal(MCR[var1], math.sqrt(0.1))
+    if cr > 1:
+      cr = 1
+    if cr < 0:
+      cr = 0
+    CR.append(copy.deepcopy(cr))
+    f = cauchy.rvs()
+    while True:
+      if f > 1:
+        f = 1.0
+        break
+      if f > 0:
+        break
+      f = cauchy.rvs()
+    # print f
+    F.append(copy.deepcopy(f)) #コーシー乱数発生よく分かっておらず そもそもなんでコーシー乱数？
     p = random.uniform(2.0/NP, 0.2)
     # generate_trial_vector(x, P, A, p, N, CR, F)
     u.append(generate_trial_vector(population[var1], population, A, p, N, CR[var1], F[var1]))#current to pbest/1/bin
@@ -126,12 +148,6 @@ for var in range(0, 3577):
   # print len(u)
   for i in range(0, len(population)):
     test_count += 1
-    # print len(u)
-    # print len(population)
-    # print test_count
-    # print u[i]
-    # print u
-    # print population[i]
     alldeltaf.append(math.fabs(evaluation(u[i]) - evaluation(population[i])))
     if evaluation(u[i]) <= evaluation(population[i]):
       population[i] = u[i]
@@ -163,10 +179,10 @@ for var in range(0, 3577):
   if k > 100 :
     k =1
 
-  print var
-  mini_ev = 1010111111
-  for x in population :
-    if mini_ev > evaluation(x):
-      mini_ev = evaluation(x)
-      xp = copy.deepcopy(x)
-  print mini_ev
+  # print var
+mini_ev = 1010111111
+for x in population :
+  if mini_ev > evaluation(x):
+    mini_ev = evaluation(x)
+    xp = copy.deepcopy(x)
+print mini_ev
