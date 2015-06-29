@@ -30,3 +30,6 @@ void rotatefunc (double*,double*,int, double*);
 void asyfunc (double *, double *x, int, double);
 void oszfunc (double *, double *, int);
 void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
+
+extern double *OShift,*M,*y,*z,*x_bound;;
+extern int ini_flag,n_flag,func_flag;

@@ -94,6 +94,127 @@ except AttributeError:
 def test_func(x, f, nx, mx, func_num):
     return _test_func.test_func(x, f, nx, mx, func_num)
 test_func = _test_func.test_func
+
+def sphere_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.sphere_func(arg1, arg2, arg3, arg4, arg5, arg6)
+sphere_func = _test_func.sphere_func
+
+def ellips_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.ellips_func(arg1, arg2, arg3, arg4, arg5, arg6)
+ellips_func = _test_func.ellips_func
+
+def bent_cigar_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.bent_cigar_func(arg1, arg2, arg3, arg4, arg5, arg6)
+bent_cigar_func = _test_func.bent_cigar_func
+
+def discus_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.discus_func(arg1, arg2, arg3, arg4, arg5, arg6)
+discus_func = _test_func.discus_func
+
+def dif_powers_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.dif_powers_func(arg1, arg2, arg3, arg4, arg5, arg6)
+dif_powers_func = _test_func.dif_powers_func
+
+def rosenbrock_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.rosenbrock_func(arg1, arg2, arg3, arg4, arg5, arg6)
+rosenbrock_func = _test_func.rosenbrock_func
+
+def schaffer_F7_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.schaffer_F7_func(arg1, arg2, arg3, arg4, arg5, arg6)
+schaffer_F7_func = _test_func.schaffer_F7_func
+
+def ackley_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.ackley_func(arg1, arg2, arg3, arg4, arg5, arg6)
+ackley_func = _test_func.ackley_func
+
+def rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6)
+rastrigin_func = _test_func.rastrigin_func
+
+def weierstrass_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.weierstrass_func(arg1, arg2, arg3, arg4, arg5, arg6)
+weierstrass_func = _test_func.weierstrass_func
+
+def griewank_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.griewank_func(arg1, arg2, arg3, arg4, arg5, arg6)
+griewank_func = _test_func.griewank_func
+
+def schwefel_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.schwefel_func(arg1, arg2, arg3, arg4, arg5, arg6)
+schwefel_func = _test_func.schwefel_func
+
+def katsuura_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.katsuura_func(arg1, arg2, arg3, arg4, arg5, arg6)
+katsuura_func = _test_func.katsuura_func
+
+def bi_rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.bi_rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6)
+bi_rastrigin_func = _test_func.bi_rastrigin_func
+
+def grie_rosen_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.grie_rosen_func(arg1, arg2, arg3, arg4, arg5, arg6)
+grie_rosen_func = _test_func.grie_rosen_func
+
+def escaffer6_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.escaffer6_func(arg1, arg2, arg3, arg4, arg5, arg6)
+escaffer6_func = _test_func.escaffer6_func
+
+def step_rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.step_rastrigin_func(arg1, arg2, arg3, arg4, arg5, arg6)
+step_rastrigin_func = _test_func.step_rastrigin_func
+
+def cf01(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf01(arg1, arg2, arg3, arg4, arg5, arg6)
+cf01 = _test_func.cf01
+
+def cf02(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf02(arg1, arg2, arg3, arg4, arg5, arg6)
+cf02 = _test_func.cf02
+
+def cf03(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf03(arg1, arg2, arg3, arg4, arg5, arg6)
+cf03 = _test_func.cf03
+
+def cf04(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf04(arg1, arg2, arg3, arg4, arg5, arg6)
+cf04 = _test_func.cf04
+
+def cf05(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf05(arg1, arg2, arg3, arg4, arg5, arg6)
+cf05 = _test_func.cf05
+
+def cf06(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf06(arg1, arg2, arg3, arg4, arg5, arg6)
+cf06 = _test_func.cf06
+
+def cf07(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf07(arg1, arg2, arg3, arg4, arg5, arg6)
+cf07 = _test_func.cf07
+
+def cf08(arg1, arg2, arg3, arg4, arg5, arg6):
+    return _test_func.cf08(arg1, arg2, arg3, arg4, arg5, arg6)
+cf08 = _test_func.cf08
+
+def shiftfunc(arg1, arg2, arg3, arg4):
+    return _test_func.shiftfunc(arg1, arg2, arg3, arg4)
+shiftfunc = _test_func.shiftfunc
+
+def rotatefunc(arg1, arg2, arg3, arg4):
+    return _test_func.rotatefunc(arg1, arg2, arg3, arg4)
+rotatefunc = _test_func.rotatefunc
+
+def asyfunc(arg1, x, arg3, arg4):
+    return _test_func.asyfunc(arg1, x, arg3, arg4)
+asyfunc = _test_func.asyfunc
+
+def oszfunc(arg1, arg2, arg3):
+    return _test_func.oszfunc(arg1, arg2, arg3)
+oszfunc = _test_func.oszfunc
+
+def cf_cal(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8):
+    return _test_func.cf_cal(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+cf_cal = _test_func.cf_cal
 # This file is compatible with both classic and new-style classes.
 
+cvar = _test_func.cvar
 

@@ -4,9 +4,13 @@ import copy
 import math
 from scipy.stats import cauchy
 import numpy as np
+import matplotlib.pyplot as plt
 
 random.seed(0)
 eva_count = 0
+best_answer = []
+
+
 def rand_normal(ave, var):
   ran = random.normalvariate(ave, math.sqrt(var))
   while ran <= 0:
@@ -62,7 +66,7 @@ def evaluation(x):
   # print x
   su = 0
   global eva_count
-  eva_count += 1
+  # eva_count += 1
   # print eva_count
   for a in x :
     # print a
@@ -114,7 +118,7 @@ bag_count = 0
 
 #51は試行回数
 estimated_count = 0
-for var in range(0, 10000):
+for var in range(0, 3000):
   SCR = []
   SF = []
   CR = []
@@ -187,3 +191,13 @@ for var in range(0, 10000):
       mini_ev = evaluation(x)
       xp = copy.deepcopy(x)
   print mini_ev
+  best_answer.append(math.log(mini_ev))
+  eva_count += 1
+  if mini_ev < 0.000000001 :
+    break
+print eva_count
+x = np.arange(0, eva_count, 1.0)
+y = np.array(best_answer)
+# plt.ylim(60000, 10000)
+plt.plot(x, y)
+plt.show()
