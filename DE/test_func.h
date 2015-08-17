@@ -1,3 +1,13 @@
+
+#define TEST_FUNC_H__
+
+
+#include <stdio.h>
+
+
+double test_array(double x[]);
+double test(double x);
+double test_pointer(double *x);
 void test_func(double *x, double *f, int nx, int mx,int func_num);
 void sphere_func (double *, double *, int , double *,double *, int); /* Sphere */
 void ellips_func(double *, double *, int , double *,double *, int); /* Ellipsoidal */
@@ -31,5 +41,7 @@ void asyfunc (double *, double *x, int, double);
 void oszfunc (double *, double *, int);
 void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
 
+extern void test_func(double *x, double *f, int nx, int mx,int func_num);
 extern double *OShift,*M,*y,*z,*x_bound;;
 extern int ini_flag,n_flag,func_flag;
+

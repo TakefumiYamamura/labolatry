@@ -90,6 +90,52 @@ except AttributeError:
     _newclass = 0
 
 
+class intArray(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, intArray, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, intArray, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, nelements):
+        this = _test_func.new_intArray(nelements)
+        try:
+            self.this.append(this)
+        except:
+            self.this = this
+    __swig_destroy__ = _test_func.delete_intArray
+    __del__ = lambda self: None
+
+    def __getitem__(self, index):
+        return _test_func.intArray___getitem__(self, index)
+
+    def __setitem__(self, index, value):
+        return _test_func.intArray___setitem__(self, index, value)
+
+    def cast(self):
+        return _test_func.intArray_cast(self)
+    __swig_getmethods__["frompointer"] = lambda x: _test_func.intArray_frompointer
+    if _newclass:
+        frompointer = staticmethod(_test_func.intArray_frompointer)
+intArray_swigregister = _test_func.intArray_swigregister
+intArray_swigregister(intArray)
+
+def intArray_frompointer(t):
+    return _test_func.intArray_frompointer(t)
+intArray_frompointer = _test_func.intArray_frompointer
+
+
+def test_array(INPUT):
+    return _test_func.test_array(INPUT)
+test_array = _test_func.test_array
+
+def test_pointer(INPUT):
+    return _test_func.test_pointer(INPUT)
+test_pointer = _test_func.test_pointer
+
+def test(x):
+    return _test_func.test(x)
+test = _test_func.test
 
 def test_func(x, f, nx, mx, func_num):
     return _test_func.test_func(x, f, nx, mx, func_num)

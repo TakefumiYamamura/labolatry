@@ -1,14 +1,20 @@
 /* File: example.i */
 %module test_func
-
+%include "typemaps.i"
+%include "carrays.i"
+%include "cpointer.i"
+%array_class(int, intArray);
 %{
 #define SWIG_FILE_WITH_INIT
 #include "main.cpp"
 #include "test_func.cpp"
 %}
 
-
+double test_array(double *INPUT);
+double test_pointer(double *INPUT);
+double test(double x);
 void test_func(double *x, double *f, int nx, int mx,int func_num);
+extern test_func(double *x, double *f, int nx, int mx,int func_num);
 void sphere_func (double *, double *, int , double *,double *, int); /* Sphere */
 void ellips_func(double *, double *, int , double *,double *, int); /* Ellipsoidal */
 void bent_cigar_func(double *, double *, int , double *,double *, int); /* Discus */
@@ -35,11 +41,12 @@ void cf06 (double *, double *, int , double *,double *, int); /* Composition Fun
 void cf07 (double *, double *, int , double *,double *, int); /* Composition Function 7 */
 void cf08 (double *, double *, int , double *,double *, int); /* Composition Function 8 */
 
-void shiftfunc (double*,double*,int,double*);
+void shiftfunc (double *INPUT,double *INPUT,int,double *INPUT);
 void rotatefunc (double*,double*,int, double*);
 void asyfunc (double *, double *x, int, double);
 void oszfunc (double *, double *, int);
 void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
+
 
 extern double *OShift,*M,*y,*z,*x_bound;;
 extern int ini_flag,n_flag,func_flag;
