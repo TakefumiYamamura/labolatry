@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <cmath>
 
-using namespace std;
+double sphere_func (double **, int);
 // #include "malloc.h"
 
 
@@ -21,18 +22,18 @@ void make_random_num(int n, int *r1, int *r2, int *r3){
   } while ((*r1 == *r2) || (*r2 == *r3) || (*r3 == *r1));
 }
 
-void generate_mutant_vector(double** x, double** v, int i){
+void generate_mutant_vector(double** x, double** v, int i, int n){
   int r1, r2, r3;
-  double F = 0.5;
+  double F = 0.00001;
   make_random_num(100, &r1, &r2, &r3);
-  for (int j = 0; j < (sizeof(x[i])/sizeof(x[i][0])); ++j)
+  for (int j = 0; j < n; ++j)
   {
-    v[i][j] = x[r1][j] + F * (x[r2][j] - x[r3][j]);
+    v[i][j] = x[r1][j] + F * std::abs(x[r2][j] - x[r3][j]);
   }
 }
 // crossover_binomial(x, v, u, i)
 void crossover_binomial(double** x, double** v, double** u, int i, int j_rand){
-  double cr = 0.5;
+  double cr = 0.1;
   if ( (((rand() % 1000) / 1000) < cr) || i == j_rand){
     u[i] = v[i];
   }else{
@@ -62,24 +63,25 @@ int main()
 
   if (x==NULL)
     printf("\nError: there is insufficient memory available!\n");
-  for(i=0;i<n;i++)
+  for(i=0;i<m;i++)
   {
     x[i] = (double *)malloc(n*sizeof(double));
     u[i] = (double *)malloc(n*sizeof(double));
     v[i] = (double *)malloc(n*sizeof(double));
-    for (int j = 0; j<m ; ++j)
+    for (int j = 0; j<n ; ++j)
     {
       fscanf(fpt,"%lf",&x[i][j]);
-      printf("%lf\n",x[i][j]);
+      // printf("%lf\n",x[i][j]);
     }
+    printf("%lf\n",sphere_func(x, i));
   }
   fclose(fpt);
 
-  for (int count = 0; count < 50 ; ++count)
+  for (int count = 0; count < 5000 ; ++count)
   {
     for (int i = 0; i < m; ++i)
     {
-      generate_mutant_vector(x, v, i);
+      generate_mutant_vector(x, v, i, n);
     }
     int j_rand = rand()%n ;
     for (int i = 0; i < m; ++i)
@@ -88,12 +90,20 @@ int main()
     }
     for (int i = 0; i < m; ++i)
     {
-      if (sphere_func(u[i]) < sphere_func(x[i]) ){
+      if (sphere_func(u, i) < sphere_func(x, i) ){
         x[i] = u[i];
       }else{
         x[i] = x[i];
       }
     }
+  }
+  for(i=0;i<m;i++)
+  {
+    for (int j = 0; j<n ; ++j)
+    {
+      // printf("%lf\n",x[i][j]);
+    }
+    printf("%lf\n",sphere_func(x, i));
   }
 
     // for (i = 1; i < m; i++)
@@ -104,20 +114,6 @@ int main()
     //     printf("%lf\n",x[i*n+j]);
     //   }
     // }
-
-
-  // f=(double *)malloc(sizeof(double)  *  m);
-  // for (i = 0; i < 28; i++)
-  // {
-  //   func_num=i+1;
-  //   for (k = 0; k < 1; k++)
-  //   {
-  //     // test_func(x, f, n,m,func_num);
-  //     for (j = 0; j < m; j++)
-  //       printf(" f%d(x[%d]) = %lf,",func_num,j+1,f[j]);
-  //     printf("\n");
-  //   }
-  // }
   free(x);
   free(f);
   free(y);
