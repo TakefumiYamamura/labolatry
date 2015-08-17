@@ -8,17 +8,10 @@ using namespace std;
 // #include "malloc.h"
 
 
-void test_func(double *, double *,int,int,int);
+// void test_func(double *, double *,int,int,int);
 
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag=0,n_flag,func_flag;
-
-void initialize();
-void mutation();
-void crossover();
-
-int crossover_rate;
-
 
 void make_random_num(int n, int *r1, int *r2, int *r3){
   do {
@@ -28,20 +21,23 @@ void make_random_num(int n, int *r1, int *r2, int *r3){
   } while ((*r1 == *r2) || (*r2 == *r3) || (*r3 == *r1));
 }
 
-void generate_mutant_vector(double* x, double*v int i){
+void generate_mutant_vector(double** x, double** v, int i){
   int r1, r2, r3;
-  make_random_num(r1, r2, r3);
-  v[i] = x[r1] + F * (x[r2] - x[r3]);
+  double F = 0.5;
+  make_random_num(100, &r1, &r2, &r3);
+  for (int j = 0; j < (sizeof(x[i])/sizeof(x[i][0])); ++j)
+  {
+    v[i][j] = x[r1][j] + F * (x[r2][j] - x[r3][j]);
+  }
 }
 // crossover_binomial(x, v, u, i)
-void crossover_binomial(double* x, double* v, double* u, int i){
-  int cr;
-  if ((rand() % 1000) / 1000 < cr){
-    u[i] = v[i]
+void crossover_binomial(double** x, double** v, double** u, int i, int j_rand){
+  double cr = 0.5;
+  if ( (((rand() % 1000) / 1000) < cr) || i == j_rand){
+    u[i] = v[i];
   }else{
-    u[i] = x[i]
+    u[i] = x[i];
   }
-
 }
 
 int main()
@@ -79,22 +75,24 @@ int main()
   }
   fclose(fpt);
 
-  for (int i = 0; i < m; ++i)
+  for (int count = 0; count < 50 ; ++count)
   {
-    generate_mutant_vector(x, v, i);
-  }
-
-  for (int i = 0; i < m; ++i)
-  {
-    crossover_binomial(x, v, u, i);
-  }
-
-  for (int i = 0; i < m; ++i)
-  {
-    if (f(u[i]) < f(x[i]) ){
-      x[i] = u[i]
-    }else{
-      x[i] = x[i]
+    for (int i = 0; i < m; ++i)
+    {
+      generate_mutant_vector(x, v, i);
+    }
+    int j_rand = rand()%n ;
+    for (int i = 0; i < m; ++i)
+    {
+      crossover_binomial(x, v, u, i, j_rand);
+    }
+    for (int i = 0; i < m; ++i)
+    {
+      if (sphere_func(u[i]) < sphere_func(x[i]) ){
+        x[i] = u[i];
+      }else{
+        x[i] = x[i];
+      }
     }
   }
 
