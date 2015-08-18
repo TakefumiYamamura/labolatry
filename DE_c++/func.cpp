@@ -10,10 +10,10 @@
 extern double *OShift,*M,*y,*z,*x_bound;;
 extern int ini_flag,n_flag,func_flag;
 
-double sphere_func (double **x, int t) /* Sphere */
+double sphere_func (double **x, int t, int n) /* Sphere */
 {
   double f = 0.0;
-   for (int i = 0; i < sizeof(x[i])/sizeof(x[i][0]); ++i)
+   for (int i = 0; i < n; ++i)
   {
     f += x[t][i] * x[t][i];
   }
