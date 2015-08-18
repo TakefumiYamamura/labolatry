@@ -103,7 +103,7 @@ int main()
   }
   fclose(fpt);
 
-  for (int count = 0; count < 50 ; count++)
+  for (int count = 0; count < 5000 ; count++)
   {
     for (int i = 0; i < m; ++i)
     {
@@ -118,14 +118,14 @@ int main()
     {
       if (sphere_func(u, i, n) < sphere_func(x, i, n) ){
         // x_new[i] = u[i];
-        array_copy(u, x_new, m, i);
-        printf("%lf", sphere_func(u, i, n) );
-        printf(" %lf\n", sphere_func(x, i, n) );
+        array_copy(u, x_new, n, i);
+        // printf("%lf", sphere_func(u, i, n) );
+        // printf(" %lf\n", sphere_func(x, i, n) );
       }else{
-        array_copy(x, x_new, m, i);
+        array_copy(x, x_new, n, i);
         // x_new[i] = x[i];
-        printf("%lf", sphere_func(x, i, n) );
-        printf(" %lf\n", sphere_func(u, i, n) );
+        // printf("%lf", sphere_func(x, i, n) );
+        // printf(" %lf\n", sphere_func(u, i, n) );
       }
     }
     array_all_copy(x_new, x, m, n);
@@ -139,7 +139,7 @@ int main()
     {
       // printf("%lf\n",x[i][j]);
     }
-    // printf("%lf\n",sphere_func(x, i, n));
+    printf("%lf\n",sphere_func(x, i, n));
   }
 
   free(x);
