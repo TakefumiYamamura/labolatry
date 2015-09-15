@@ -18,12 +18,13 @@ void test_func(double *, double *, int, int, int);
 
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
+int m = 100;
+int n = 30;
 double f[2];
 
 double cauchy(double f){
-    std::random_device seed_gen;
+  std::random_device seed_gen;
   std::default_random_engine engine(seed_gen());
-
   // 位置母数0.0、尺度母数1.0で分布させる
   std::cauchy_distribution<> dist(f, 0.1);
   // コーシー分布で乱数を生成する
@@ -31,47 +32,31 @@ double cauchy(double f){
   do{
     result = dist(engine);
   }while(result < 0);
-  // double result = dist(engine);
   if (result > 1.0){
     result = 1.00;
   }
-  // std::cout << result << "\n";
   return result;
 }
 
 double randn(double cr){
-      std::random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
-    std::mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
-    // //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
-    std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
-    return norm(mt);
-    for (int i = 0; i < 20; ++i) {
-      //std::cout << rand100(mt) << "\n";
-      // std::cout << norm(mt) << "\n";
-    }
+  std::random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
+  std::mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
+  // //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
+  std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
+  return norm(mt);
+  //std::cout << rand100(mt) << "\n";
 }
 
-
-
-double adjustment(double **x, int i, int func_num){
+double bench_mark(double **x, int i, int func_num){
   double *new_array;
-  new_array = (double *)malloc(60*sizeof(double));
-
-  for (int j = 0; j < 30 ; ++j)
+  new_array = (double *)malloc(30*sizeof(double));
+  for (int j = 0; j < n ; ++j)
   {
-    new_array[j] = 0;
-    new_array[j+30] = 0;
     new_array[j] = x[i][j];
-    // printf("%lf\n",new_array[j]);
   }
-  // printf("%lf\n",new_array[0]);
-
-  test_func(new_array, f, 30, 1, func_num);
-  // printf("%lf  ",f[0]);
-  // printf("%lf\n",f[1]);
+  test_func(new_array, f, n, 1, func_num);
   return f[0];
 }
-
 
 void array_copy(double** resource_array, double** to_array, int len, int i){
   for (int j = 0; j < len; ++j)
@@ -97,9 +82,6 @@ void array_all_copy(double** resource_array, double** to_array, int m, int n){
   }
 }
 
-
-
-
 void make_random_num(int n, int *r1, int *r2, int *r3){
   do {
     *r1 = rand() % n;
@@ -124,7 +106,7 @@ void selectxp(double ** x, double ** xp, int m, int n){
   int p = 20;
   for (int i = 0; i < p; ++i)
     {
-      if (adjustment(xp, 1, 1) > adjustment(x, i, 1) ){
+      if (bench_mark(xp, 1, 1) > bench_mark(x, i, 1) ){
         array_copy_2(x, xp, n, i, 0);
       }
     }
@@ -161,12 +143,8 @@ int main()
 {
   int i, j,  func_num;
   double *f, **x, **u, **v, **x_new;
-  int m = 100;
-  int n = 30;
   FILE *fpt;
   int k = 0;
-  // m=100;
-  // n=30;
 
   //初期化100*30(次元数)のベクトル作成
   fpt=fopen("input_data/M_D30.txt","r");
@@ -224,18 +202,18 @@ int main()
     vector<double> sf;
     for (int i = 0; i < m; ++i)
     {
-      if (adjustment(u, i, 1) < adjustment(x, i, 1) ){
+      if (bench_mark(u, i, 1) < bench_mark(x, i, 1) ){
         // x_new[i] = u[i];
         array_copy(u, x_new, n, i);
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
+        // printf("%lf", bench_mark(u, i, 28) );
+        // printf(" %lf\n", bench_mark(x, i, 28) );
         //cr とfを保存すべし
       }else{
         array_copy(x, x_new, n, i);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
+        // printf("%lf", bench_mark(u, i, 28) );
+        // printf(" %lf\n", bench_mark(x, i, 28) );
         // x_new[i] = x[i];
         // printf("%lf", sphere_func(x, i, n) );
         // printf(" %lf\n", sphere_func(u, i, n) );
@@ -267,7 +245,7 @@ int main()
     {
       // printf("%lf\n",x[i][j]);
     }
-    printf("%lf\n",adjustment(x, i, 1));
+    printf("%lf\n",bench_mark(x, i, 1));
   }
 
 
