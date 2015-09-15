@@ -24,7 +24,7 @@ int main()
 	FILE *fpt;
 
 	m=2;
-	n=10;
+	n=30;
 
 		fpt=fopen("input_data/shift_data.txt","r");
 		if (fpt==NULL)
@@ -37,7 +37,7 @@ int main()
 		for(i=0;i<n;i++)
 		{
 				fscanf(fpt,"%lf",&x[i]);
-				printf("%lf\n",x[i]);
+				// printf("%lf\n",x[i]);
 		}
 		fclose(fpt);
 
@@ -46,7 +46,7 @@ int main()
 			for (j = 0; j < n; j++)
 			{
 				x[i*n+j]=0.0;
-				printf("%lf\n",x[i*n+j]);
+				// printf("%lf\n",x[i*n+j]);
 			}
 		}
 
@@ -59,10 +59,12 @@ int main()
 		{
 			test_func(x, f, n,m,func_num);
 			for (j = 0; j < m; j++)
-				printf(" f%d(x[%d]) = %lf,",func_num,j+1,f[j]);
+			printf(" f%d(x[%d]) = %lf,",func_num,j+1,f[j]);
 			printf("\n");
+			// printf(" %lf  %lf  \n,",f[0],f[1]);
 		}
 	}
+	// test_func(x, f, 30, 2,2);
 	free(x);
 	free(f);
 	free(y);

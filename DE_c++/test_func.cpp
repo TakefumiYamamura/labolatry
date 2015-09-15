@@ -10,7 +10,6 @@
 #include <math.h>
 // #include "malloc.h"
 #include <stdlib.h>
-#include "test_func.h"
 
 
 
@@ -58,33 +57,6 @@ extern int ini_flag,n_flag,func_flag;
 // int ini_flag=0,n_flag,func_flag;
 
 
-
-
-double test(double x)
-{
-  return x;
-}
-
-double test_pointer(double* x)
-{
-  return *x;
-}
-
-double test_array(double* x)
-{
-  int i;
-  double sum = 0 ;
-    for(i = 0; i < 2; i++)
-        sum += x[i];
-  return sum;
-}
-
-// void print_array(std::vector< std::vector < double > > myarray)
-// {
-//     for (int i=0; i<2; i++)
-//         for (int j=0; j<2; j++)
-//             printf("[%d][%d] = [%d]\n", i, j, myarray[i][j]);
-// }
 
 void test_func(double *x, double *f, int nx, int mx,int func_num)
 {

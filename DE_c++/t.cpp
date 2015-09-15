@@ -13,41 +13,21 @@ void test_func(double *, double *, int, int, int);
 
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag=0,n_flag,func_flag;
-double f[2];
-// double f[0] = 0.0;
+double f[0];
 
-// double *new_array;
-// double * new_array = (double *)malloc(n*sizeof(double));
-// int m, n;
-
-
-// double change_array(double** array, int i, int n){
-//   double *new_array;
-//   new_array = (double *)malloc(n*sizeof(double));
-//   for (int j = 0; j < n ; ++j)
-//   {
-//     new_array[j] = array[i][j];
-//   }
-//   return new_array;
-// }
-
-double adjustment(double **x, int i, int func_num){
+double adjustment(double **x, int i, int nx, int mx, int func_num){
   double *new_array;
-  new_array = (double *)malloc(60*sizeof(double));
+  new_array = (double *)malloc(nx*sizeof(double));
 
-  for (int j = 0; j < 30 ; ++j)
+  for (int j = 0; j < nx ; ++j)
   {
     new_array[j] = 0;
-    new_array[j+30] = 0;
     new_array[j] = x[i][j];
-    // printf("%lf\n",new_array[j]);
+    printf("%lf\n",new_array[j]);
   }
-  // printf("%lf\n",new_array[0]);
-
-  test_func(new_array, f, 30, 2, func_num);
-  printf("%lf  ",f[0]);
-  printf("%lf\n",f[1]);
-  return f[1];
+  f[0] = 0;
+  test_func(new_array, f, nx, mx, func_num);
+  return f[0];
 }
 
 
@@ -113,8 +93,8 @@ int main()
   // m=100;
   // n=30;
 
-  //初期化100*30(次元数)のベクトル作成
-  fpt=fopen("input_data/shift_data.txt","r");
+  //初期化100*100(次元数)のベクトル作成
+  fpt=fopen("input_data/M_D30.txt","r");
   if (fpt==NULL)
   {
     printf("\n Error: Cannot open input file for reading \n");
@@ -123,6 +103,8 @@ int main()
   u=(double **)malloc(m*sizeof(double*));
   v=(double **)malloc(m*sizeof(double*));
   x_new=(double **)malloc(m*sizeof(double*));
+  double * test;
+  test = (double * )malloc(m*n*sizeof(double));
 
 
   if (x==NULL)
@@ -135,43 +117,43 @@ int main()
     x_new[i] = (double *)malloc(n*sizeof(double));
     for (int j = 0; j<n ; ++j)
     {
-      fscanf(fpt,"%lf",&x[i][j]);
+      fscanf(fpt,"%lf",&test[i*n+j]);
       // printf("%lf\n",x[i][j]);
     }
     // printf("%lf\n",sphere_func(x, i, n));
   }
   fclose(fpt);
 
-  for (int count = 0; count < 1; count++)
-  {
-    for (int i = 0; i < m; ++i)
-    {
-      generate_mutant_vector(x, v, i, n);
-    }
-    int j_rand = rand()%n ;
-    for (int i = 0; i < m; ++i)
-    {
-      crossover_binomial(x, v, u, i, j_rand);
-    }
-    for (int i = 0; i < m; ++i)
-    {
-      if (adjustment(u, i, 1) < adjustment(x, i, 1) ){
-        // x_new[i] = u[i];
-        array_copy(u, x_new, n, i);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
-      }else{
-        array_copy(x, x_new, n, i);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
-        // x_new[i] = x[i];
-        // printf("%lf", sphere_func(x, i, n) );
-        // printf(" %lf\n", sphere_func(u, i, n) );
-      }
-    }
-    array_all_copy(x_new, x, m, n);
-    x = x_new;
-  }
+  test_func
+
+  // for (int count = 0; count < 500; count++)
+  // {
+  //   for (int i = 0; i < m; ++i)
+  //   {
+  //     generate_mutant_vector(x, v, i, n);
+  //   }
+  //   int j_rand = rand()%n ;
+  //   for (int i = 0; i < m; ++i)
+  //   {
+  //     crossover_binomial(x, v, u, i, j_rand);
+  //   }
+  //   for (int i = 0; i < m; ++i)
+  //   {
+  //     if (adjustment(u, i, n, 1, 28) < adjustment(x, i, n, 1, 28) ){
+  //       // x_new[i] = u[i];
+  //       array_copy(u, x_new, n, i);
+  //       // printf("%lf", adjustment(u, i, n, 1, 1) );
+  //       // printf(" %lf\n", adjustment(x, i, n, 1, 1) );
+  //     }else{
+  //       array_copy(x, x_new, n, i);
+  //       // x_new[i] = x[i];
+  //       // printf("%lf", sphere_func(x, i, n) );
+  //       // printf(" %lf\n", sphere_func(u, i, n) );
+  //     }
+  //   }
+  //   array_all_copy(x_new, x, m, n);
+  //   x = x_new;
+  // }
 
 
   for(i=0;i<m;i++)
@@ -180,7 +162,7 @@ int main()
     {
       // printf("%lf\n",x[i][j]);
     }
-    // printf("%lf\n",adjustment(x, i, 1));
+    // printf("%lf\n",adjustment(x, i, n, 1, 1));
   }
 
   free(x);

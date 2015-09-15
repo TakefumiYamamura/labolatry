@@ -125,9 +125,20 @@ void test_func(double *x, double *f, int nx, int mx,int func_num)
 	{
 		switch(func_num)
 		{
-		case 1:	
+		case 1:
+      //     for (int j = 0; j < nx; j++)
+      // {
+      //   // x[i*n+j]=0.0;
+      //   printf("%lf\n",x[j]);
+      // }
+
 			sphere_func(&x[i*nx],&f[i],nx,OShift,M,0);
 			f[i]+=-1400.0;
+      // for (int j = 0; j < 2*nx; j++)
+      // {
+      //   // x[i*n+j]=0.0;
+      //   printf("%lf\n",x[j]);
+      // }
 			break;
 		case 2:	
 			ellips_func(&x[i*nx],&f[i],nx,OShift,M,1);

@@ -5,50 +5,14 @@
 #include <stdlib.h>
 #include <cmath>
 
-// double sphere_func(double **, int, int);
-// #include "malloc.h"
-void test_func(double *, double *, int, int, int);
+using namespace std;
 
+double sphere_func (double **, int, int);
+// #include "malloc.h"
 // void test_func(double *, double *,int,int,int);
 
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag=0,n_flag,func_flag;
-double f[2];
-// double f[0] = 0.0;
-
-// double *new_array;
-// double * new_array = (double *)malloc(n*sizeof(double));
-// int m, n;
-
-
-// double change_array(double** array, int i, int n){
-//   double *new_array;
-//   new_array = (double *)malloc(n*sizeof(double));
-//   for (int j = 0; j < n ; ++j)
-//   {
-//     new_array[j] = array[i][j];
-//   }
-//   return new_array;
-// }
-
-double adjustment(double **x, int i, int func_num){
-  double *new_array;
-  new_array = (double *)malloc(60*sizeof(double));
-
-  for (int j = 0; j < 30 ; ++j)
-  {
-    new_array[j] = 0;
-    new_array[j+30] = 0;
-    new_array[j] = x[i][j];
-    // printf("%lf\n",new_array[j]);
-  }
-  // printf("%lf\n",new_array[0]);
-
-  test_func(new_array, f, 30, 2, func_num);
-  printf("%lf  ",f[0]);
-  printf("%lf\n",f[1]);
-  return f[1];
-}
 
 
 void array_copy(double** resource_array, double** to_array, int len, int i){
@@ -101,76 +65,123 @@ void crossover_binomial(double** x, double** v, double** u, int i, int j_rand){
   }
 }
 
+void generate_trial_vector(double** u, double** v, double** x, double* f, double* p, int i){
+  //pbestは世代ｇからRANDOMに選んだ20この中の最良個体
+  //r2, r3はかぶらないようにアーカイブから選択
+  for (int j = 0; j < 30; ++j)
+  {
+    v[i][j] = x[i][j] + f[i]*(x[p_best][j]-x[i][j]) + f[i]*(x[r2][j]-x[r3][j]);
+  }
+  j_rand = rand()%30
+  for (int j = 0; j < 30; ++j)
+  {
+    if ((rand()%100 < cr) || (j == j_rand)){
+      u[i][j] = v[i][j];
+    }else{
+      u[i][j] = x[i][j];
+    }
+  }
+}
+
 int main()
 {
-  int i, j, k, func_num;
-  double *f, **x, **u, **v, **x_new;
-  int m = 100;
-  int n = 30;
+  int i, j, k, n, m, func_num;
+  double *f, *x, *u, *v, *x_new, *p, *cr, *f;
   FILE *fpt;
+  // int k = 1;
+  m = 100;
+  n = 30;
+  int index = 0
 
-
-  // m=100;
-  // n=30;
-
-  //初期化100*30(次元数)のベクトル作成
-  fpt=fopen("input_data/shift_data.txt","r");
-  if (fpt==NULL)
+  //初期化100*100(次元数)のベクトル作成
+  fpt = fopen("input_data/shift_data.txt","r");
+  if (fpt == NULL)
   {
     printf("\n Error: Cannot open input file for reading \n");
   }
-  x=(double **)malloc(m*sizeof(double*));
-  u=(double **)malloc(m*sizeof(double*));
-  v=(double **)malloc(m*sizeof(double*));
-  x_new=(double **)malloc(m*sizeof(double*));
+  x = (double *)malloc(m*n*sizeof(double));
+  u = (double *)malloc(m*n*sizeof(double));
+  v = (double *)malloc(m*n*sizeof(double));
+  x_new = (double *)malloc(m*n*sizeof(double));
 
-
+  //初期化
   if (x==NULL)
     printf("\nError: there is insufficient memory available!\n");
   for(i=0;i<m;i++)
   {
-    x[i] = (double *)malloc(n*sizeof(double));
-    u[i] = (double *)malloc(n*sizeof(double));
-    v[i] = (double *)malloc(n*sizeof(double));
-    x_new[i] = (double *)malloc(n*sizeof(double));
     for (int j = 0; j<n ; ++j)
     {
-      fscanf(fpt,"%lf",&x[i][j]);
-      // printf("%lf\n",x[i][j]);
+      fscanf(fpt,"%lf",&x[i*n+j]);
     }
     // printf("%lf\n",sphere_func(x, i, n));
   }
   fclose(fpt);
 
-  for (int count = 0; count < 1; count++)
+  p = (double *)malloc(m*sizeof(double));
+  cr = (double *)malloc(m*sizeof(double));
+  f = (double *)malloc(m*sizeof(double));
+
+  vector<double> scr;
+  vector<double> sf;
+  vector<double> a;
+
+  for (int count = 0; count < 50 ; count++)
   {
+
+    scr.clear();
+    sf.clear();
     for (int i = 0; i < m; ++i)
     {
-      generate_mutant_vector(x, v, i, n);
+      r = rand() % m;
+      cr[i] = rand_n(mcr, r, 0.1);//正規分布
+      f[i] = rand_c(mf, r, 0.1);//コーシー分布
+      p = rand(0.02, 0.2);
+      generate_trial_vector(u);
     }
-    int j_rand = rand()%n ;
+
     for (int i = 0; i < m; ++i)
     {
-      crossover_binomial(x, v, u, i, j_rand);
+      if (func(u[i]) < func(x[i])){
+        // x_new[i] = u[i]
+        array_copy(u, x_new, 30, i);
+        a.push_back(x); //アーカイブにｘを入れる
+        scr.push_back(cr[i]);
+        sf.push_back(f[i]);
+        // array_copy(double** resource_array, double** to_array, int len, int i)
+      }else{
+        array_copy(x, x_new, 30, i)
+      }
     }
+
+    //アーカイブ更新作業
+
+    if ((scr.empty() != true) && (sf.empty() != true)){
+      index ++
+      mcr[index]= meanwa(scr);
+      mf[index]= meanwl(sf);
+      if (index > 99){
+        k = 0
+      }
+    }
+
+
+
     for (int i = 0; i < m; ++i)
     {
-      if (adjustment(u, i, 1) < adjustment(x, i, 1) ){
+      if (sphere_func(u, i, n) < sphere_func(x, i, n) ){
         // x_new[i] = u[i];
         array_copy(u, x_new, n, i);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
+        // printf("%lf", sphere_func(u, i, n) );
+        // printf(" %lf\n", sphere_func(x, i, n) );
       }else{
         array_copy(x, x_new, n, i);
-        // printf("%lf", adjustment(u, i, 28) );
-        // printf(" %lf\n", adjustment(x, i, 28) );
         // x_new[i] = x[i];
         // printf("%lf", sphere_func(x, i, n) );
         // printf(" %lf\n", sphere_func(u, i, n) );
       }
     }
     array_all_copy(x_new, x, m, n);
-    x = x_new;
+
   }
 
 
@@ -180,7 +191,7 @@ int main()
     {
       // printf("%lf\n",x[i][j]);
     }
-    // printf("%lf\n",adjustment(x, i, 1));
+    printf("%lf\n",sphere_func(x, i, n));
   }
 
   free(x);
