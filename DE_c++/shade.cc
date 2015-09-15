@@ -10,33 +10,15 @@
 #include <stdlib.h> /* for srand48(), drand48() */
 #include <math.h>  
 #include <vector>
-// double sphere_func(double **, int, int);
-// #include "malloc.h"
+
 
 using namespace std;
 void test_func(double *, double *, int, int, int);
 
-// void test_func(double *, double *,int,int,int);
 
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
 double f[2];
-// double f[0] = 0.0;
-
-// double *new_array;
-// double * new_array = (double *)malloc(n*sizeof(double));
-// int m, n;
-
-
-// double change_array(double** array, int i, int n){
-//   double *new_array;
-//   new_array = (double *)malloc(n*sizeof(double));
-//   for (int j = 0; j < n ; ++j)
-//   {
-//     new_array[j] = array[i][j];
-//   }
-//   return new_array;
-// }
 
 double cauchy(double f){
     std::random_device seed_gen;
@@ -44,21 +26,17 @@ double cauchy(double f){
 
   // 位置母数0.0、尺度母数1.0で分布させる
   std::cauchy_distribution<> dist(f, 0.1);
-
-  // std::ofstream file("cauchy_distribution.tsv");
-  // for (size_t n = 0; n < 1000; ++n) {
-    // コーシー分布で乱数を生成する
-    double result;
-    do{
-      result = dist(engine);
-    }while(result < 0);
-    // double result = dist(engine);
-    if (result > 1.0){
-      result = 1.00;
-    }
-    // std::cout << result << "\n";
-    return result;
-  // }
+  // コーシー分布で乱数を生成する
+  double result;
+  do{
+    result = dist(engine);
+  }while(result < 0);
+  // double result = dist(engine);
+  if (result > 1.0){
+    result = 1.00;
+  }
+  // std::cout << result << "\n";
+  return result;
 }
 
 double randn(double cr){
@@ -74,6 +52,7 @@ double randn(double cr){
 }
 
 
+
 double adjustment(double **x, int i, int func_num){
   double *new_array;
   new_array = (double *)malloc(60*sizeof(double));
@@ -87,7 +66,7 @@ double adjustment(double **x, int i, int func_num){
   }
   // printf("%lf\n",new_array[0]);
 
-  test_func(new_array, f, 30, 2, func_num);
+  test_func(new_array, f, 30, 1, func_num);
   // printf("%lf  ",f[0]);
   // printf("%lf\n",f[1]);
   return f[0];
