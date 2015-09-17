@@ -6,20 +6,15 @@
 #include <fstream>
 #include <random>
 #include <iostream>
-#include <stdio.h> 
-#include <stdlib.h> /* for srand48(), drand48() */
-#include <math.h>  
 #include <vector>
-
 
 using namespace std;
 void test_func(double *, double *, int, int, int);
 
-
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
 int m = 100;
-int n = 30;
+int dim = 30;
 double f[2];
 
 double cauchy(double f){
@@ -49,33 +44,26 @@ double randn(double cr){
 
 double bench_mark(double **x, int i, int func_num){
   double *new_array;
-  new_array = (double *)malloc(30*sizeof(double));
-  for (int j = 0; j < n ; ++j)
+  new_array = (double *)malloc(dim*sizeof(double));
+  for (int j = 0; j < dim ; ++j)
   {
     new_array[j] = x[i][j];
   }
-  test_func(new_array, f, n, 1, func_num);
+  test_func(new_array, f, dim, 1, func_num);
   return f[0];
 }
 
-void array_copy(double** resource_array, double** to_array, int len, int i){
-  for (int j = 0; j < len; ++j)
-  {
-    to_array[i][j] = resource_array[i][j];
-  }
-}
-
-void array_copy_2(double** resource_array, double** to_array, int len, int i, int k){
-  for (int j = 0; j < len; ++j)
+void array_copy(double** resource_array, int j ,double** to_array, int k){
+  for (int j = 0; j < dim; ++j)
   {
     to_array[k][j] = resource_array[i][j];
   }
 }
 
-void array_all_copy(double** resource_array, double** to_array, int m, int n){
+void array_all_copy(double** to_array, double** resource_array){
   for (int i = 0; i < m; ++i)
   {
-    for (int j = 0; j < n; ++j)
+    for (int j = 0; j < dim; ++j)
     {
       to_array[i][j] = resource_array[i][j];
     }
@@ -90,7 +78,7 @@ void make_random_num(int n, int *r1, int *r2, int *r3){
   } while ((*r1 == *r2) || (*r2 == *r3) || (*r3 == *r1));
 }
 
-void shuffle(int ary[],int size)
+void shuffle(int ary[], int size)
 {
     for(int i=0;i<size;i++)
     {
@@ -101,26 +89,26 @@ void shuffle(int ary[],int size)
     }
 }
 
-void selectxp(double ** x, double ** xp, int m, int n){
-  array_copy_2(x, xp, n, 0, 0);
+void selectxp(double ** x, double ** xp){
+  array_copy(x, xp, 0, 0);
   int p = 20;
   for (int i = 0; i < p; ++i)
     {
       if (bench_mark(xp, 1, 1) > bench_mark(x, i, 1) ){
-        array_copy_2(x, xp, n, i, 0);
+        array_copy(x, xp, i, 0);
       }
     }
 }
 
-void generate_mutant_vector(double** x, double** v, int i, int n, double* cr, double* f, double* mcr, double*mf, int m){
+void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double*mf){
   int r1, r2, r3;
   cr[m] = randn(mcr[m]);
   f[m] = randc(mf[m]);
   make_random_num(100, &r1, &r2, &r3);
   xp=(double **)malloc(1*sizeof(double*));
-  xp[0] = (double *)malloc(n*sizeof(double));
-  selectxp(x, xp, m, n);
-  for (int j = 0; j < n; ++j)
+  xp[0] = (double *)malloc(dim*sizeof(double));
+  selectxp(x, xp);
+  for (int j = 0; j < dim; ++j)
   {
     // make_random_num(100, &r1, &r2, &r3);
     // printf("%lf  %lf ", x[r2][j], x[r3][j]);
@@ -180,10 +168,7 @@ int main()
     for (int j = 0; j<n ; ++j)
     {
       fscanf(fpt,"%lf",&x[i][j]);
-
-      // printf("%lf\n",x[i][j]);
     }
-    // printf("%lf\n",sphere_func(x, i, n));
   }
   fclose(fpt);
 
@@ -191,7 +176,7 @@ int main()
   {
     for (int i = 0; i < m; ++i)
     {
-      generate_mutant_vector(x, v, i, n, cr, f, mcr, mf, m);
+      generate_mutant_vector(x, v, i, cr, f, mcr, mf);
     }
     int j_rand = rand()%n ;
     for (int i = 0; i < m; ++i)
@@ -221,32 +206,19 @@ int main()
     }
     sf.clear();
     scr.clear();
-    array_all_copy(x_new, x, m, n);
-    x = x_new;
-
+    array_all_copy(x, x_new);
     if (k == m){
       k = 0;
     }
-
-  //update_mcr
-  for (int i = 0; i < count; ++i)
-  {
-    /* code */
-  }
-  //update_mf
-
-  k++;
-  }
-
-
-  for(i=0;i<m;i++)
-  {
-    for (int j = 0; j<n ; ++j)
+    //update_mcr
+    for (int i = 0; i < count; ++i)
     {
-      // printf("%lf\n",x[i][j]);
+      /* code */
     }
-    printf("%lf\n",bench_mark(x, i, 1));
+  //update_mf
+    k++;
   }
+
 
 
   free(x);
