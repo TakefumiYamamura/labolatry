@@ -117,19 +117,19 @@ void selectxp(double ** x, double * xp){
   }
 }
 
-void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf){
+void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf, double** x_sort){
   int r1, r2, r3;
-  cr[m] = randn(mcr[m]);
-  f[m] = randc(mf[m]);
-  make_random_num(100, &r1, &r2, &r3);
+  cr[i] = randn(mcr[i]);
+  f[i] = randc(mf[i]);
+  make_random_num(dim, &r1, &r2, &r3);
   double *xp;
   xp = (double *)malloc(dim*sizeof(double));
-  selectxp(x, xp);
+  selectxp(x_sort, xp);
   for (int j = 0; j < dim; ++j)
   {
     // make_random_num(100, &r1, &r2, &r3);
     // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-    v[i][j] = x[i][j] + f[m] * std::fabs(x[r2][j] - x[r3][j]) + f[m]* (xp[j] - x[i][j]);
+    v[i][j] = x[i][j] + f[i] * (x[r2][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
     // printf("%lf  %lf ", x[r2][j], x[r3][j]);
     // printf("%d %d %d\n", r1, r2,r3);
   }
@@ -148,7 +148,7 @@ void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, d
 int main()
 {
   int i, j,  func_num;
-  double **x, **u, **v, **x_new, *cr, *f, *mcr, *mf;
+  double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf;
   FILE *fpt;
   int k = 0;
 
@@ -159,6 +159,7 @@ int main()
     printf("\n Error: Cannot open input file for reading \n");
   }
   x=(double **)malloc(m*sizeof(double*));
+  x_sort=(double **)malloc(m*sizeof(double*));
   u=(double **)malloc(m*sizeof(double*));
   v=(double **)malloc(m*sizeof(double*));
   x_new=(double **)malloc(m*sizeof(double*));
@@ -178,6 +179,7 @@ int main()
   for(i=0;i<m;i++)
   {
     x[i] = (double *)malloc(dim*sizeof(double));
+    x_sort[i] = (double *)malloc(dim*sizeof(double));
     u[i] = (double *)malloc(dim*sizeof(double));
     v[i] = (double *)malloc(dim*sizeof(double));
     x_new[i] = (double *)malloc(dim*sizeof(double));
@@ -187,14 +189,20 @@ int main()
     }
   }
   fclose(fpt);
-
-  for (int count = 0; count < 50; count++)
+  for (int count = 0; count < 500; count++)
   {
     func_num = 1;
-    sort_by_func(x, func_num);
+    array_all_copy(x_sort, x);
+    sort_by_func(x_sort, func_num);
+//デバッグ用
+    // for (int i = 0; i < m; ++i)
+    // {
+    //   printf("%lf\n", bench_mark(x, i, func_num) );
+    // }
+
     for (int i = 0; i < m; ++i)
     {
-      generate_mutant_vector(x, v, i, cr, f, mcr, mf);
+      generate_mutant_vector(x, v, i, cr, f, mcr, mf, x_sort);
     }
     int j_rand = rand()%dim ;
     for (int i = 0; i < m; ++i)
@@ -206,20 +214,16 @@ int main()
     for (int i = 0; i < m; ++i)
     {
       if (bench_mark(u, i, func_num) < bench_mark(x, i, func_num) ){
-        // x_new[i] = u[i];
         array_copy(x_new, i, u, i);
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
-        // printf("%lf", bench_mark(u, i, 28) );
-        // printf(" %lf\n", bench_mark(x, i, 28) );
-        //cr とfを保存すべし
+        // printf("%lf", bench_mark(u, i, func_num) );
+        // printf(" %lf\n", bench_mark(x, i, func_num) );
+        //アーカイブ関連のことやるべし
       }else{
         array_copy(x_new, i, x, i);
-        // printf("%lf", bench_mark(u, i, 28) );
-        // printf(" %lf\n", bench_mark(x, i, 28) );
-        // x_new[i] = x[i];
-        // printf("%lf", sphere_func(x, i, n) );
-        // printf(" %lf\n", sphere_func(u, i, n) );
+        // printf("%lf", bench_mark(x, i, func_num) );
+        // printf(" %lf\n", bench_mark(u, i, func_num) );
       }
     }
     array_all_copy(x, x_new);
@@ -236,6 +240,11 @@ int main()
     sf.clear();
     scr.clear();
   }
+  //デバッグ用
+  // for (int i = 0; i < m; ++i)
+  // {
+  //   printf("%lf\n", bench_mark(x, i, func_num) );
+  // }
 
   free(x);
   free(f);
