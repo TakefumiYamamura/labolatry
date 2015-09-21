@@ -17,7 +17,7 @@ int m = 100;
 int dim = 30;
 double f[2];
 
-double cauchy(double f){
+double randc(double f){
   std::random_device seed_gen;
   std::default_random_engine engine(seed_gen());
   // 位置母数0.0、尺度母数1.0で分布させる
@@ -53,7 +53,7 @@ double bench_mark(double **x, int i, int func_num){
   return f[0];
 }
 
-void array_copy(double** resource_array, int j ,double** to_array, int k){
+void array_copy(double** to_array, int k ,double** resource_array, int i){
   for (int j = 0; j < dim; ++j)
   {
     to_array[k][j] = resource_array[i][j];
@@ -78,59 +78,77 @@ void make_random_num(int n, int *r1, int *r2, int *r3){
   } while ((*r1 == *r2) || (*r2 == *r3) || (*r3 == *r1));
 }
 
-void shuffle(int ary[], int size)
-{
-    for(int i=0;i<size;i++)
-    {
-        int j = rand()%size;
-        int t = ary[i];
-        ary[i] = ary[j];
-        ary[j] = t;
-    }
+double randp(){
+  int p;
+  do{
+    p = rand() % 21;
+  }while(p < 2);
+  return p;
 }
 
-void selectxp(double ** x, double ** xp){
-  array_copy(x, xp, 0, 0);
-  int p = 20;
-  for (int i = 0; i < p; ++i)
+void replace(double **x, int a, int b){
+  for (int i = 0; i < dim; ++i)
+  {
+    double array_context = x[a][i];
+    x[a][i] = x[b][i];
+    x[b][i] = array_context;
+  }
+}
+
+void sort_by_func(double **x, int func_num){
+  int i, k;
+  for (i = 0; i < m; ++i)
+  {
+    for (k = 0; k < m; ++k)
     {
-      if (bench_mark(xp, 1, 1) > bench_mark(x, i, 1) ){
-        array_copy(x, xp, i, 0);
+      if (bench_mark(x, i, func_num) > bench_mark(x, k, func_num) )
+      {
+        replace(x, i, k);
       }
     }
+  }
 }
 
-void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double*mf){
+void selectxp(double ** x, double * xp){
+  int p = randp();
+  for (int i = 0; i < dim; ++i)
+  {
+    xp[i] = x[p][i];
+  }
+}
+
+void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf){
   int r1, r2, r3;
   cr[m] = randn(mcr[m]);
   f[m] = randc(mf[m]);
   make_random_num(100, &r1, &r2, &r3);
-  xp=(double **)malloc(1*sizeof(double*));
-  xp[0] = (double *)malloc(dim*sizeof(double));
+  double *xp;
+  xp = (double *)malloc(dim*sizeof(double));
   selectxp(x, xp);
   for (int j = 0; j < dim; ++j)
   {
     // make_random_num(100, &r1, &r2, &r3);
     // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-    double zettai = x[r2][j] + x[r3][j];
-    v[i][j] = x[i][j] + f[m] * std::fabs(zettai) + f[m]* (xp[0] - x[i][j]);
+    v[i][j] = x[i][j] + f[m] * std::fabs(x[r2][j] - x[r3][j]) + f[m]* (xp[j] - x[i][j]);
     // printf("%lf  %lf ", x[r2][j], x[r3][j]);
     // printf("%d %d %d\n", r1, r2,r3);
   }
+  free(xp);
 }
 
-void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, double**cr){
-  if ( (((rand() % 100) / 100) < cr[i]) || i == j_rand){
-    u[i] = v[i];
+void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, double*cr){
+  //0~1の一様乱数作り方 (double)rand()/((double)RAND_MAX+1)
+  if ( ((double)rand()/((double)RAND_MAX+1) < cr[i]) || i == j_rand){
+    array_copy(u, i, v, i);
   }else{
-    u[i] = x[i];
+    array_copy(u, i, x, i);
   }
 }
 
 int main()
 {
   int i, j,  func_num;
-  double *f, **x, **u, **v, **x_new;
+  double **x, **u, **v, **x_new, *cr, *f, *mcr, *mf;
   FILE *fpt;
   int k = 0;
 
@@ -143,7 +161,7 @@ int main()
   x=(double **)malloc(m*sizeof(double*));
   u=(double **)malloc(m*sizeof(double*));
   v=(double **)malloc(m*sizeof(double*));
-  x_new=(double *)malloc(m*sizeof(double*));
+  x_new=(double **)malloc(m*sizeof(double*));
   cr=(double *)malloc(m*sizeof(double*));
   f=(double *)malloc(m*sizeof(double*));
   mcr=(double *)malloc(m*sizeof(double*));
@@ -151,21 +169,19 @@ int main()
 
   for (int i = 0; i < m; ++i)
   {
-    mcr[i] = 0.5
-    mf[i] = 0.5
+    mcr[i] = 0.5;
+    mf[i] = 0.5;
   }
-
 
   if (x==NULL)
     printf("\nError: there is insufficient memory available!\n");
   for(i=0;i<m;i++)
   {
-    x[i] = (double *)malloc(n*sizeof(double));
-    u[i] = (double *)malloc(n*sizeof(double));
-    v[i] = (double *)malloc(n*sizeof(double));
-    x_new[i] = (double *)malloc(n*sizeof(double));
-
-    for (int j = 0; j<n ; ++j)
+    x[i] = (double *)malloc(dim*sizeof(double));
+    u[i] = (double *)malloc(dim*sizeof(double));
+    v[i] = (double *)malloc(dim*sizeof(double));
+    x_new[i] = (double *)malloc(dim*sizeof(double));
+    for (int j = 0; j < dim ; ++j)
     {
       fscanf(fpt,"%lf",&x[i][j]);
     }
@@ -174,11 +190,13 @@ int main()
 
   for (int count = 0; count < 50; count++)
   {
+    func_num = 1;
+    sort_by_func(x, func_num);
     for (int i = 0; i < m; ++i)
     {
       generate_mutant_vector(x, v, i, cr, f, mcr, mf);
     }
-    int j_rand = rand()%n ;
+    int j_rand = rand()%dim ;
     for (int i = 0; i < m; ++i)
     {
       crossover_binomial(x, v, u, i, j_rand, cr);
@@ -187,16 +205,16 @@ int main()
     vector<double> sf;
     for (int i = 0; i < m; ++i)
     {
-      if (bench_mark(u, i, 1) < bench_mark(x, i, 1) ){
+      if (bench_mark(u, i, func_num) < bench_mark(x, i, func_num) ){
         // x_new[i] = u[i];
-        array_copy(u, x_new, n, i);
+        array_copy(x_new, i, u, i);
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
         // printf("%lf", bench_mark(u, i, 28) );
         // printf(" %lf\n", bench_mark(x, i, 28) );
         //cr とfを保存すべし
       }else{
-        array_copy(x, x_new, n, i);
+        array_copy(x_new, i, x, i);
         // printf("%lf", bench_mark(u, i, 28) );
         // printf(" %lf\n", bench_mark(x, i, 28) );
         // x_new[i] = x[i];
@@ -204,8 +222,6 @@ int main()
         // printf(" %lf\n", sphere_func(u, i, n) );
       }
     }
-    sf.clear();
-    scr.clear();
     array_all_copy(x, x_new);
     if (k == m){
       k = 0;
@@ -215,11 +231,11 @@ int main()
     {
       /* code */
     }
-  //update_mf
+    //update_mf
     k++;
+    sf.clear();
+    scr.clear();
   }
-
-
 
   free(x);
   free(f);
