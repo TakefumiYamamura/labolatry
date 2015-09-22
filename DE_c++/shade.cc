@@ -145,10 +145,54 @@ void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, d
   }
 }
 
+
+void make_df(double* df, double** u, double** x, int func_num){
+  for (int i = 0; i < m; ++i)
+  {
+    df[i] = abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num));
+  }
+}
+//const をつけると破壊的操作を防げる
+void make_w(vector<double>& w, double*df ){
+  double sum = 0;
+  for (int i = 0; i < m; ++i)
+  {
+    sum += df[i];
+  }
+  for (int i = 0; i < m; ++i)
+  {
+    w[i] = (df[i] / sum);
+  }
+}
+
+void update_mcr(double* mcr, vector<double>& scr, vector<double>& w, int index){
+  if (int(scr.size()) != 0){
+    mcr[index] = 0;
+    for (int i = 0; i < int(scr.size()); ++i)
+    {
+      mcr[index] += w[i]*scr[i];
+    }
+  }
+}
+
+void update_mf(double* mf, vector<double>& sf, vector<double>& w, int index){
+  mf[index] = 0;
+  double sum1 = 0;
+  double sum2 = 0;
+  if (int(sf.size()) != 0){
+    for (int i = 0; i < int(sf.size()); ++i)
+    {
+      sum1 += w[i] * sf[i] * sf[i];
+      sum2 += w[i] * sf[i];
+    }
+    mf[index] = sum1/sum2;
+  }
+}
+
 int main()
 {
   int i, j,  func_num;
-  double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf;
+  double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf, *df;
   FILE *fpt;
   int k = 0;
 
@@ -166,7 +210,7 @@ int main()
   cr=(double *)malloc(m*sizeof(double*));
   f=(double *)malloc(m*sizeof(double*));
   mcr=(double *)malloc(m*sizeof(double*));
-  mf=(double *)malloc(m*sizeof(double*));
+  df =(double *)malloc(m*sizeof(double*));
 
   for (int i = 0; i < m; ++i)
   {
@@ -211,6 +255,7 @@ int main()
     }
     vector<double> scr;
     vector<double> sf;
+    vector<double> w;
     for (int i = 0; i < m; ++i)
     {
       if (bench_mark(u, i, func_num) < bench_mark(x, i, func_num) ){
@@ -231,12 +276,13 @@ int main()
       k = 0;
     }
     //update_mcr
-    for (int i = 0; i < count; ++i)
-    {
-      /* code */
-    }
+    make_df(df, u, x, func_num);//まずdfを計算
+    make_w(w, df);
+    update_mcr(mcr, scr, w, k);
+    update_mf(mf, sf, w, k);
     //update_mf
     k++;
+    w.clear();
     sf.clear();
     scr.clear();
   }
