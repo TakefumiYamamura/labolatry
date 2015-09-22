@@ -15,7 +15,7 @@ double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
 int m = 100;
 int dim = 30;
-double f[2];
+double fv[2];
 
 double randc(double f){
   std::random_device seed_gen;
@@ -26,7 +26,7 @@ double randc(double f){
   double result;
   do{
     result = dist(engine);
-  }while(result < 0);
+  }while(result <= 0);
   if (result > 1.0){
     result = 1.00;
   }
@@ -49,8 +49,8 @@ double bench_mark(double **x, int i, int func_num){
   {
     new_array[j] = x[i][j];
   }
-  test_func(new_array, f, dim, 1, func_num);
-  return f[0];
+  test_func(new_array, fv, dim, 1, func_num);
+  return fv[0];
 }
 
 void array_copy(double** to_array, int k ,double** resource_array, int i){
@@ -146,22 +146,24 @@ void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, d
 }
 
 
-void make_df(double* df, double** u, double** x, int func_num){
-  for (int i = 0; i < m; ++i)
-  {
-    df[i] = abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num));
-  }
-}
+// void make_df(double* df, double** u, double** x, int func_num){
+//   for (int i = 0; i < m; ++i)
+//   {
+//     //ここが0になっちゃだめ
+//     df[i] = abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num));
+//     // cout << df[i] << endl;
+//   }
+// }
 //const をつけると破壊的操作を防げる
-void make_w(vector<double>& w, double*df ){
+void make_w(vector<double>& w, vector<double>& df ){
   double sum = 0;
-  for (int i = 0; i < m; ++i)
+  for (int i = 0; i < int(df.size()); ++i)
   {
     sum += df[i];
   }
-  for (int i = 0; i < m; ++i)
+  for (int i = 0; i < int(df.size()); ++i)
   {
-    w[i] = (df[i] / sum);
+    w.push_back(df[i]/sum);
   }
 }
 
@@ -176,10 +178,11 @@ void update_mcr(double* mcr, vector<double>& scr, vector<double>& w, int index){
 }
 
 void update_mf(double* mf, vector<double>& sf, vector<double>& w, int index){
-  mf[index] = 0;
   double sum1 = 0;
   double sum2 = 0;
   if (int(sf.size()) != 0){
+        // cout << int(sf.size());
+    mf[index] = 0;
     for (int i = 0; i < int(sf.size()); ++i)
     {
       sum1 += w[i] * sf[i] * sf[i];
@@ -192,7 +195,7 @@ void update_mf(double* mf, vector<double>& sf, vector<double>& w, int index){
 int main()
 {
   int i, j,  func_num;
-  double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf, *df;
+  double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf;
   FILE *fpt;
   int k = 0;
 
@@ -210,7 +213,7 @@ int main()
   cr=(double *)malloc(m*sizeof(double*));
   f=(double *)malloc(m*sizeof(double*));
   mcr=(double *)malloc(m*sizeof(double*));
-  df =(double *)malloc(m*sizeof(double*));
+  mf =(double *)malloc(m*sizeof(double*));
 
   for (int i = 0; i < m; ++i)
   {
@@ -233,7 +236,7 @@ int main()
     }
   }
   fclose(fpt);
-  for (int count = 0; count < 500; count++)
+  for (int count = 0; count < 300; count++)
   {
     func_num = 1;
     array_all_copy(x_sort, x);
@@ -255,13 +258,18 @@ int main()
     }
     vector<double> scr;
     vector<double> sf;
+    vector<double> df;
     vector<double> w;
+    // scr.reserve(m);
+    // sf.reserve(m);
+    // w.reserve(m);
     for (int i = 0; i < m; ++i)
     {
       if (bench_mark(u, i, func_num) < bench_mark(x, i, func_num) ){
         array_copy(x_new, i, u, i);
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
+        df.push_back(abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num)));
         // printf("%lf", bench_mark(u, i, func_num) );
         // printf(" %lf\n", bench_mark(x, i, func_num) );
         //アーカイブ関連のことやるべし
@@ -276,21 +284,36 @@ int main()
       k = 0;
     }
     //update_mcr
-    make_df(df, u, x, func_num);//まずdfを計算
+    // make_df(df, v, x, func_num);//まずdfを計算
     make_w(w, df);
     update_mcr(mcr, scr, w, k);
     update_mf(mf, sf, w, k);
-    //update_mf
+    // update_mf
+  //     for (int i = 0; i < m; ++i)
+  // {
+  //   printf("%lf\n", mcr[i] );
+  // }
+    // cout << int(sf.size());
+  //           for (int i = 0; i < int(sf.size()); ++i)
+  // {
+  //   printf("%lf\n", sf[i] );
+  // }
+
     k++;
     w.clear();
     sf.clear();
     scr.clear();
-  }
-  //デバッグ用
-  // for (int i = 0; i < m; ++i)
+    df.clear();
+  //     for (int i = 0; i < m; ++i)
   // {
   //   printf("%lf\n", bench_mark(x, i, func_num) );
   // }
+  }
+  //デバッグ用
+  for (int i = 0; i < m; ++i)
+  {
+    printf("%lf\n", bench_mark(x, i, func_num) );
+  }
 
   free(x);
   free(f);
