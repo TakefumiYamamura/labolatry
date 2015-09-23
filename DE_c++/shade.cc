@@ -15,7 +15,7 @@ void test_func(double *, double *, int, int, int);
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
 int m = 100;
-int dim = 10;
+int dim = 30;
 double fv[2];
 
 double randc(double f){
@@ -125,32 +125,21 @@ void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f
   double *xp;
   xp = (double *)malloc(dim*sizeof(double));
   selectxp(x_sort, xp);
+  r1 = 1;
+  r2 = 2;
+  // cout << (int)(archive.size()) << endl;
+  // make_random_num(m, &r1, &r2, int(archive.size()));
   if( r2 < dim ){
     for (int j = 0; j < dim; ++j)
     {
-      // make_random_num(100, &r1, &r2, &r3);
-      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
       v[i][j] = x[i][j] + f[i] * (x[r2][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
-      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-      // printf("%d %d %d\n", r1, r2,r3);
+      // cout << v[i][j] << endl;
     }
   }else{
     for (int j = 0; j < dim; ++j)
     {
-      // make_random_num(100, &r1, &r2, &r3);
-      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
       v[i][j] = x[i][j] + f[i] * (archive[r2 - dim][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
-      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-      // printf("%d %d %d\n", r1, r2,r3);
     }
-  }
-  for (int j = 0; j < dim; ++j)
-  {
-    // make_random_num(100, &r1, &r2, &r3);
-    // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-    v[i][j] = x[i][j] + f[i] * (x[r2][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
-    // printf("%lf  %lf ", x[r2][j], x[r3][j]);
-    // printf("%d %d %d\n", r1, r2,r3);
   }
   free(xp);
 }
@@ -256,7 +245,7 @@ int main()
   }
   fclose(fpt);
   vector< vector<double> > archive;
-  for (int count = 0; count < 3; count++) //実際は3000回
+  for (int count = 0; count < 1; count++) //実際は3000回
   {
     func_num = 2;
     array_all_copy(x_sort, x);
@@ -287,17 +276,16 @@ int main()
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
         df.push_back(abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num)));
-        // add archive
-        cout << int(archive.size());
-        if (int(archive.size()) > m){
-          archive.pop_back();
-        }
-        archive.push_back(vector<double>(dim));
-        for (int k = 0; k < dim; ++k)
-        {
-          archive[int(archive.size()) - 1][k] = x[i][k];
-        }
-        random_shuffle(archive.begin(), archive.end());
+        // // add archive
+        // archive.push_back(vector<double>(dim));
+        // if (int(archive.size()) > m && !archive.empty()){
+        //   archive.pop_back();
+        // }
+        // for (int k = 0; k < dim; ++k)
+        // {
+        //   archive[int(archive.size()) - 1][k] = x[i][k];
+        // }
+        // random_shuffle(archive.begin(), archive.end());
       }else{
         array_copy(x_new, i, x, i);
         // printf("%lf", bench_mark(x, i, func_num) );
@@ -329,16 +317,12 @@ int main()
     sf.clear();
     scr.clear();
     df.clear();
-  //     for (int i = 0; i < m; ++i)
+  }
+  //デバッグ用
+  // for (int i = 0; i < m; ++i)
   // {
   //   printf("%lf\n", bench_mark(x, i, func_num) );
   // }
-  }
-  //デバッグ用
-  for (int i = 0; i < m; ++i)
-  {
-    printf("%lf\n", bench_mark(x, i, func_num) );
-  }
 
   free(x);
   free(f);
