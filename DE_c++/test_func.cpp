@@ -1,6 +1,6 @@
 /*
-  CEC13 Test Function Suite 
-  Jane Jing Liang (email: liangjing@zzu.edu.cn) 
+  CEC13 Test Function Suite
+  Jane Jing Liang (email: liangjing@zzu.edu.cn)
   Last Modified on 14th Feb. 2013
 */
 
@@ -18,7 +18,7 @@
 #define E  2.7182818284590452353602874713526625
 #define PI 3.1415926535897932384626433832795029
 
-
+using namespace std;
 void sphere_func (double *, double *, int , double *,double *, int); /* Sphere */
 void ellips_func(double *, double *, int , double *,double *, int); /* Ellipsoidal */
 void bent_cigar_func(double *, double *, int , double *,double *, int); /* Discus */

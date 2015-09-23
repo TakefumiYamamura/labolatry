@@ -7,6 +7,7 @@
 #include <random>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 void test_func(double *, double *, int, int, int);
@@ -14,14 +15,14 @@ void test_func(double *, double *, int, int, int);
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag = 0, n_flag, func_flag;
 int m = 100;
-int dim = 30;
+int dim = 10;
 double fv[2];
 
 double randc(double f){
-  std::random_device seed_gen;
-  std::default_random_engine engine(seed_gen());
+  random_device seed_gen;
+  default_random_engine engine(seed_gen());
   // 位置母数0.0、尺度母数1.0で分布させる
-  std::cauchy_distribution<> dist(f, 0.1);
+  cauchy_distribution<> dist(f, 0.1);
   // コーシー分布で乱数を生成する
   double result;
   do{
@@ -34,10 +35,10 @@ double randc(double f){
 }
 
 double randn(double cr){
-  std::random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
-  std::mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
+  random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
+  mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
   // //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
-  std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
+  normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
   return norm(mt);
   //std::cout << rand100(mt) << "\n";
 }
@@ -70,12 +71,11 @@ void array_all_copy(double** to_array, double** resource_array){
   }
 }
 
-void make_random_num(int n, int *r1, int *r2, int *r3){
+void make_random_num(int n, int *r1, int *r2, int archive_size){
   do {
     *r1 = rand() % n;
-    *r2 = rand() % n;
-    *r3 = rand() % n;
-  } while ((*r1 == *r2) || (*r2 == *r3) || (*r3 == *r1));
+    *r2 = rand() % (n + archive_size);
+  } while (*r1 == *r2);
 }
 
 double randp(){
@@ -107,6 +107,7 @@ void sort_by_func(double **x, int func_num){
       }
     }
   }
+  // cout << bench_mark(x, i, func_num);
 }
 
 void selectxp(double ** x, double * xp){
@@ -117,14 +118,32 @@ void selectxp(double ** x, double * xp){
   }
 }
 
-void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf, double** x_sort){
+void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf, double** x_sort, vector<vector<double> >& archive){
   int r1, r2, r3;
   cr[i] = randn(mcr[i]);
   f[i] = randc(mf[i]);
-  make_random_num(dim, &r1, &r2, &r3);
   double *xp;
   xp = (double *)malloc(dim*sizeof(double));
   selectxp(x_sort, xp);
+  if( r2 < dim ){
+    for (int j = 0; j < dim; ++j)
+    {
+      // make_random_num(100, &r1, &r2, &r3);
+      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
+      v[i][j] = x[i][j] + f[i] * (x[r2][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
+      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
+      // printf("%d %d %d\n", r1, r2,r3);
+    }
+  }else{
+    for (int j = 0; j < dim; ++j)
+    {
+      // make_random_num(100, &r1, &r2, &r3);
+      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
+      v[i][j] = x[i][j] + f[i] * (archive[r2 - dim][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
+      // printf("%lf  %lf ", x[r2][j], x[r3][j]);
+      // printf("%d %d %d\n", r1, r2,r3);
+    }
+  }
   for (int j = 0; j < dim; ++j)
   {
     // make_random_num(100, &r1, &r2, &r3);
@@ -200,7 +219,7 @@ int main()
   int k = 0;
 
   //初期化100*30(次元数)のベクトル作成
-  fpt=fopen("input_data/M_D30.txt","r");
+  fpt=fopen("input_data/shift_data.txt","r");
   if (fpt==NULL)
   {
     printf("\n Error: Cannot open input file for reading \n");
@@ -236,9 +255,10 @@ int main()
     }
   }
   fclose(fpt);
-  for (int count = 0; count < 300; count++)
+  vector< vector<double> > archive;
+  for (int count = 0; count < 3; count++) //実際は3000回
   {
-    func_num = 1;
+    func_num = 2;
     array_all_copy(x_sort, x);
     sort_by_func(x_sort, func_num);
 //デバッグ用
@@ -249,7 +269,7 @@ int main()
 
     for (int i = 0; i < m; ++i)
     {
-      generate_mutant_vector(x, v, i, cr, f, mcr, mf, x_sort);
+      generate_mutant_vector(x, v, i, cr, f, mcr, mf, x_sort, archive);
     }
     int j_rand = rand()%dim ;
     for (int i = 0; i < m; ++i)
@@ -260,9 +280,6 @@ int main()
     vector<double> sf;
     vector<double> df;
     vector<double> w;
-    // scr.reserve(m);
-    // sf.reserve(m);
-    // w.reserve(m);
     for (int i = 0; i < m; ++i)
     {
       if (bench_mark(u, i, func_num) < bench_mark(x, i, func_num) ){
@@ -270,9 +287,17 @@ int main()
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
         df.push_back(abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num)));
-        // printf("%lf", bench_mark(u, i, func_num) );
-        // printf(" %lf\n", bench_mark(x, i, func_num) );
-        //アーカイブ関連のことやるべし
+        // add archive
+        cout << int(archive.size());
+        if (int(archive.size()) > m){
+          archive.pop_back();
+        }
+        archive.push_back(vector<double>(dim));
+        for (int k = 0; k < dim; ++k)
+        {
+          archive[int(archive.size()) - 1][k] = x[i][k];
+        }
+        random_shuffle(archive.begin(), archive.end());
       }else{
         array_copy(x_new, i, x, i);
         // printf("%lf", bench_mark(x, i, func_num) );
