@@ -37,15 +37,13 @@ double randc(double f){
 double randn(double cr){
   random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
   mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
-  // //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
-
+  //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
   std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
   double result;
   result = norm(mt);
   if (result > 1.0) result = 1.0;
   if (result < 0.0) result = 0.0;
-  return result
-  //std::cout << rand100(mt) << "\n";
+  return result;
 }
 
 double bench_mark(double **x, int i, int func_num){
@@ -112,7 +110,6 @@ void sort_by_func(double **x, int func_num){
       }
     }
   }
-  // cout << bench_mark(x, i, func_num);
 }
 
 void selectxp(double ** x, double * xp){
@@ -130,20 +127,16 @@ void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f
   double *xp;
   xp = (double *)malloc(dim*sizeof(double));
   selectxp(x_sort, xp);
-  r1 = 1;
-  r2 = 2;
-  // cout << (int)(archive.size()) << endl;
-  // make_random_num(m, &r1, &r2, int(archive.size()));
-  if( r2 < dim ){
+  make_random_num(m, &r1, &r2, int(archive.size()));
+  if( r2 < m ){
     for (int j = 0; j < dim; ++j)
     {
       v[i][j] = x[i][j] + f[i] * (x[r2][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
-      // cout << v[i][j] << endl;
     }
   }else{
     for (int j = 0; j < dim; ++j)
     {
-      v[i][j] = x[i][j] + f[i] * (archive[r2 - dim][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
+      v[i][j] = x[i][j] + f[i] * (archive[r2 - m][j] - x[r3][j]) + f[i]* (xp[j] - x[i][j]);
     }
   }
   free(xp);
@@ -154,24 +147,13 @@ void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, d
   for (int t = 0; t < dim; ++t)
   {
     if ( ((double)rand()/((double)RAND_MAX+1) < cr[i]) || i == j_rand){
-      // array_copy(u, i, v, i);
       u[i][t] = v[i][t];
     }else{
-      // array_copy(u, i, x, i);
       u[i][t] = x[i][t];
     }
   }
 }
 
-// void make_df(double* df, double** u, double** x, int func_num){
-//   for (int i = 0; i < m; ++i)
-//   {
-//     //ここが0になっちゃだめ
-//     df[i] = abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num));
-//     // cout << df[i] << endl;
-//   }
-// }
-//const をつけると破壊的操作を防げる
 void make_w(vector<double>& w, vector<double>& df ){
   double sum = 0;
   for (int i = 0; i < int(df.size()); ++i)
@@ -198,7 +180,6 @@ void update_mf(double* mf, vector<double>& sf, vector<double>& w, int index){
   double sum1 = 0;
   double sum2 = 0;
   if (int(sf.size()) != 0){
-        // cout << int(sf.size());
     mf[index] = 0;
     for (int i = 0; i < int(sf.size()); ++i)
     {
@@ -213,15 +194,13 @@ int main()
 {
   int i, j,  func_num;
   double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf;
-  FILE *fpt;
   int k = 0;
-
   //初期化100*30(次元数)のベクトル作成
-  fpt=fopen("input_data/shift_data.txt","r");
-  if (fpt==NULL)
-  {
-    printf("\n Error: Cannot open input file for reading \n");
-  }
+  // fpt=fopen("input_data/shift_data.txt","r");
+  // if (fpt==NULL)
+  // {
+  //   printf("\n Error: Cannot open input file for reading \n");
+  // }
   x=(double **)malloc(m*sizeof(double*));
   x_sort=(double **)malloc(m*sizeof(double*));
   u=(double **)malloc(m*sizeof(double*));
@@ -238,8 +217,8 @@ int main()
     mf[i] = 0.5;
   }
 
-  if (x==NULL)
-    printf("\nError: there is insufficient memory available!\n");
+  // if (x==NULL)
+    // printf("\nError: there is insufficient memory available!\n");
   for(i=0;i<m;i++)
   {
     x[i] = (double *)malloc(dim*sizeof(double));
@@ -253,7 +232,7 @@ int main()
       x[i][j] = (double)rand()/((double)RAND_MAX+1) * 100 - 50.0;
     }
   }
-  fclose(fpt);
+  // fclose(fpt);
 
   vector< vector<double> > archive;
   for (int count = 0; count < 3000; count++)
@@ -261,11 +240,6 @@ int main()
     func_num = 11;
     array_all_copy(x_sort, x);
     sort_by_func(x_sort, func_num);
-//デバッグ用
-    // for (int i = 0; i < m; ++i)
-    // {
-    //   printf("%lf\n", bench_mark(x, i, func_num) );
-    // }
 
     for (int i = 0; i < m; ++i)
     {
@@ -299,16 +273,12 @@ int main()
         random_shuffle(archive.begin(), archive.end());
       }else{
         array_copy(x_new, i, x, i);
-        // printf("%lf", bench_mark(x, i, func_num) );
-        // printf(" %lf\n", bench_mark(u, i, func_num) );
       }
     }
     array_all_copy(x, x_new);
     if (k == m){
       k = 0;
     }
-    //update_mcr
-    // make_df(df, v, x, func_num);//まずdfを計算
     make_w(w, df);
     update_mcr(mcr, scr, w, k);
     update_mf(mf, sf, w, k);
