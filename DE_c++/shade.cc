@@ -38,6 +38,10 @@ double randn(double cr){
   std::mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
   // //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
   std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
+  double result;
+  result = norm(mt);
+  if (result > 1.0) result = 1.0;
+  if (result < 0.0) result = 0.0;
   return norm(mt);
   //std::cout << rand100(mt) << "\n";
 }
@@ -138,13 +142,17 @@ void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f
 
 void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, double*cr){
   //0~1の一様乱数作り方 (double)rand()/((double)RAND_MAX+1)
-  if ( ((double)rand()/((double)RAND_MAX+1) < cr[i]) || i == j_rand){
-    array_copy(u, i, v, i);
-  }else{
-    array_copy(u, i, x, i);
+  for (int t = 0; t < dim; ++t)
+  {
+    if ( ((double)rand()/((double)RAND_MAX+1) < cr[i]) || i == j_rand){
+      // array_copy(u, i, v, i);
+      u[i][t] = v[i][t];
+    }else{
+      // array_copy(u, i, x, i);
+      u[i][t] = x[i][t];
+    }
   }
 }
-
 
 // void make_df(double* df, double** u, double** x, int func_num){
 //   for (int i = 0; i < m; ++i)
@@ -200,7 +208,7 @@ int main()
   int k = 0;
 
   //初期化100*30(次元数)のベクトル作成
-  fpt=fopen("input_data/M_D30.txt","r");
+  fpt=fopen("input_data/shift_data.txt","r");
   if (fpt==NULL)
   {
     printf("\n Error: Cannot open input file for reading \n");
@@ -232,13 +240,14 @@ int main()
     x_new[i] = (double *)malloc(dim*sizeof(double));
     for (int j = 0; j < dim ; ++j)
     {
-      fscanf(fpt,"%lf",&x[i][j]);
+      // fscanf(fpt,"%lf",&x[i][j]);
+      x[i][j] = (double)rand()/((double)RAND_MAX+1) * 100 - 50.0;
     }
   }
   fclose(fpt);
-  for (int count = 0; count < 300; count++)
+  for (int count = 0; count < 3000; count++)
   {
-    func_num = 1;
+    func_num = 11;
     array_all_copy(x_sort, x);
     sort_by_func(x_sort, func_num);
 //デバッグ用
@@ -306,14 +315,23 @@ int main()
     df.clear();
   //     for (int i = 0; i < m; ++i)
   // {
-  //   printf("%lf\n", bench_mark(x, i, func_num) );
+  //   printf("%lf %lf %lf\n", cr[i], f[i], bench_mark(x, i, func_num) );
   // }
+    for (int i = 0; i < m; ++i)
+    {
+      for (int j = 0; j < dim; ++j)
+      {
+        cout << x[i][j] << " ";
+      }
+      cout << endl;
+       printf("%lf\n", bench_mark(x, i, func_num) );
+    }
   }
   //デバッグ用
-  for (int i = 0; i < m; ++i)
-  {
-    printf("%lf\n", bench_mark(x, i, func_num) );
-  }
+  // for (int i = 0; i < m; ++i)
+  // {
+  //   printf("%lf\n", bench_mark(x, i, func_num) );
+  // }
 
   free(x);
   free(f);
