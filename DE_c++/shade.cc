@@ -21,9 +21,7 @@ double fv[2];
 double randc(double f){
   random_device seed_gen;
   default_random_engine engine(seed_gen());
-  // 位置母数0.0、尺度母数1.0で分布させる
   cauchy_distribution<> dist(f, 0.1);
-  // コーシー分布で乱数を生成する
   double result;
   do{
     result = dist(engine);
@@ -35,10 +33,9 @@ double randc(double f){
 }
 
 double randn(double cr){
-  random_device rnd;     // 非決定的な乱数生成器でシード生成機を生成
-  mt19937 mt(rnd()); //  メルセンヌツイスターの32ビット版、引数は初期シード
-  //std::uniform_int_distribution<> rand100(0, 99);     // [0, 99] 範囲の一様乱数
-  std::normal_distribution<> norm(cr, 0.1);       // 平均0.5, 分散値0.1の正規分布
+  random_device rnd;
+  mt19937 mt(rnd());
+  std::normal_distribution<> norm(cr, 0.1);
   double result;
   result = norm(mt);
   if (result > 1.0) result = 1.0;
@@ -143,7 +140,6 @@ void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f
 }
 
 void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, double*cr){
-  //0~1の一様乱数作り方 (double)rand()/((double)RAND_MAX+1)
   for (int t = 0; t < dim; ++t)
   {
     if ( ((double)rand()/((double)RAND_MAX+1) < cr[i]) || i == j_rand){
@@ -195,12 +191,6 @@ int main()
   int i, j,  func_num;
   double **x, **x_sort, **u, **v, **x_new, *cr, *f, *mcr, *mf;
   int k = 0;
-  //初期化100*30(次元数)のベクトル作成
-  // fpt=fopen("input_data/shift_data.txt","r");
-  // if (fpt==NULL)
-  // {
-  //   printf("\n Error: Cannot open input file for reading \n");
-  // }
   x=(double **)malloc(m*sizeof(double*));
   x_sort=(double **)malloc(m*sizeof(double*));
   u=(double **)malloc(m*sizeof(double*));
@@ -217,8 +207,6 @@ int main()
     mf[i] = 0.5;
   }
 
-  // if (x==NULL)
-    // printf("\nError: there is insufficient memory available!\n");
   for(i=0;i<m;i++)
   {
     x[i] = (double *)malloc(dim*sizeof(double));
@@ -228,11 +216,9 @@ int main()
     x_new[i] = (double *)malloc(dim*sizeof(double));
     for (int j = 0; j < dim ; ++j)
     {
-      // fscanf(fpt,"%lf",&x[i][j]);
       x[i][j] = (double)rand()/((double)RAND_MAX+1) * 100 - 50.0;
     }
   }
-  // fclose(fpt);
 
   vector< vector<double> > archive;
   for (int count = 0; count < 3000; count++)
@@ -261,7 +247,6 @@ int main()
         sf.push_back(f[i]);
         scr.push_back(cr[i]);
         df.push_back(abs(bench_mark(u, i, func_num) - bench_mark(x, i, func_num)));
-        // add archive
         archive.push_back(vector<double>(dim));
         if (int(archive.size()) > m && !archive.empty()){
           archive.pop_back();
@@ -308,4 +293,3 @@ int main()
   free(OShift);
   free(x_bound);
 }
-//memcopy
