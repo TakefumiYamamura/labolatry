@@ -223,7 +223,7 @@ int main()
   vector< vector<double> > archive;
   for (int count = 0; count < 3000; count++)
   {
-    func_num = 1;
+    func_num = 11;
     array_all_copy(x_sort, x);
     sort_by_func(x_sort, func_num);
 
@@ -272,9 +272,9 @@ int main()
     {
       for (int j = 0; j < dim; ++j)
       {
-        // cout << x[i][j] << " ";
+        cout << x[i][j] << " ";
       }
-      // cout << endl;
+      cout << endl;
        printf("%lf\n", bench_mark(x, i, func_num) );
     }
 
