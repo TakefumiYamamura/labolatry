@@ -1,0 +1,709 @@
+\documentclass{jpnsec2e}
+
+\usepackage{graphics}
+\usepackage{fancybox}
+\usepackage{comment}
+
+%%%%% LaTeXなどのロゴの定義
+\makeatletter
+\catcode`\@=11
+\font\eightsy=cmsy8
+\def\AMSTeX{\leavevmode
+\hbox{$\scriptstyle\cal A$}\kern-.25em
+ \lower.4ex\hbox{\eightsy M}\kern-.1em{$\cal S$}-\TeX}
+\catcode`\@=\active
+\def\LaTeX{{\rm L\kern-.36em\raise.3ex\hbox{$\scriptstyle {\rm A}$}\kern-.15em
+ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\def\JTeX{\leavevmode\lower.5ex\hbox{J}\kern-.17em\TeX}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em%
+ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\def\StyleFile{{\tt jpnsec2e.cls}}\tt
+\def\JBibTeX{\leavevmode\lower .6ex\hbox{J}\kern-0.15em\BibTeX}
+\def\LaTeXe{\LaTeX\kern.15em2$_{\textstyle\varepsilon}$}
+\def\Stylefile2e{{\tt jpnsec2e.cls}}
+\makeatother
+
+%%%%% その他のマクロ
+\verbatimbaselineskip.5\baselineskip
+\def\verbatimsize{\small}%%{\normalsize}
+\def\tbs{{\tt \char'134}} % \
+\def\tob{{\tt \char'173}} % {
+\def\tcb{{\tt \char'175}} % }
+\newcommand{\bsl}[1]{{$\mathtt{\backslash}$}\texttt{#1}}
+\newcommand{\ltt}[1]{\texttt{\small{}#1}}
+
+\newenvironment{verbfbox}%
+{\VerbatimEnvironment%
+\begin{Sbox}\begin{minipage}{79mm}\footnotesize\begin{Verbatim}}%
+{\end{Verbatim}\end{minipage}\end{Sbox}
+\cornersize*{3mm}\setlength{\fboxsep}{1mm}\par\noindent\ovalbox{\TheSbox}}
+
+\newenvironment{verbFbox}%
+{\VerbatimEnvironment%
+\begin{Sbox}\begin{minipage}{77mm}\small\begin{Verbatim}}%
+{\end{Verbatim}\end{minipage}\end{Sbox}%
+\setlength{\fboxsep}{1.4mm}\par\noindent\doublebox{\TheSbox}\par}
+
+\raggedbottom
+\pagestyle{plain}
+
+\jtitle{進化計算学会\LaTeX{}スタイルファイルの使い方}
+\etitle{How to Use \LaTeX{} Style Files}
+
+\author{%
+\name{}{}{}
+\affiliation{進化計算学会編集委員会}%
+{Editorial Board, Japanese Society for Evolutionary Computation}%
+{editor@jpnsec.org,
+http://www.jpnsec.org/journal.html}
+}
+
+\rm
+\begin{summary}
+This is a guide to the style files 
+for the Journal of Japanese Society for Evolutionary Computation. 
+\end{summary}
+
+\begin{document}
+\maketitle
+
+\section{はじめに}\label{sec:intro}
+
+このスタイルファイルは，進化計算学会論文誌の原
+稿を作成するためのものです．
+アスキー版日本語 p\TeX{}のVersion p2.1.5以降を対象としています．
+
+
+このスタイルファイルは，本誌の組版体裁にしたがって調整されているので，
+スタイルファイルの変更は一切しないでください．
+
+本誌で使われる\LaTeXe 用のクラスファイルとテンプレートは，次のとおりです．
+\medskip
+
+{\small
+\begin{tabular}{ll}
+\hline
+\ltt{jpnsecart.cls}    & 論文用クラスファイル\\
+\ltt{jpnsec2e.cls}     & 補助クラスファイル\\
+\ltt{jpnsec.bst}     　& 参考文献用クラスファイル\\
+\ltt{profile-2e.sty}   & 著者紹介用クラスファイル\\\hline
+\ltt{template-j.tex} 　& 日本語論文用テンプレート\\
+\ltt{template-e.tex}   & 英語論文用テンプレート\\\hline
+\end{tabular}
+}
+\medskip
+
+論文用クラスファイル\ltt{jpnsecart.cls} と補助クラスファイル\ltt{jpnsec2e.cls}は同じ場所においてください．
+
+
+\ref{japanese}と\ref{english}では，それぞれ
+日本語の原稿，英語の原稿についての書式と注意事項を述べます．
+\ref{sec:generalnote} では，句読点，脚注，相互参照，拡張マクロについ
+ての注意事項を述べます．
+\ref{sec:figtab}では，図表の注意事項，\textsc{PostScript}ファイルの取り
+込みに関する規定などを述べます．
+\ref{sec:equation}では，数式についての注意事項を述べます．\ltt{amsmath}を用いる場合は，特に注意が必要です．
+\ref{sec:bib}では，参考文献についての注意事項を述べます．
+\ref{submit}では，採録決定後に提出するファイルについて述べます．
+
+\section{日本語の原稿について}\label{japanese}
+
+\ltt{jpnsecart.cls} を用いて，オプション(\verb|[]|内）に次の
+ことを指定してください．
+\medskip
+
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\hline
+\noalign{\vskip1mm}
+\tt{originalpaper}   & 論文（Original Paper）\\
+\tt{invitedpaper}    & 招待論文（Invited Paper）\\
+\tt{surveypaper}     & 解説（Survey Paper）\\
+
+\noalign{\vskip1mm}
+\hline
+\end{tabular}
+\end{center}
+\medskip
+\noindent
+例えば，論文であれば, 次のように指定してください．
+\begin{verbfbox}
+\documentclass[originalpaper]{jpnsecart}
+\end{verbfbox}
+\noindent
+
+\subsection{原稿の書き方}
+
+原稿の全体構成を\ref{fig:原稿構成}に示します．
+テンプレートファイル \ltt{template-j.tex} をベースに，これを編集して原稿を作成してください．
+
+\begin{figure}[p]
+\begin{verbFbox}
+\documentclass[originalpaper]{jpnsecart}
+
+\Vol{1}   %%掲載論文の巻番号；事務局が指定
+\No{1}    %%掲載論文の号番号；事務局が指定
+
+\jtitle{日本語タイトル}
+
+\etitle{英語タイトル}
+
+\author{%
+ \name{姓}{名}{ローマ字読み}
+ \affiliation{日本語所属名}{英語所属名}%
+                             {e-mail,URL}
+\and
+ \name{姓}{名}{ローマ字読み}
+ \affiliation{日本語所属名}{英語所属名}%
+                             {e-mail,URL}
+}
+
+\begin{keyword}
+keywords in English
+\end{keyword}
+
+\begin{summary}
+summary in English
+\end{summary}
+%\setcounter{page}{1}
+
+\begin{document}
+\maketitle
+\section{はじめに}
+%% 本文の内容%%
+
+\begin{acknowledgment}
+%% 謝辞の内容%%
+\end{acknowledgment}
+
+\begin{thebibliography}{??}
+\bibitem[]{}
+\bibitem[]{}
+\end{thebibliography}
+
+\appendix
+\section{付録}
+%% 付録の内容%%
+
+\begin{biography}
+\profile{会員種別}{著者名}{略歴内容}
+\end{biography}
+
+\end{document}
+\end{verbFbox}
+\caption{原稿の構成}
+\label{fig:原稿構成}
+\end{figure}
+
+\subsubsection{\texttt{jtitle}}
+日本語のタイトルを書いてください．
+タイトル中に改行（\verb|\\|）を指定すれば，タイトル中で改行できま
+すが，柱\footnote{ヘッダ．ページ上部のページ数などがある部分}
+では無視されます．長すぎて，柱に収まらない場合，
+\begin{verbfbox}
+\jtitle[柱用タイトル]{タイトル}
+\end{verbfbox}
+\noindent
+のようにすれば，柱には\verb|[]|内のものが使われます．
+
+\subsubsection{\texttt{etitle}}
+英語のタイトルを書いてください．
+前置詞，接続詞，文中冠詞などを除いて，単語の先頭文字は大文字にしてください．
+
+\subsubsection{\texttt{jsubtitle}と\texttt{esubtitle}}
+サブタイトルがある場合は，これらを用いて指定してください．
+\verb/\jsubtitle/ は日本語用，\verb/\esubtitle/ は英語用です．
+これらは柱には出力されません．
+
+\subsubsection{\texttt{author}，\texttt{name}，\texttt{affiliation}}
+
+著者の姓名，所属名などを，以下のように指定してください．名前が長い方は
+\verb/\name/の代わりに
+\verb/\longname/を使ってください．
+\begin{verbfbox}
+\author{%
+ \name{姓}{名}{ローマ字読み}
+ \affiliation{日本語所属名}{英語所属名}{e-mail,URL}
+}
+\end{verbfbox}
+
+\verb/\affiliation/ の第3引数には著者のe-mailアドレスを書き，
+ホームページがある場合には，``,''のあとにURLを書いてください．
+URL中の``\~{}'' はそのまま（エスケープしないで）記してください．
+
+著者が複数の場合，\verb|\and| を用いて，次のように書いてください．
+\begin{verbfbox}
+\author{%
+ \name{姓1}{名1}{ローマ字読み1}
+ \affiliation{日本語所属1}{英語所属1}{e-mail,URL}
+\and
+ \name{姓2}{名2}{ローマ字読み2}
+ \sameaffiliation{e-mail,URL}
+\and
+ \longname{姓3}{名3}{ローマ字読み3}
+ \affiliation{日本語所属3}{英語所属3}{e-mail,URL}
+\and
+ \longname{姓4}{名4}{ローマ字読み4}
+ \affiliation{日本語所属1}{英語所属1}{e-mail,URL}
+}
+\end{verbfbox}
+\noindent
+
+同じ所属の著者が連続する場合，\verb/\affiliation/の代わりに
+\verb/\sameaffiliation/を用いて，メールアドレスとURLだけを
+指定してください．上の例では，著者1と2は所属が同じため著者2
+は\verb/\sameaffiliation/を利用しています．
+
+
+著者4名以上の場合，\verb/\author/の前に
+\verb/\manyauthor/をおいて，著者名の行間を詰めてください．
+
+\subsubsection{\texttt{keyword}}
+
+3〜5 語の英単語を，略語や固有名詞などの場合を除いて，小文字で
+列挙してください．
+
+\subsubsection{\texttt{summary}}
+要約を200〜500 \texttt{words}の英文で書いてください．
+
+\subsubsection{document}
+
+\texttt{summary}までを記述したあとに，
+\begin{verbfbox}
+\begin{document}
+\maketitle
+\end{verbfbox}
+\noindent
+と指定してから，本文以下を書いてください．
+
+\subsubsection{\texttt{acknowledgment}}
+
+謝辞は\verb/\acknowledgment/ を用いて書いてください．
+
+\subsubsection{\texttt{thebiography}}
+
+参考文献は\verb/\bibtem/ を用いて書いてください．
+参考文献の書き方は\ref{sec:bib}を参照してください．
+
+\subsubsection{appendix}
+
+付録は\verb/\appendix/ を用いて書いてください．付録における
+\verb|\section|の番号は(A.1)，(A.2) $\cdots$ となります．
+
+\subsubsection{biography}\label{profile}
+
+著者紹介は，次のように書いてください．
+\begin{verbfbox}
+\begin{biography}
+\profile{m}{進化 太郎}
+{19xx年xx月XX大学XX学部XX学科卒業．原稿の内容（省略）}
+\end{biography}
+\end{verbfbox}
+\noindent
+第1引数には一般会員，学生会員などの会員種別を，次表にしたがって，\ltt{m}，\ltt{s}，\ltt{n}のいずれかで指定してください．
+\medskip
+
+\begin{center}
+\begin{small}
+\begin{tabular}{cll}
+\hline
+\noalign{\vskip1mm}
+指定する文字 & 日本語の場合 & \multicolumn{1}{c}{英語の場合} \\
+\noalign{\vskip1mm}
+\hline
+\noalign{\vskip1mm}
+\ltt{m} & 正会員   & Member \\
+\ltt{s} & 学生会員 & Student Member \\
+\ltt{n} & （なし） & （なし） \\
+\noalign{\vskip1mm}
+\hline
+\noalign{\vskip1mm}
+%%\multicolumn{3}{l}{\parbox[t]{20zw}{}}
+\end{tabular}
+\end{small}
+\end{center}
+\medskip
+
+第2引数の著者名は，姓と名の間を半角のスペース \verb*| |で
+区切って記してください．第3引数の略歴は，200字以内で書いてください．
+
+\subsubsection{論文受理日，担当委員}
+\verb/\received/ は， \verb/\received{2010}{4}{1}/ のように論文受理日を指定します．
+\verb/\stuffincharge/ は， \verb/\stuffincharge{進化 \hspace{0.5zh} 花子}/ \\
+のように担当委員を指定します．
+
+これらは，論文の採録決定後に事務局が指定します．
+
+\subsubsection{巻番号，号番号，ページ番号}
+\ltt{Vol} は \verb/\Vol{1}/ のように巻番号を指定します．
+\verb/\No/ は \verb/\No{1}/ のように号番号を指定します．
+\verb/\page/ は \verb/\page{1}/ のように論文のページ番号を指定します．
+
+これらは，論文の採録決定後に事務局が指定します．
+
+
+\section{英語原稿について}\label{english}
+
+英語原稿の場合は，\verb|\documentclass|の
+オプション（\verb|[]|内）を用いて，\ltt{english} を指定してください．
+\verb|\name|や\verb|\affiliatiton|の書式は，次のようになります．
+\begin{verbfbox}
+\author{%
+ \name{First Name}{Last Name}
+ \affiliatiton{英語所属名}{e-mail,URL}
+}
+\end{verbfbox}
+
+
+\section{原稿全般に関する注意事項}\label{sec:generalnote}
+\subsection{句読点}
+
+日本語の句読点はカンマ（\makebox[1zw][c]{\hbox{，}}）と
+ピリオド（\makebox[1zw][c]{\hbox{．}}）を使い，
+``\makebox[1zw][c]{\hbox{、}}'' と ``\makebox[1zw][c]{\hbox{。}}''は
+使わないでください．
+半角の句読点は，数式や英文中でのみを使い，日本語文中では全角の句
+読点を使ってください．
+
+2倍ダッシュ（ダーシ）の``\ddash''は，英文中を除いて，日本語の中では 
+\verb/\ddash/ を使ってください．
+
+\subsection{脚注}\label{sec:footnote}
+
+
+脚注マークは，カウンターが進むごとに $\ast$1，$\ast$2，$\ast$3 となります．
+
+
+\verb|\section{}| や \verb|\subsection{}| などの中では脚注は利用で
+きません．
+
+タイトル中で脚注をつける場合は，次のように手動でカウンタの値を調節
+する必要があります．
+
+
+\begin{verbfbox}
+\begin{document}
+\maketitle
+\footnotetext[1]{現職：進化計算研究所}
+\setcounter{footnote}{1}
+\end{verbfbox}
+\bsl{footnotemark[}$\langle$脚注番号$\rangle$\texttt{]}
+で番号を付けて，内容は
+\bsl{footnotetext[}$\langle$脚注番号$\rangle$\texttt{]\{}
+$\langle$脚注の内容$\rangle$\texttt{\}}
+によって記述します．そのあとにカウンタ\ltt{footnote}をタイト
+ル中で用いた最後の脚注番号にします．これらは\bsl{maketitle}の直後
+に書いてください．
+
+\subsection{相互参照}
+
+図表の相互参照は，図表環境内に\verb/\ref{fig:1}/ のように指定すれば，
+``図1''（英語では Figure~1），``表1''（英語では Table~1）と
+出力されます．
+
+数式は，\verb|\label{eq:01}| のようにラベルをつけておけば，
+\verb|\ref{eq:01}| によって参照することができます．
+参照箇所では，括弧を明示的につけなくても，(1)のように出力され
+ます．
+ただし，\ltt{amsmath}スタイルを利用する場合は，注意すべき点があるので，
+\ref{amstex}を参照してください．
+
+\def\DOT{\hbox to .5zw{\hss {\rm ・}\hss}}%
+sectionの番号を参照すると，``1章''(英語では ``Chapter~1'')，
+subsectionは``1\DOT{}1節''(英語では ``Section~1\DOT{}1'')，subsubsectionは
+``1\DOT 1\DOT 1節''(英語では``Section~1\DOT 1\DOT 1'') 
+のように，\verb|\ref|だけで``章''や``節''が補われます．
+
+その他の参照は，番号のみが出力されるので，出力結果に合わせるように
+してください．
+
+\subsection{拡張マクロ}
+
+次の拡張マクロがあります．
+\medskip
+
+\begin{center}
+\begin{small}
+\begin{tabular}{@{}ll@{}}
+\hline
+\noalign{\vskip1mm}
+\verb/\QED/ & 「証明終」の（$\Box$）\\
+\verb|\MARU{1}$\sim$\MARU{5}| & \MARU{1}$\sim$\MARU{5} \\
+\verb|\kintou{4zw}{時間}| & 均等割り付け：\kintou{3zw}{時間} \\
+\verb|\ruby{閾}{しきい}値| & ルビ：\ruby{閾}{しきい}値 \\
+\verb/\onelineskip/ & 1行アキ \\
+\verb/\halflineskip/ & 半行アキ \\
+\noalign{\vskip1mm}
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\smallskip
+通常の\LaTeX{}では，\verb|\,| や \verb|\;| は数式中でしか使えませんが，本スタイルファイルでは数式以外でも使えます．
+
+また，\verb|\section{}| や \verb|\subsection{}| 
+の中では\verb|\ % $ # _| などが使えませんが，
+次のような方法で使うことができます．
+\medskip
+
+\begin{verbfbox}
+\def\tbs{\ltt{\char'134}} % \
+\section{コマンド \texttt{\tbs \char} について}
+\end{verbfbox}
+
+\section{図表}\label{sec:figtab}
+
+図表の出力位置を指定するオプションは，\ltt{h} は使わないで，
+\ltt{t}，\ltt{b}，\ltt{tbp} などを指定して，ページの上端か下端に配
+置してください．
+表のキャプションは表の上に，図のキャプションは図の下に書いてください．
+
+キャプションの幅を図表の幅に合わせたい場合には，
+\verb|\capwidth|を使って，次のように指定してください．
+\begin{verbfbox}
+\begin{figure*}[t]
+\begin{center}
+\epsfile{file=xxxx.eps,width=90mm}
+\end{center}
+\capwidth=90mm %
+\caption{図の説明文 ... }
+\end{figure*}
+\end{verbfbox}
+
+取り込みが可能な図の形式はepsファイルのみです．
+取り込みには\ltt{graphics}パッケージまたは\ltt{eclepsf.sty}，
+\ltt{epsbox.sty}，\ltt{epsf.sty}
+スタイルファイルのいずれかを使ってください．
+これらの使い方については，\cite{latex-graphics-companion}や
+\cite{中野}を参照してください．
+
+\textsc{PostScript}ファイル中では以下の
+PSフォントのみを用いてください．
+\begin{verbfbox}
+Courier, Courier-Bold, 
+    Courier-Oblique, Courier-BoldOblique,
+Helvetica, Helvetica-Bold, 
+    Helvetica-Oblique, Helvetica-BoldOblique, 
+Times, Times-Bold, Times-Italic, Times-BoldItalic
+Symbol, ZapfDingbats,
+中ゴシックBBB, リュウミンライトKL
+\end{verbfbox}
+その他のPS，TrueTpye，OpenTypeのフォントを用いる場合は，必ずアウトライン化してください．
+
+文字を含む線画を取り込む場合，本文の文字の大きさとのバランスが取れるように，
+文字の大きさや線の太さを調整してください．
+
+\section{数式}\label{sec:equation}
+
+\subsection{独立行の数式}
+
+独立行の数式の記述には， \ltt{\$\$} ではなく，\bsl{[} や \ltt{equation}環
+境を使ってください．
+
+\StyleFile{}には \ltt{fleqn.sty} が組み込まれており，数式は
+左寄せで出力されます．
+数式は，文書の幅をはみ出しやすいので，特に注意してください．
+
+\subsection{アメリカ数学会のスタイルファイルの使用}
+\label{amstex}
+
+\ltt{amsfonts}スタイルなどを用いて，以下のフォントが利用できます．
+\begin{verbfbox}
+msam5, msam6, msam7, msam8, msam9, msam10
+msbm5, msbm6, msbm7, msbm8, msbm9, msbm10
+\end{verbfbox}
+
+\ltt{amsmath}スタイルファイルを用いる場合は
+\begin{itemize}
+\item \bsl{documentclass}のオプションに\ltt{fleqn}を指定してください
+\item 数式番号の参照は，\ltt{amsmath}の
+\bsl{eqref}を用いてください
+\end{itemize}
+
+その他，\ltt{amsmath}スタイルファイルの詳細は，
+\cite{latex-companion}や\cite{中野}を参照してください．
+
+\subsection{$\backslash$\texttt{newtheorem}について}
+
+\verb/\newtheorem/ は，本誌の体裁にしたがって調整してあります．
+日本語モード，英語モードそれぞれに，\ref{tbl:newtheorem} に示す
+ものが用意されています．
+
+\begin{table}[btp]
+\caption{$\backslash$\texttt{newtheorem}の見出し}
+\label{tbl:newtheorem}
+\resizebox{8cm}{!}{%
+\begin{tabular}{ll}
+\hline
+\bsl{newtheorem} の宣言 & 出力例 \\
+\hline
+\bsl{newtheorem\{definition\}\{定義\}} & \bf 【定義1】 \\
+\bsl{newtheorem\{definition\}\{Definition\}} & \bf [Definition 1] \\
+\hline
+\bsl{newtheorem\{theorem\}\{定理\}} & \bf ［定理1］ \\
+\bsl{newtheorem\{theorem\}\{Theorem\}} & \bf [Theorem 1] \\
+\hline
+\bsl{newtheorem\{proof\}\{証明\}} & 《証明》$^{*}$ \\
+\bsl{newtheorem\{proof\}\{Proof\}} & \bf \hbox{$\LL$}Proof\kern.25ex \hbox{$\GG$}$^{*}$ \\
+\hline
+\bsl{newtheorem\{lemma\}\{補題\}} & \bf ［補題1］ \\
+\bsl{newtheorem\{lemma\}\{Lemma\}} & \bf [Lemma 1] \\
+\hline
+\bsl{newtheorem\{corollary\}\{系\}} & \bf （系1） \\
+\bsl{newtheorem\{corollary\}\{Corollary\}} & \bf (Corollary 1) \\
+\hline
+\bsl{newtheorem\{example\}\{例\}} & 〔例1〕 \\
+\bsl{newtheorem\{example\}\{Example\}} & \bf [Example 1] \\
+\hline
+\bsl{newtheorem\{proposition\}\{命題\}} & 〈命題1〉 \\
+\bsl{newtheorem\{proposition\}\{Proposition\}} & 
+\bf \hbox{$\langle$}Proposition 1\hbox{$\rangle$} \\
+\hline
+\bsl{newtheorem\{assumption\}\{仮定\}} & \bf ［仮定1］ \\
+\bsl{newtheorem\{assumption\}\{Assumption\}} & \bf [Assumption 1] \\
+\hline
+\multicolumn{2}{l}{$^{*}$ 番号が付きません．}
+\end{tabular}}
+\end{table}
+
+\section{参考文献}\label{sec:bib}
+
+\subsection{\BibTeX{}を使わない場合}\label{not-bib}
+
+本誌の \verb/\bibitem/ の記述は以下のとおりです．
+\begin{verbfbox}
+\bibitem[Deb 02]{ec:02} K. Deb, S. Pratap, ...
+\end{verbfbox}
+
+掲載順は，和文・英文の文献を含めて，アルファベット順としてください．
+
+引用は[Goldberg 89]のように著者名と年の間に空白を入れてください．
+文献を複数引用する場合は，[Goldberg 89, Deb 02]のようにまとめてください．
+
+\subsection{\BibTeX{}を使う場合}\label{on-bib}
+
+\BibTeX{}用のスタイルファイルを使う場合は
+一緒に配布される専用のスタイルファイル\ltt{jpnsec.bst}を使ってください．
+
+参考文献の所定の箇所に次のように指定してください．
+\begin{verbfbox}
+\bibliography{btxsample} %% .bibファイル名
+\bibliographystyle{jpnsec} %% jpnsec.bst スタイルの指定
+\end{verbfbox}
+
+
+データベース\ltt{.bib}ファイルの例を\ref{fig:bibsample}に示しま
+す．
+
+
+\begin{figure}[btp]
+\begin{verbFbox}
+
+@Book{goldberg:89,
+  author = "D. E. Goldberg",
+  title = "Genetic Algorithms in Search,
+  Optimization and Machine Learning",
+  publisher = "Addison-Wesley Publishing
+  Company Inc",
+  year = 1989
+}
+
+@Article{ec:02,
+  author = "K. Deb, S. Pratap, S. Agawal,
+  and T. Meyarivan",
+  title = "A Fast Elitist Multi-objective
+  Genetic Algorithm: NSGA-II",
+  journal = "IEEE Trans. on Evolutionary
+  Computation",
+  year = 2002,
+  volume = 6,
+  number = 2,
+  pages = "181--197"
+}
+
+@InProceedings{ppsn:04,
+  author = "N. Hansen S. Kern",
+  title = "Evaluating the CMA Evolution
+  Strategy on Multimodal Test Function",
+  booktitle = "Proc. of the 8th Int. Conf.
+  on Parallel Problem Solving form Nature
+  (PPSN VIII)",
+  year = 2004,
+  pages = "282--291"
+}
+
+@Book{iba:05,
+  author = "伊庭 斉志",
+  title = "進化論的計算手法",
+  publisher = "オーム社",
+  year = 2005
+}
+
+@Article{jsai:09,
+  author = "小林 重信",
+  title = "実数値GAのフロンティア",
+  yomi = "Kobayashi",
+  journal = "人工知能学会論文誌",
+  year = 2009,
+  volume = 24,
+  number = 1,
+  pages = "147--162",
+}
+
+\end{verbFbox}
+\caption{\ltt{.bib}ファイルの例}
+\label{fig:bibsample}
+\end{figure}
+
+
+詳しくは\BibTeX{}や，\JBibTeX{}のドキュメント\cite{松井,btxhak}を
+参照してください．
+
+\section{採録決定後のファイルの提出について}\label{submit}
+
+投稿時の原稿およびファイルの提出については「原稿執筆案内」を参照してください．
+ここでは，採録決定後にファイルを提出するの際の留意点を述べます．
+
+\begin{itemize}
+\item
+原稿の \TeX{} ファイルは，メインのファイルにインクルードまたは
+インプットするのではなく，必ず一本のファイルにまとめてください．
+\item
+著者独自のマクロなど，コンパイルに必要なソースは必ず添付してください．
+\item
+一般サイトにない特殊なパッケージを使ったときは，必ずスタイルファイルを添付してください．
+ただし，最終組版の段階でそれらパッケージが使えない場合もあることをご承知おきください．
+\item
+図の ps および eps ファイル，\BibTeX{}の生成する bbl ファイル
+も必ず添付してください．
+\item
+原稿全体をフォーマットしたのちPDFファイルに変換したものを添付して
+ください．
+\end{itemize}
+
+\bibliography{btxsample}
+\bibliographystyle{jpnsec}
+
+\appendix
+
+
+\section{\texttt{profile-2e.sty}について}
+
+\ltt{profile-2e.sty} は最終組版作成のため事務局側が用いるものですが，
+参考のために，説明しておきます．
+これは，著者紹介に写真を取り込むためのスタイルファイルで，
+\bsl{usepackage} によって \ltt{graphicx} パッケージと共に用いると，
+\bsl{profile} に写真を取り込む引数が追加されます．
+次のように記述すると， 
+\begin{verbfbox}
+\begin{biography}
+\profile{m}{進化 太郎}{著者の略歴}{portrait}
+\end{biography}
+\end{verbfbox}
+\ltt{portrait.eps}（拡張子は小文字）という
+PSファイルが取り込まれます．\ltt{portrait}が写真のファイ
+ル名に合わせて変更されます．写真の比率は縦：横が $6:5$ です．
+
+
+\end{document}

@@ -1,0 +1,118 @@
+%% 和文論文用のテンプレート
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 以下のうち，対応する一つのみコメント ('%') を外してください．
+\documentclass[originalpaper]{jpnsecart}      % 論文 Original Paper
+% \documentclass[invitedpaper]{jpnsecart}      % 招待論文 Invited Paper
+% \documentclass[surveypaper]{jpnsecart}       % 解説 Survey Paper
+%\documentclass[practicalpaper]{jpnsecart}       % 事例紹介論文 Practical Application Paper
+
+%% amsmathパッケージの注意点 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackpage{amsmath}
+% 数式番号の参照は \ref ではなく，\eqref を使ってください．
+% documentclass のオプションに fleqnを指定してください．
+% 例: \documentclass[technicalpaper,fleqn]{jpnsecart}
+
+%% ページ番号，Volume，Number %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 掲載時に学会事務局が指定します．
+\received{2010}{8}{1}
+\stuffincharge{XX\hspace{0.5zh} XX}
+\setcounter{page}{1}
+%\setcounter{volpage}{1}
+\Vol{1}
+\No{1}
+
+%% タイトル %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\jtitle{適応DEにおけるアーカイブ改善}
+% \jtitle[柱用和文タイトル]{和文タイトル}
+\jsubtitle{和文サブタイトル}
+\etitle{The Improvement Of the Archive in Adaptated Differential Evolution}
+\esubtitle{英文サブタイトル}
+
+%% 著者名 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 所属先が同じ著者が連続する場合，その中の先頭の著者のみ \affiliation
+% を使って，残りの所属先には \sameaffiliation を使ってください．
+% ただし，所属先が同じでも連続していない場合は \affliation を使ってください．
+% 名前が長い場合は \name の代りに \longname を使ってください．
+% 著者が3名以下の場合は以下の \manyauthor をコメントアウトしてください．
+\manyauthor
+\author{%
+ \name{山村}{武史}{Yamamura Takefumi}
+ \affiliation{東京大学　教養学部　学際科学科総合情報学コース}%
+     {The Department of Interdisciply Sciences, The University of Tokyo}%
+     {yama1223xxx@gmail.com, http://www.ids.c.u-tokyo.ac.jp/info/}
+\and
+ \name{福永}{アレックス}{Fukunaga Alex}
+ \affiliation{東京大学大学院総合文化研究科 広域科学専攻 広域システム科学系 }%
+     { Department of General Systems Studies, Graduate School of Arts and Sciences, The University of Tokyo}%
+     {fukunaga@idea.c.u-tokyo.ac.jp, http://metahack.org/index-j.html}
+\and
+ \name{著者3姓}{名}{Auther3 Roman Name}
+ \sameaffiliation{user3@jpnsec.org, http://www.jpnsec.org/~user3/}
+\and
+ \longname{カタガナガキノ}{ナガイナガイナマエ}{VeryLong Roman Name}
+ \sameaffiliation{user4@jpnsec.org, http://www.jpnsec.org/~user4/}
+\and
+ \name{著者5姓}{名}{Auther5 Roman Name}
+ \affiliation{日本語所属名1}%
+     {Affiliation1 in English}%
+     {user5@jpnsec.org, http://www.jpnsec.org/~user5/}
+}
+
+%% Keywords, Summary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{keyword}
+Artificial Inteligence, Evolutionary Algorithm, Genetic Algorithm, Differential Evolution, Archive
+\end{keyword}
+
+\begin{summary}
+200〜500 ワード以内の英文でsummaryを書いてください．
+\end{summary}
+
+%% 本文 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\section{はじめに}
+実数値最適化問題とはD次元の実数値ベクトル$\vec{x} = (x_1, x_2, \cdots, x_D)$ が存在する時に有る評価関数${f(x)}$を最小にするような最適解$x$を求める問題である．
+Differential Evolution(DE) は主に連続最適化問題を対象としたEvolutionary Algorithm(EA)である．
+DEは単純なアルゴリズムで有るにも関わらず，優れた探索性能をもつことから様々な実問題に適用されている．
+其の探索性能は突然変異を調節するパラメーターであるスケーリングパラメーターF，交叉を調節する交叉率CRが適切であるかに大きく依存し，多くのDE手法はこのFとCRの値を調整するものが多い．
+
+DEでは大域的探索を可能にするためには，解集合における多様性が保証される必要がある．
+多様性を維持するため，突然変異において解集合と離れた位置に差分ベクトル分移動するこ
+アーカイブに劣っていた親個体を保持し，変異ベクトル作成時に使用することでその多様性を維持する．
+DEにおける
+引用の例\cite{latex,texbook}
+\section{従来の手法の問題点}
+\section{今回の改良点}
+\section{実験}
+\subsection{実験手法}
+\subsection{実験結果}
+\subsubsection{実験1}
+\subsubsection{実験2}
+\section{まとめ}
+
+\begin{acknowledgment}
+謝辞について
+\end{acknowledgment}
+
+\bibliography{btxsample}
+\bibliographystyle{jpnsec}
+
+\appendix
+
+\section{付録のタイトル1}
+
+付録の本文1
+
+\section{付録のタイトル2}
+
+付録の本文2
+
+%% 著者紹介 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 著者の姓と名の間は半角スペースで区切ってください．
+% 略歴は200字以内で書いてください．
+\begin{biography}
+\profile{m}{著者1姓 名}{著者1の略歴}
+\end{biography}
+
+\end{document}
