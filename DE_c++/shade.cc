@@ -216,7 +216,7 @@ int main()
     x_new[i] = (double *)malloc(dim*sizeof(double));
     for (int j = 0; j < dim ; ++j)
     {
-      x[i][j] = (double)rand()/((double)RAND_MAX+1) * 100 - 50.0;
+      x[i][j] = (double)rand()/((double)RAND_MAX) * 200 - 100;
     }
   }
 
