@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     for (int j = 0; j < num_runs; j++) { 
       searchAlgorithm *alg = new SHADE();
       bsf_fitness_array[j] = alg->run();
-      cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
+      // cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
     }
   
     for (int j = 0; j < num_runs; j++) {
