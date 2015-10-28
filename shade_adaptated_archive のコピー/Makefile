@@ -6,7 +6,7 @@ CC = g++
 OPTION = -O3
 
 $(TARGET): $(OBJS)
-	$(CC) -o $(TARGET) $(OBJS) $(OPTION) -lm
+	$(CC) -o $(TARGET) $(OBJS) $(OPTION) -lm 
 
 %.o: %.cc $(HEADER)
 	$(CC) $(CFLAGS) -c $<

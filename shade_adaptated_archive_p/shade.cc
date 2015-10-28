@@ -200,7 +200,7 @@ Fitness SHADE::run() {
           flag = true;
           for (int j = 0; j < problem_size; ++j)
           {
-            if (pop[i][j] < 1.5 * min_x[j] || pop[i][j] > 1.5 * max_x[j]){
+            if (pop[i][j] < 2.0 * min_x[j] || pop[i][j] > 2.0 * max_x[j]){
               flag = false;
               break;
             }

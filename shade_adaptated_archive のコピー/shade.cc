@@ -6,6 +6,8 @@
 */
 
 #include"de.h"
+#include <float.h>
+
 
 Fitness SHADE::run() {
  cout << setprecision(16);
@@ -18,6 +20,17 @@ Fitness SHADE::run() {
   vector <Fitness> fitness(pop_size, 0);
 
   vector <Individual> children;
+  vector <variable> max_x;
+  vector <variable> min_x;
+  // variable *max_x, *min_x;
+  // max_x =(variable *)malloc(problem_size * sizeof(variable*));
+  // min_x =(variable *)malloc(problem_size * sizeof(variable*));
+  for (int j = 0; j < problem_size; ++j)
+  {
+    max_x.push_back(-DBL_MAX);
+    min_x.push_back(DBL_MAX);
+    // std::cout << max_x[j] << " ";
+  }
   vector <Fitness> children_fitness(pop_size, 0);
 
   //initialize population
@@ -44,13 +57,11 @@ Fitness SHADE::run() {
 
   //External archive
   int arc_ind_count = 0;
-  double convergence_parameter = 0.0;
-  int update_count = 0;
   int random_selected_arc_ind;
   vector <Individual> archive;
-  for (int i = 0; i < arc_size; i++) {
-    archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
-  }
+  // for (int i = 0; i < arc_size; i++) {
+  //   archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
+  // }
 
   // the contents of M_f and M_cr are all initialiezed 0.5
   vector <variable> memory_sf(memory_size, 0.5);
@@ -87,8 +98,6 @@ Fitness SHADE::run() {
 
   //main loop
   while (nfe < max_num_evaluations) {
-    convergence_parameter = update_count*1.0 / pop_size;
-    update_count = 0;
     for (int i = 0; i < pop_size; i++) sorted_array[i] = i;
     for (int i = 0; i < pop_size; i++)  temp_fit[i] = fitness[i];
     sortIndexWithQuickSort(&temp_fit[0], 0, pop_size - 1, sorted_array);
@@ -124,11 +133,23 @@ Fitness SHADE::run() {
       //p-best individual is randomly selected from the top pop_size *  p_i members
       p_best_ind = sorted_array[rand() % p_num];
 
-      operateCurrentToPBest1BinWithArchive(pop, &children[target][0], target, p_best_ind, pop_sf[target], pop_cr[target], archive, arc_ind_count, convergence_parameter);
+      operateCurrentToPBest1BinWithArchive(pop, &children[target][0], target, p_best_ind, pop_sf[target], pop_cr[target], archive, arc_ind_count);
     }
 
     // evaluate the children's fitness values
     evaluatePopulation(children, children_fitness);
+
+    for(int i = 0; i < pop_size; i++){
+      for (int k = 0; k < problem_size; ++k)
+      {
+        if(children[i][k] < min_x[i]){
+          min_x[k] = children[i][k];
+        }
+        if(children[i][k] > max_x[i]){
+          max_x[k] = children[i][k];
+        }
+      }
+    }
 
     /////////////////////////////////////////////////////////////////////////
     //update the bsf-solution and check the current number of fitness evaluations
@@ -141,23 +162,23 @@ Fitness SHADE::run() {
       //if the gap between the error values of the best solution found and the optimal solution was 10^{−8} or smaller,
       //the error was treated as 0
       if ((children_fitness[i] - optimum) < epsilon) {
-	children_fitness[i] = optimum;
+        children_fitness[i] = optimum;
       }
 
       if (children_fitness[i] < bsf_fitness) {
-  	bsf_fitness = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  bsf_solution[j] = children[i][j];
-  	}
+        bsf_fitness = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          bsf_solution[j] = children[i][j];
+        }
       }
 
       // if (nfe % 1000 == 0) {
-      // 	//output the error value
-      // 	cout << bsf_fitness - optimum << endl;
+      //  //output the error value
+      //  cout << bsf_fitness - optimum << endl;
       // }
 
       if (nfe >= max_num_evaluations) {
-  	break;
+        break;
       }
     }
     ////////////////////////////////////////////////////////////////////////////
@@ -167,63 +188,78 @@ Fitness SHADE::run() {
     //generation alternation
     for (int i = 0; i < pop_size; i++) {
       if (children_fitness[i] == fitness[i]) {
-  	fitness[i] = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  pop[i][j] = children[i][j];
-  	}
+        fitness[i] = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          pop[i][j] = children[i][j];
+        }
       }
       else if (children_fitness[i] < fitness[i]) {
-        update_count++;
-	//parent vectors x_i which were worse than the trial vectors u_i are preserved
-	if (arc_size > 1) {
-	  if (arc_ind_count < arc_size) {
-	    for (int j = 0; j < problem_size; j++) {
-	      archive[arc_ind_count][j] = pop[i][j];
-	    }
-	    arc_ind_count++;
-	  }
-	  //Whenever the size of the archive exceeds, randomly selected elements are deleted to make space for the newly inserted elements
-	  else {
-	    random_selected_arc_ind = rand() % arc_size;
-	    for (int j = 0; j < problem_size; j++) {
-	      archive[random_selected_arc_ind][j] = pop[i][j];
-	    }
-	  }
-	}
-
-	dif_fitness.push_back(fabs(fitness[i] - children_fitness[i]));
-  	fitness[i] = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  pop[i][j] = children[i][j];
-  	}
-
-	//successful parameters are preserved in S_F and S_CR
-	success_sf.push_back(pop_sf[i]);
-	success_cr.push_back(pop_cr[i]);
-	num_success_param++;
+      //parent vectors x_i which were worse than the trial vectors u_i are preserved
+        if (arc_size > 1) {
+          bool flag;
+          flag = true;
+          for (int j = 0; j < problem_size; ++j)
+          {
+            if (pop[i][j] < min_x[j] || pop[i][j] > max_x[j]){
+              flag = false;
+              break;
+            }
+          }
+          if (flag == true){
+            archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
+            // if (arc_ind_count < arc_size) {
+            for (int j = 0; j < problem_size; j++) {
+              archive[arc_ind_count][j] = pop[i][j];
+            }
+            arc_ind_count++;
+          }
+          // archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
+          // // if (arc_ind_count < arc_size) {
+          // for (int j = 0; j < problem_size; j++) {
+          //   archive[arc_ind_count][j] = pop[i][j];
+          // }
+          // arc_ind_count++;
+          // }
+//Whenever the size of the archive exceeds, randomly selected elements are deleted to make space for the newly inserted elements
+          // else {
+          //   random_selected_arc_ind = rand() % arc_size;
+          //   for (int j = 0; j < problem_size; j++) {
+          //     archive[random_selected_arc_ind][j] = pop[i][j];
+          //   }
+          // }
+        }
+        dif_fitness.push_back(fabs(fitness[i] - children_fitness[i]));
+        fitness[i] = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          pop[i][j] = children[i][j];
+        }
+        //successful parameters are preserved in S_F and S_CR
+        success_sf.push_back(pop_sf[i]);
+        success_cr.push_back(pop_cr[i]);
+        num_success_param++;
       }
     }
   
     // if numeber of successful parameters > 0, historical memories are updated 
-    if (num_success_param > 0) {      
+    if (num_success_param > 0) {
       memory_sf[memory_pos] = 0;
       memory_cr[memory_pos] = 0;
       sum_dif_fitness = 0;
       temp_sum_sf = 0;
-     
+
       for (int i = 0; i < num_success_param; i++) {
-	sum_dif_fitness += dif_fitness[i];
+  sum_dif_fitness += dif_fitness[i];
       } 
 
-      for (int i = 0; i < num_success_param; i++) {	
-	weight = dif_fitness[i] / sum_dif_fitness;
+      for (int i = 0; i < num_success_param; i++) { 
+  weight = dif_fitness[i] / sum_dif_fitness;
 
-	//weighted lehmer mean
-	memory_sf[memory_pos] += weight * success_sf[i] * success_sf[i];
-	temp_sum_sf += weight * success_sf[i];
+  //weighted lehmer mean
+  memory_sf[memory_pos] += weight * success_sf[i] * success_sf[i];
+  temp_sum_sf += weight * success_sf[i];
 
-	//weighted arithmetic mean
-	memory_cr[memory_pos] += weight * success_cr[i];
+  //weighted arithmetic mean
+  memory_cr[memory_pos] += weight * success_cr[i];
       }
 
       memory_sf[memory_pos] /= temp_sum_sf;
@@ -242,44 +278,40 @@ Fitness SHADE::run() {
   return bsf_fitness - optimum;
 }
 
-void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count, double convergence_parameter) {
+void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count) {
   int r1, r2;
+  
+  do {
+    r1 = rand() % pop_size;
+  } while (r1 == target);
+  do {
+    r2 = rand() % (pop_size + arc_ind_count);
+  } while ((r2 == target) || (r2 == r1));
 
-  if(randDouble() < convergence_parameter && arc_ind_count != 0){
-    do {
-      r1 = rand() % pop_size;
-    } while (r1 == target);
-    do {
-      r2 = rand() % (arc_ind_count);
-    } while ((r2 == target) || (r2 == r1));
-    int random_variable = rand() % problem_size;
+  int random_variable = rand() % problem_size;
+  
+  if (r2 >= pop_size) {
+    r2 -= pop_size;
     for (int i = 0; i < problem_size; i++) {
       if ((randDouble() < cross_rate) || (i == random_variable)) {
-        child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - archive[r2][i]);
+  child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - archive[r2][i]);
       }
       else {
-        child[i] = pop[target][i];
-      }
-    }
-  }else{
-    do{
-        r1 = rand() % pop_size;
-      } while (r1 == target);
-    do {
-      r2 = rand() % (pop_size);
-    } while ((r2 == target) || (r2 == r1));
-
-    int random_variable = rand() % problem_size;
-
-    for (int i = 0; i < problem_size; i++) {
-      if ((randDouble() < cross_rate) || (i == random_variable)) {
-        child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - pop[r2][i]);
-      }
-      else {
-        child[i] = pop[target][i];
+  child[i] = pop[target][i];
       }
     }
   }
+  else {
+    for (int i = 0; i < problem_size; i++) {
+      if ((randDouble() < cross_rate) || (i == random_variable)) {
+  child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - pop[r2][i]);
+      }
+      else {
+  child[i] = pop[target][i];
+      }
+    }
+  }
+
   //If the mutant vector violates bounds, the bound handling method is applied
   modifySolutionWithParentMedium(child,  pop[target]);
 }
