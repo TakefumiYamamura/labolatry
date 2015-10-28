@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   //number of runs
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 10;
+  g_problem_size = 50;
   //available number of fitness evaluations 
   g_max_num_evaluations = g_problem_size * 10000;
 
@@ -41,14 +41,14 @@ int main(int argc, char **argv) {
   g_memory_size = 100;
   g_arc_size = g_pop_size;
   FILE *fp;
-  fp = fopen("../csvs/shade_wo_archive.csv", "w" );
-  fprintf(fp, "func_num, shade_wo_archive\n");
+  fp = fopen("../csvs/shade_wo_archive50.csv", "w" );
+  fprintf(fp, "shade_wo_archive, mean std\n");
 
   for (int i = 0; i < 28; i++) {
     g_function_number = i + 1;
     cout << "\n-------------------------------------------------------" << endl;
     cout << "Function = " << g_function_number << ", Dimension size = " << g_problem_size << "\n" << endl;
-    fprintf(fp, "%d", g_function_number);
+    // fprintf(fp, "%d", g_function_number);
 
     Fitness *bsf_fitness_array = (Fitness*)malloc(sizeof(Fitness) * num_runs);
     Fitness mean_bsf_fitness = 0;
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
     std_bsf_fitness = sqrt(std_bsf_fitness);
 
     cout  << "\nmean = " << mean_bsf_fitness << ", std = " << std_bsf_fitness << endl;
-    fprintf(fp, ",%f\n", std_bsf_fitness);
+    fprintf(fp, "%f,%f\n", mean_bsf_fitness, std_bsf_fitness);
     free(bsf_fitness_array);
   }
   fclose(fp);
