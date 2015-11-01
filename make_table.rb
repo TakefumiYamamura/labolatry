@@ -4,7 +4,7 @@ require "csv"
 
 array = []
 
-f_name1 = File.basename("DE")+".pdf"
+f_name1 = File.basename("DE_50")+".pdf"
 # headers, *scores = CSV.read('csv/data.csv')
 
 # CSV.open("active-enrollments.csv", "wb") do |csv|
@@ -84,7 +84,7 @@ end
 # p show_array
 show_array.unshift(headers.flatten)
 
-a = "適応DE性能評価 D=10"
+a = "適応DE性能評価 D=50"
 
 Prawn::Document.generate(f_name1) {
 
