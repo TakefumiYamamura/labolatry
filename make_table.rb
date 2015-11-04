@@ -1,5 +1,6 @@
-require "prawn/table"
 require "prawn"
+require "prawn/table"
+
 require "csv"
 
 array = []
