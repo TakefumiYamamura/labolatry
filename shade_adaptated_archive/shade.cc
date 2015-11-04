@@ -57,8 +57,10 @@ Fitness SHADE::run() {
 
   //External archive
   int arc_ind_count = 0;
+  int new_arc_ind_count = 0;
   int random_selected_arc_ind;
   vector <Individual> archive;
+   vector <Individual> new_archive;
   // for (int i = 0; i < arc_size; i++) {
   //   archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
   // }
@@ -196,23 +198,23 @@ Fitness SHADE::run() {
       else if (children_fitness[i] < fitness[i]) {
       //parent vectors x_i which were worse than the trial vectors u_i are preserved
         if (arc_size > 1) {
-          bool flag;
-          flag = true;
-          for (int j = 0; j < problem_size; ++j)
-          {
-            if (pop[i][j] < min_x[j] || pop[i][j] > max_x[j]){
-              flag = false;
-              break;
-            }
-          }
-          if (flag == true){
+          // bool flag;
+          // flag = true;
+          // for (int j = 0; j < problem_size; ++j)
+          // {
+          //   if (pop[i][j] < 2.0 * min_x[j] || pop[i][j] > 2.0 * max_x[j]){
+          //     flag = false;
+          //     break;
+          //   }
+          // }
+          // if (flag == true){
             archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
             // if (arc_ind_count < arc_size) {
             for (int j = 0; j < problem_size; j++) {
               archive[arc_ind_count][j] = pop[i][j];
             }
             arc_ind_count++;
-          }
+          // }
           // archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
           // // if (arc_ind_count < arc_size) {
           // for (int j = 0; j < problem_size; j++) {
@@ -239,6 +241,30 @@ Fitness SHADE::run() {
         num_success_param++;
       }
     }
+    //archive_push_back
+    new_arc_ind_count = 0;
+    new_archive.clear();
+    for (int i = 0; i < arc_ind_count; ++i)
+    {
+      bool flag;
+      flag = true;
+      for (int j = 0; j < problem_size; ++j)
+        {
+          if (archive[i][j] < min_x[j] || archive[i][j] > max_x[j]){
+            flag = false;
+            break;
+          }
+        }
+      if(flag){
+        new_archive.push_back((variable*)malloc(sizeof(variable) * problem_size));
+        for (int j = 0; j < problem_size; j++) {
+          new_archive[new_arc_ind_count][j] = pop[i][j];
+        }
+        new_arc_ind_count++;
+      }
+    }
+    arc_ind_count = new_arc_ind_count;
+    archive.swap(new_archive);
   
     // if numeber of successful parameters > 0, historical memories are updated 
     if (num_success_param > 0) {

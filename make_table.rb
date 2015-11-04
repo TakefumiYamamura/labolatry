@@ -11,7 +11,7 @@ f_name1 = File.basename("DE_50")+".pdf"
 #   csv << ["course_id", "user_name", "user_id","course_name", "status"]
 # end
 headers =[]
-Dir["csvs/*.csv"].each do |file|
+Dir["csvs_50/*.csv"].each do |file|
   header, *scores = CSV.read(file)
   headers << header[0]
   array << scores
