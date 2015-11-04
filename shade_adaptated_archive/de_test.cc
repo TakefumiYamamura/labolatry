@@ -37,11 +37,11 @@ int main(int argc, char **argv) {
   srand((unsigned)time(NULL));
 
   //SHADE parameters
-  g_pop_size = 100;
+  g_pop_size = 50;
   g_memory_size = 100;
   g_arc_size = g_pop_size;
   FILE *fp;
-  fp = fopen("../csvs/shade_adaptated_archive.csv", "w" );
+  fp = fopen("../csvs/shade_adaptated_archive_D_10_p_50.csv", "w" );
   fprintf(fp, "shade_adaptated_archive_used\n");
 
   for (int i = 0; i < 28; i++) {
