@@ -41,13 +41,8 @@ int main(int argc, char **argv) {
   g_memory_size = 100;
   g_arc_size = g_pop_size;
   FILE *fp;
-  FILE *fp2;
-  fp = fopen("../csvs/shade_adaptated_archive_kihon_p_D10_P50.csv", "w" );
-  fp2 = fopen("../csvs/shade_adaptated_archive_kihon_.csv", "w" );
-
-
-  fprintf(fp, "shade_no_limited_archive_p, mean std\n");
-  fprintf(fp2, "shade_no_limited_archive, mean std\n");
+  fp = fopen("../csvs/shade_adaptated_archive_p_D10_P50_kihon.csv", "w" );
+  fprintf(fp, "shade_no_limited_archive, mean std\n");
 
   for (int i = 0; i < 28; i++) {
     g_function_number = i + 1;
@@ -63,11 +58,9 @@ int main(int argc, char **argv) {
       searchAlgorithm *alg = new SHADE();
       bsf_fitness_array[j] = alg->run();
       // cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
-      if (j == (num_runs-1)){
-        fprintf(fp, "%f\n" ,bsf_fitness_array[i]);
-      }
-      fprintf(fp, "%f," ,bsf_fitness_array[i]);
+      fprintf(fp, "%f, ", bsf_fitness_array[j]);
     }
+    fprintf(fp, "\n");
   
     for (int j = 0; j < num_runs; j++) {
       mean_bsf_fitness += bsf_fitness_array[j];
