@@ -22,10 +22,10 @@
 \No{1}
 
 %% タイトル %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\jtitle{適応DEにおけるアーカイブ性能の解析}
+\jtitle{適応DEにおけるアーカイブ改善}
 % \jtitle[柱用和文タイトル]{和文タイトル}
 \jsubtitle{和文サブタイトル}
-\etitle{The Improvement Of the Archive in Adaptated Differential Evolution}
+\etitle{Title in English}
 \esubtitle{英文サブタイトル}
 
 %% 著者名 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,23 +37,34 @@
 \manyauthor
 \author{%
  \name{山村}{武史}{Yamamura Takefumi}
- \affiliation{東京大学　教養学部　学際科学科総合情報学コース}%
-     {The Department of Interdisciply Sciences, The University of Tokyo}%
-     {yama1223xxx@gmail.com, http://www.ids.c.u-tokyo.ac.jp/info/}
+ \affiliation{東京大学教養学部学際科学科総合情報学コース4年}%
+     {Affiliation1 in English }%
+     {user1@jpnsec.org, http://www.jpnsec.org/~user1/}
 \and
  \name{福永}{アレックス}{Fukunaga Alex}
- \affiliation{東京大学大学院総合文化研究科 広域科学専攻 広域システム科学系 }%
-     { Department of General Systems Studies, Graduate School of Arts and Sciences, The University of Tokyo}%
-     {fukunaga@idea.c.u-tokyo.ac.jp, http://metahack.org/index-j.html}
+ \affiliation{日本語所属名2}%
+     {Affiliation2 in English}%
+     {user2@jpnsec.org, http://www.jpnsec.org/~user2/}
+\and
+ \name{著者3姓}{名}{Auther3 Roman Name}
+ \sameaffiliation{user3@jpnsec.org, http://www.jpnsec.org/~user3/}
+\and
+ \longname{カタガナガキノ}{ナガイナガイナマエ}{VeryLong Roman Name}
+ \sameaffiliation{user4@jpnsec.org, http://www.jpnsec.org/~user4/}
+\and
+ \name{著者5姓}{名}{Auther5 Roman Name}
+ \affiliation{日本語所属名1}%
+     {Affiliation1 in English}%
+     {user5@jpnsec.org, http://www.jpnsec.org/~user5/}
 }
 
 %% Keywords, Summary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{keyword}
-Artificial Inteligence, Evolutionary Algorithm, Genetic Algorithm, Differential Evolution, Archive
+differential evolution, archive, 
+キーワードとして，小文字（固有名詞や略語を除く）の英単語を3〜5個記入してください．
 \end{keyword}
 
 \begin{summary}
-Differential Evolution is a simple, but effective approach for numerical optimization. This approach can find a local minimum and can solve the any numerical optimization in independent problem.
 200〜500 ワード以内の英文でsummaryを書いてください．
 \end{summary}
 
@@ -62,19 +73,8 @@ Differential Evolution is a simple, but effective approach for numerical optimiz
 \maketitle
 
 \section{はじめに}
-実数値最適化問題とはD次元の実数値ベクトル$\vec{x} = (x_1, x_2, \cdots, x_D)$ が存在する時に有る評価関数${f(x)}$を最小にするような最適解$x$を求める問題である．実数値最適化問題は多峰性，変数間依存性や悪スケール性を考慮して解候補	
-Differential Evolution(DE) は主に連続最適化問題を対象としたEvolutionary Algorithm(EA)である．
-DEは単純なアルゴリズムで有るにも関わらず，優れた探索性能をもつことから様々な実問題に適用されている．
-
-DEでは大域的探索を可能にするためには，解集合における多様性が保証するためアーカイブが用いられることが多い．アーカイブは進化計算における生存選択の際に劣った親個体を，アーカイブに保持し,差分ベクトル生成時にその劣った親個体を利用することで解探索における多様性を維持する．state of the artなDEの多くでアーカイブを使用することが多いがその実性能について厳密に議論されたことは未だ少ない．本論文ではDEにおけるアーカイブが現実でどの程度有用であるかを複数の手法を用いて検証する．
-検証すべき仮定
-アーカイブが多様性をどれだけ維持できているのか，分散をアーカイブがありとアーカイブなしで各世代ごとに比べる
-アーカイブによる解更新が起きた際は普通の突然変異のステップ幅よりも大きく，通常の突然変異より大きな変化を生じる．
-巡
-多様性を維持するため，突然変異において解集合と離れた位置に差分ベクトル分移動する
-アーカイブに劣っていた親個体を保持し，変異ベクトル作成時に使用することでその多様性を維持する．
-DEにおける可能な
-	
+Differential Evolution(DE)は実数値最適化問題を主な対象問題とする確率的探索手法である。
+引用の例\cite{latex,texbook}
 \section{従来の手法の問題点}
 \section{今回の改良点}
 \section{実験}

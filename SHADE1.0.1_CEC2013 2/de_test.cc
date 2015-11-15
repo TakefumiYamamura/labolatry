@@ -41,8 +41,8 @@ int main(int argc, char **argv) {
   g_memory_size = 100;
   g_arc_size = g_pop_size;
   FILE *fp;
-  fp = fopen("../csvs/shade_with_archive_D10_P50.csv", "w" );
-  fprintf(fp, "shade_wo_archive, mean std\n");
+  fp = fopen("../csvs_new/shade_with_archive_p_D10_P50.csv", "w" );
+  fprintf(fp, "shade_no_limited_archive, mean std\n");
 
   for (int i = 0; i < 28; i++) {
     g_function_number = i + 1;
@@ -58,7 +58,9 @@ int main(int argc, char **argv) {
       searchAlgorithm *alg = new SHADE();
       bsf_fitness_array[j] = alg->run();
       // cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
+      fprintf(fp, "%f,", bsf_fitness_array[j]);
     }
+    fprintf(fp, "\n");
   
     for (int j = 0; j < num_runs; j++) {
       mean_bsf_fitness += bsf_fitness_array[j];

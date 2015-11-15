@@ -5,7 +5,7 @@ require "csv"
 
 array = []
 
-f_name1 = File.basename("DE_50")+".pdf"
+f_name1 = File.basename("DE_p50_d10")+".pdf"
 # headers, *scores = CSV.read('csv/data.csv')
 
 # CSV.open("active-enrollments.csv", "wb") do |csv|
@@ -13,7 +13,7 @@ f_name1 = File.basename("DE_50")+".pdf"
 # end
 headers =[]
 count_mini = []
-Dir["csvs_50/*.csv"].each do |file|
+Dir["csvs_2/*.csv"].each do |file|
   header, *scores = CSV.read(file)
   headers << header[0]
   array << scores

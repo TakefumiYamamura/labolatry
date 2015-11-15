@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
       searchAlgorithm *alg = new SHADE();
       bsf_fitness_array[j] = alg->run();
       // cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
-      fprintf(fp, "%f, ", bsf_fitness_array[j]);
+      fprintf(fp, "%f,", bsf_fitness_array[j]);
     }
     fprintf(fp, "\n");
   
