@@ -49,6 +49,7 @@ int main(int argc, char **argv) {
 
 // for (int i = 0; i < 28; i++) {
   for (int i = 0; i < 1; i++) {
+    i = 9;
     g_function_number = i + 1;
     cout << "\n-------------------------------------------------------" << endl;
     cout << "Function = " << g_function_number << ", Dimension size = " << g_problem_size << "\n" << endl;
