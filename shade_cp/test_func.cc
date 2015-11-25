@@ -81,7 +81,7 @@ void test_func(double *x, double *f, int nx, int mx,int func_num)
 		fpt = fopen(FileName,"r");
 		if (fpt==NULL)
 		{
-		    printf("\n Error: Cannot open input file for reading \n");
+		    pri ntf("\n Error: Cannot open input file for reading \n");
 		}
 
 		M=(double*)malloc(cf_num*nx*nx*sizeof(double));
@@ -93,7 +93,6 @@ void test_func(double *x, double *f, int nx, int mx,int func_num)
 				//printf("M[%d] = %LE,",i+1,M[i]);
 		}
 		fclose(fpt);
-		
 
 		fpt=fopen("input_data/shift_data.txt","r");
 		if (fpt==NULL)

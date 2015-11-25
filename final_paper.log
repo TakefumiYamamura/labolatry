@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.1415926-p3.4-110825-2.6 (utf8.euc) (TeX Live 2013) (format=platex 2015.11.13)  15 NOV 2015 13:14
+This is e-pTeX, Version 3.1415926-p3.4-110825-2.6 (utf8.euc) (TeX Live 2013) (format=platex 2015.11.13)  22 NOV 2015 16:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -156,7 +156,8 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 
 Underfull \vbox (badness 7851) has occurred while \output is active []
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 83.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 104.
+
 
 (/Applications/TeXLive/Library/texlive/2013/texmf-dist/tex/latex/psnfss/omsptm.
 fd
@@ -165,13 +166,24 @@ File: omsptm.fd
 
 LaTeX Font Warning: Font shape `OMS/ptm/bx/n' undefined
 (Font)              using `OMS/ptm/m/n' instead
-(Font)              for symbol `textsection' on input line 83.
+(Font)              for symbol `textsection' on input line 104.
 
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 104.
 LaTeX Font Info:    Font shape `OMS/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 105.
 (./final_paper.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Font Info:    Font shape `JT1/mc/m/sl' in size <9> not available
+(Font)              Font shape `JT1/mc/m/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `JY1/mc/m/sl' in size <9> not available
+(Font)              Font shape `JY1/mc/m/n' tried instead on input line 1.
+LaTeX Font Info:    External font `min8 at8.872pt' loaded for size
+(Font)              <9> on input line 1.
+ [1
+
+]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -180,31 +192,23 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 1.
 )
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 96.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 117.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 96.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 117.
 LaTeX Font Info:    External font `goth8 at8.872pt' loaded for size
-(Font)              <9> on input line 96.
+(Font)              <9> on input line 117.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 96.
-LaTeX Font Info:    Font shape `JT1/mc/m/sl' in size <9> not available
-(Font)              Font shape `JT1/mc/m/n' tried instead on input line 107.
-LaTeX Font Info:    Font shape `JY1/mc/m/sl' in size <9> not available
-(Font)              Font shape `JY1/mc/m/n' tried instead on input line 107.
-LaTeX Font Info:    External font `min8 at8.872pt' loaded for size
-(Font)              <9> on input line 107.
- [1
-
-]
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 117.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <8> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 108.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 129.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <8> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 108.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 129.
 LaTeX Font Info:    External font `goth8 at8.128pt' loaded for size
-(Font)              <8> on input line 108.
+(Font)              <8> on input line 129.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 108.
- [2
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
+
+[2
 
 ] (./final_paper.aux)
 
@@ -214,10 +218,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  805 strings out of 494001
  10176 string characters out of 6147733
- 71715 words of memory out of 5000000
+ 70715 words of memory out of 5000000
  4294 multiletter control sequences out of 15000+600000
  24979 words of font info for 87 fonts, out of 8000000 for 9000
  745 hyphenation exceptions out of 8191
  29i,12n,25p,481b,330s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on final_paper.dvi (2 pages, 7532 bytes).
+Output written on final_paper.dvi (2 pages, 9428 bytes).
