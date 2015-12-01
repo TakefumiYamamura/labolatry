@@ -86,7 +86,7 @@ Fitness SHADE::run() {
   FILE *fp_val;
   string file_path;
   char fname[100];
-  sprintf(fname, "../csvs_shade_with_archive_D10/func%d_%dth.csv",g_function_number, g_th_num) ;
+  sprintf(fname, "../csvs_shade_with_archive_D30/func%d_%dth.csv",g_function_number, g_th_num) ;
   fp_val = fopen(fname,"w");
 
   //main loop
