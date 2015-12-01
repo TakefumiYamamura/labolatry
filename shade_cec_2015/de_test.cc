@@ -20,6 +20,7 @@ int ini_flag=0, n_flag,func_flag,**SS;
 int g_function_number;
 int g_problem_size;
 unsigned int g_max_num_evaluations;
+int g_th_num;
 
 int g_pop_size;
 int g_arc_size;
@@ -30,7 +31,7 @@ int main(int argc, char **argv) {
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
   g_problem_size = 10;
-  //available number of fitness evaluations 
+  //available number of fitness evaluations
   g_max_num_evaluations = g_problem_size * 10000;
 
   //random seed is based on time according to competition rules
@@ -40,9 +41,9 @@ int main(int argc, char **argv) {
   g_pop_size = 50;
   g_memory_size = 100;
   g_arc_size = g_pop_size;
-  FILE *fp;
-  fp = fopen("../csvs2015/shade_with_archive_D100_P50.csv", "w" );
-  fprintf(fp, "shade_no_limited_archive, mean std\n");
+  // FILE *fp;
+  // fp = fopen("../csvs2015/shade_with_archive_D30_P50.csv", "w" );
+  // fprintf(fp, "shade_with_archive, mean std\n");
 
   for (int i = 0; i < 15; i++) {
     g_function_number = i + 1;
@@ -55,12 +56,13 @@ int main(int argc, char **argv) {
     Fitness std_bsf_fitness = 0;
 
     for (int j = 0; j < num_runs; j++) { 
+      g_th_num = j;
       searchAlgorithm *alg = new SHADE();
       bsf_fitness_array[j] = alg->run();
       // cout << j + 1 << "th run, " << "best fitness = " << bsf_fitness_array[j] << endl;
-      fprintf(fp, "%f,", bsf_fitness_array[j]);
+      // fprintf(fp, "%f,", bsf_fitness_array[j]);
     }
-    fprintf(fp, "\n");
+    // fprintf(fp, "\n");
   
     for (int j = 0; j < num_runs; j++) {
       mean_bsf_fitness += bsf_fitness_array[j];
@@ -76,10 +78,10 @@ int main(int argc, char **argv) {
     std_bsf_fitness = sqrt(std_bsf_fitness);
 
     cout  << "\nmean = " << mean_bsf_fitness << ", std = " << std_bsf_fitness << endl;
-    fprintf(fp, "%f,%f\n", mean_bsf_fitness, std_bsf_fitness);
+    // fprintf(fp, "%f,%f\n", mean_bsf_fitness, std_bsf_fitness);
     free(bsf_fitness_array);
   }
-  fclose(fp);
+  // fclose(fp);
 
   return 0;
 }

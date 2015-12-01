@@ -87,7 +87,7 @@ Fitness SHADE::run() {
   FILE *fp_val;
   string file_path;
   char fname[50];
-  sprintf(fname, "../csvs_shade_wo_archive/func%d_%dth.csv",g_function_number, g_th_num) ;
+  sprintf(fname, "../csvs_shade_wo_archive/func%d_%dth.csv", g_function_number, g_th_num) ;
   fp_val = fopen(fname,"w");
   // fp_val = fopen("../csvs/shade_wo_archive50_val.csv", "w" );
   // fprintf(fp_val, "shade_wo_archive, std\n");

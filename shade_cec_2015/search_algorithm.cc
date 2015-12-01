@@ -1,4 +1,4 @@
-/*
+  /*
   SHADE implemented by C++ for Special Session & Competition on Real-Parameter Single Objective Optimization at CEC-2013
 
   Version: 1.0   Date: 28/June/2013
@@ -30,49 +30,49 @@ void searchAlgorithm::initializeFitnessFunctionParameters() {
   switch(function_number)
   {
     case 1:
-        optimum = -100.0;
+        optimum = 100.0;
         break;
     case 2:
-        optimum = -200.0;
+        optimum = 200.0;
         break;
     case 3:
-        optimum = -300.0;
+        optimum = 300.0;
         break;
     case 4:
-        optimum = -400.0;
+        optimum = 400.0;
         break;
     case 5:
-        optimum = -500.0;
+        optimum = 500.0;
         break;
     case 6:
-        optimum = -600.0;
+        optimum = 600.0;
         break;
     case 7:
-        optimum = -700.0;
+        optimum = 700.0;
         break;
     case 8:
-        optimum = -800.0;
+        optimum = 800.0;
         break;
     case 9:
-        optimum = -900.0;
+        optimum = 900.0;
         break;
     case 10:
-        optimum = -1000.0;
+        optimum = 1000.0;
         break;
     case 11:
-        optimum = -1100.0;
+        optimum = 1100.0;
         break;
     case 12:
-        optimum = -1200.0;
+        optimum = 1200.0;
         break;
     case 13:
-        optimum = -1300.0;
+        optimum = 1300.0;
         break;
     case 14:
-        optimum = -1400.0;
+        optimum = 1400.0;
         break;
     case 15:
-        optimum = -1500.0;
+        optimum = 1500.0;
         break;
   }
 
