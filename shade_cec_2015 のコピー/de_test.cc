@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   g_memory_size = 100;
   g_arc_size = g_pop_size;
   FILE *fp;
-  fp = fopen("../csvs2015/shade_with_archive_D100_P50.csv", "w" );
+  fp = fopen("../csvs_new/shade_with_archive_p_D10_P50.csv", "w" );
   fprintf(fp, "shade_no_limited_archive, mean std\n");
 
   for (int i = 0; i < 15; i++) {
