@@ -30,8 +30,8 @@ int main(int argc, char **argv) {
   //number of runs
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 10;
-  //available number of fitness evaluations 
+  g_problem_size = 30;
+  //available number of fitness evaluations
   g_max_num_evaluations = g_problem_size * 10000;
 
   //random seed is based on time according to competition rules
