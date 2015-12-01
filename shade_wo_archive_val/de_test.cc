@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   //number of runs
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 10;
+  g_problem_size = 50;
   //available number of fitness evaluations 
   g_max_num_evaluations = g_problem_size * 10000;
 
