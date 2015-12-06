@@ -4,7 +4,7 @@
 
   1. Ryoji Tanabe and Alex Fukunaga: Success-History Based Parameter Adaptation for Differential Evolution, Proc. IEEE Congress on Evolutionary Computation (CEC-2013), Cancun, June, 2013, pp. 71-78.
   2. Ryoji Tanabe and Alex Fukunaga: Evaluating the performance of SHADE on CEC 2013 benchmark problems, Proc. IEEE Congress on Evolutionary Computation (CEC-2013), Cancun, June, 2013, pp. 1952-1959.
-  
+
   Version: 1.0   Date: 28/June/2013
   Written by Ryoji Tanabe (rt.ryoji.tanabe@gmail.com)
 */
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
       // fprintf(fp, "%f,", bsf_fitness_array[j]);
     }
     // fprintf(fp, "\n");
-  
+
     for (int j = 0; j < num_runs; j++) {
       mean_bsf_fitness += bsf_fitness_array[j];
     }

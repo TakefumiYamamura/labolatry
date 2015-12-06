@@ -258,6 +258,7 @@ Fitness SHADE::run() {
       dif_fitness.clear();
     }
   }
+  fclose(fp_val);
 
   return bsf_fitness - optimum;
 }

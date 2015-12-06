@@ -1,6 +1,6 @@
 /*
   SHADE implemented by C++ for Special Session & Competition on Real-Parameter Single Objective Optimization at CEC-2013
-  
+
   Version: 1.0   Date: 28/June/2013
   Written by Ryoji Tanabe (rt.ryoji.tanabe@gmail.com)
 */
@@ -85,7 +85,7 @@ Fitness SHADE::run() {
 
   FILE *fp_val;
   string file_path;
-  char fname[50];
+  char fname[100];
   sprintf(fname, "../csvs_de_wo_archive_D30/func%d_%dth.csv",g_function_number, g_th_num) ;
   fp_val = fopen(fname,"w");
 
@@ -95,7 +95,7 @@ Fitness SHADE::run() {
     for (int i = 0; i < pop_size; i++)  temp_fit[i] = fitness[i];
     sortIndexWithQuickSort(&temp_fit[0], 0, pop_size - 1, sorted_array);
 
-        //分散
+    //分散
 
     double mean_fitness;
     double std_fitness;
@@ -258,6 +258,7 @@ Fitness SHADE::run() {
       dif_fitness.clear();
     }
   }
+  fclose(fp_val);
 
   return bsf_fitness - optimum;
 }
