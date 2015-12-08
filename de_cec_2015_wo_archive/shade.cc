@@ -223,19 +223,19 @@ Fitness SHADE::run() {
 	num_success_param++;
       }
     }
-  
-    // if numeber of successful parameters > 0, historical memories are updated 
-    if (num_success_param > 0) {      
+
+    // if numeber of successful parameters > 0, historical memories are updated
+    if (num_success_param > 0) {
       memory_sf[memory_pos] = 0;
       memory_cr[memory_pos] = 0;
       sum_dif_fitness = 0;
       temp_sum_sf = 0;
-     
+
       for (int i = 0; i < num_success_param; i++) {
 	sum_dif_fitness += dif_fitness[i];
-      } 
+      }
 
-      for (int i = 0; i < num_success_param; i++) {	
+      for (int i = 0; i < num_success_param; i++) {
 	weight = dif_fitness[i] / sum_dif_fitness;
 
 	//weighted lehmer mean
