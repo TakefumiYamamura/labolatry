@@ -119,7 +119,7 @@ Fitness SHADE::run() {
 
     //lengthの分散
     vector <variable> centroid(problem_size, 0.0);
-    vector <variable> distance_to_centroid(pop_size, 0.0)
+    vector <variable> distance_to_centroid(pop_size, 0.0);
     variable avg_distance_to_centroid;
     avg_distance_to_centroid = 0.0;
     for (int i = 0; i < arc_size; i++) {
@@ -129,12 +129,12 @@ Fitness SHADE::run() {
     {
       for (int j = 0; j < problem_size; ++j)
       {
-        centroid[j] += pop[i][j]
+        centroid[j] += pop[i][j];
       }
     }
     for (int j = 0; j < problem_size; ++j)
     {
-      centroid[j] /= pop_size
+      centroid[j] /= pop_size;
     }
 
     for (int i = 0; i < pop_size; ++i)
@@ -143,7 +143,7 @@ Fitness SHADE::run() {
       {
         distance_to_centroid[i] += pow((centroid[j] - pop[i][j]), 2.0);
       }
-      distance_to_centroid[i] = sqrt(avg_distance[i]);
+      distance_to_centroid[i] = sqrt(distance_to_centroid[i]);
     }
     for (int i = 0; i < pop_size; ++i)
     {
@@ -300,6 +300,7 @@ Fitness SHADE::run() {
     }
   }
   fclose(fp_val);
+  fclose(fp_val_length);
 
   return bsf_fitness - optimum;
 }
