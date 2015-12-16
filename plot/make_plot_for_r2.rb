@@ -35,8 +35,8 @@ def file_read(file_name)
       sum += a1
     end
     var = sum/a.length
-    min_array << var - min
-    max_array << max - var
+    min_array << min
+    max_array << max
     var_array << var
   end
 
@@ -59,49 +59,3 @@ d_name.each do |d|
     end
   end
 end
-
-
-
-# Gnuplot.open do |gp|
-#   Gnuplot::Plot.new(gp) do |plot|
-#     plot.terminal "png font 'IPA P ゴシック' fontscale 1.2"
-#     plot.output   "gnuplot.png"
-#     plot.title    "with archive/ wo archive における世代ごとの標準偏差"
-#     plot.xlabel   "世代数"
-#     plot.ylabel   "std"
-#     plot.grid
-
-#     #min_array, max_array, var_array
-
-#     a = file_read("../csvs_length_de_wo_archive/*.csv")
-#     p a[2].length
-
-#     x = (1..2000).to_a
-#     y = a[2].map { |e| Math.log(e) }
-
-#     p y.length
-
-#     plot.data << Gnuplot::DataSet.new([x,y]) do |ds|
-#       ds.with      = "lines"
-#       # ds.linewidth = 2
-#       ds.linecolor = 3
-#       ds.notitle
-#     end
-#     #青アーカイブなし
-#     #赤アーカイブあり
-
-#     a = file_read("../csvs_length_de_with_archive/*.csv")
-
-#     x = (1..2000).to_a
-#     y = a[2].map { |e| Math.log(e) }
-
-#     plot.data << Gnuplot::DataSet.new([x,y]) do |ds|
-#       ds.with      = "lines"
-#       # ds.linewidth = 2
-#       ds.linecolor = 1
-#       ds.notitle
-#     end
-
-#   end
-# end
-
