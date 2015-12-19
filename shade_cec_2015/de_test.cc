@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 
   //SHADE parameters
   g_pop_size = 50;
-  g_memory_size = 100;
+  g_memory_size = g_problem_size;
   g_arc_size = g_pop_size;
   // FILE *fp;
   // fp = fopen("../csvs2015/shade_with_archive_D30_P50.csv", "w" );
