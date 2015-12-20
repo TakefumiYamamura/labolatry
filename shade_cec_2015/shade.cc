@@ -86,11 +86,13 @@ Fitness SHADE::run() {
 
   FILE *fp_val, *fp_val_length;
   string file_path;
-  char fname[100],fname2[100];
+  char fname[100],fname2[100],fname3[100];
   sprintf(fname, "../csvs_shade_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
   sprintf(fname2, "../csvs_length_shade_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
+  sprintf(fname3, "../best_fitness_csvs_shade_with_archive_D%d/func%d_%dth.csv")
   fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
+  fp_val_fitness = fopen(fname3,"w");
 
   //main loop
   while (nfe < max_num_evaluations) {
@@ -212,6 +214,7 @@ Fitness SHADE::run() {
   	  bsf_solution[j] = children[i][j];
   	}
       }
+      fprintf(fp_val_fitness, "%f\n", bsf_fitness - optimum);
 
       // if (nfe % 1000 == 0) {
       // 	//output the error value
@@ -236,7 +239,7 @@ Fitness SHADE::run() {
       }
       else if (children_fitness[i] < fitness[i]) {
 	//parent vectors x_i which were worse than the trial vectors u_i are preserved
-	if (arc_size > 1) { 
+	if (arc_size > 1) {
 	  if (arc_ind_count < arc_size) {
 	    for (int j = 0; j < problem_size; j++) {
 	      archive[arc_ind_count][j] = pop[i][j];
@@ -301,13 +304,14 @@ Fitness SHADE::run() {
   }
   fclose(fp_val);
   fclose(fp_val_length);
+  fclose(fp_val_fitness);
 
   return bsf_fitness - optimum;
 }
 
 void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count) {
   int r1, r2;
-  
+
   do {
     r1 = rand() % pop_size;
   } while (r1 == target);
@@ -316,7 +320,7 @@ void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, 
   } while ((r2 == target) || (r2 == r1));
 
   int random_variable = rand() % problem_size;
-  
+
   if (r2 >= pop_size) {
     r2 -= pop_size;
     for (int i = 0; i < problem_size; i++) {
