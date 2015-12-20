@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
   //number of runs
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 100;
+  g_problem_size = 50;
   //available number of fitness evaluations
   g_max_num_evaluations = g_problem_size * 10000;
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 
   //SHADE parameters
   g_pop_size = 50;
-  g_memory_size = 100;
+  g_memory_size = g_problem_size;
   g_arc_size = g_pop_size;
   FILE *fp;
   // fp = fopen("../csvs2015/shade_with_archive_D100_P50.csv", "w" );
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
       // fprintf(fp, "%f,", bsf_fitness_array[j]);
     }
     // fprintf(fp, "\n");
-  
+
     for (int j = 0; j < num_runs; j++) {
       mean_bsf_fitness += bsf_fitness_array[j];
     }

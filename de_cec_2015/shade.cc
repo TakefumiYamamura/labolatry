@@ -84,13 +84,15 @@ Fitness SHADE::run() {
   Fitness *temp_fit = (Fitness*)malloc(sizeof(Fitness) * pop_size);
 
 
-FILE *fp_val, *fp_val_length;
+FILE *fp_val, *fp_val_length, *fp_val_fitness;
   string file_path;
-  char fname[100],fname2[100];
+  char fname[100],fname2[100], fname3[100];
   sprintf(fname, "../csvs_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
-  sprintf(fname2, "../csvs_length_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
+  sprintf(fname2, "../csvs_length_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
+  sprintf(fname3,"bset_fitness_csvs_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
   fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
+  fp_val_fitness = fopen(fname3,"w");
 
 
   //main loop
@@ -211,6 +213,8 @@ FILE *fp_val, *fp_val_length;
   	}
       }
 
+      fprintf(fp_val_fitness, "%f\n", bsf_fitness - optimum);
+
       // if (nfe % 1000 == 0) {
       // 	//output the error value
       // 	cout << bsf_fitness - optimum << endl;
@@ -299,6 +303,7 @@ FILE *fp_val, *fp_val_length;
   }
   fclose(fp_val);
   fclose(fp_val_length);
+  fclose(fp_val_fitness);
 
   return bsf_fitness - optimum;
 }

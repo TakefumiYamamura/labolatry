@@ -83,13 +83,15 @@ Fitness SHADE::run() {
   int *sorted_array = (int*)malloc(sizeof(int) * pop_size);
   Fitness *temp_fit = (Fitness*)malloc(sizeof(Fitness) * pop_size);
 
-FILE *fp_val, *fp_val_length;
+FILE *fp_val, *fp_val_length, *fp_val_fitness;
   string file_path;
-  char fname[100],fname2[100];
+  char fname[100],fname2[100],fname3[100];
   sprintf(fname, "../csvs_shade_wo_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
   sprintf(fname2, "../csvs_length_shade_wo_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
+  sprintf(fname3, "../best_fitness_csvs_shade_wo_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
   fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
+  fp_val_fitness = fopen(fname3, "w");
 
   //main loop
   while (nfe < max_num_evaluations) {
@@ -116,7 +118,7 @@ FILE *fp_val, *fp_val_length;
     std_fitness /= pop_size;
     fprintf(fp_val, "%f\n", sqrt(std_fitness));
 
-        //lengthの分散
+    //lengthの分散
     vector <variable> centroid(problem_size, 0.0);
     vector <variable> distance_to_centroid(pop_size, 0.0);
     variable avg_distance_to_centroid;
@@ -208,6 +210,7 @@ FILE *fp_val, *fp_val_length;
   	  bsf_solution[j] = children[i][j];
   	}
       }
+      fprintf(fp_val_fitness, "%f\n", bsf_fitness - optimum);
 
       // if (nfe % 1000 == 0) {
       // 	//output the error value
@@ -297,6 +300,7 @@ FILE *fp_val, *fp_val_length;
   }
   fclose(fp_val);
   fclose(fp_val_length);
+  fclose(fp_val_fitness);
 
   return bsf_fitness - optimum;
 }
