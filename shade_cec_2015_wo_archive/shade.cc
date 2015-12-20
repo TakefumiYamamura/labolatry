@@ -83,7 +83,7 @@ Fitness SHADE::run() {
   int *sorted_array = (int*)malloc(sizeof(int) * pop_size);
   Fitness *temp_fit = (Fitness*)malloc(sizeof(Fitness) * pop_size);
 
-FILE *fp_val, *fp_val_length;
+FILE *fp_val, *fp_val_length, *fp_val_fitness;
   string file_path;
   char fname[100],fname2[100],fname3[100];
   sprintf(fname, "../csvs_shade_wo_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
@@ -91,7 +91,7 @@ FILE *fp_val, *fp_val_length;
   sprintf(fname3, "../best_fitness_csvs_shade_wo_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
   fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
-  fp_val_fitness = fopen(fanem3, "w")
+  fp_val_fitness = fopen(fname3, "w");
 
   //main loop
   while (nfe < max_num_evaluations) {
