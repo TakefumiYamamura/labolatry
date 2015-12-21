@@ -89,7 +89,7 @@ FILE *fp_val, *fp_val_length, *fp_val_fitness;
   char fname[100],fname2[100], fname3[100];
   sprintf(fname, "../csvs_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num) ;
   sprintf(fname2, "../csvs_length_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
-  sprintf(fname3,"bset_fitness_csvs_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
+  sprintf(fname3, "../best_fitness_csvs_de_with_archive_D%d/func%d_%dth.csv", problem_size, g_function_number, g_th_num);
   fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
   fp_val_fitness = fopen(fname3,"w");

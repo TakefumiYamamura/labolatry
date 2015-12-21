@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
   //number of runs
   int num_runs = 51;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 50;
+  g_problem_size = 30;
   //available number of fitness evaluations
   g_max_num_evaluations = g_problem_size * 10000;
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
   srand((unsigned)time(NULL));
 
   //SHADE parameters
-  g_pop_size = 50;
+  g_pop_size = 10;
   g_memory_size = g_problem_size;
   g_arc_size = g_pop_size;
   FILE *fp;
