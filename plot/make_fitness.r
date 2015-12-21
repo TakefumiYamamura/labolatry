@@ -1,16 +1,25 @@
-# library(exactRankTests)
-# library(knitr)
-# library(xtable)
+library(exactRankTests)
+library(knitr)
+library(xtable)
 
 
 for (i in 1:15) {
-    file_name = paste("final/func", i, ".csv" , sep = "")
+    file_name = paste("final_fitness/func", i, ".csv" , sep = "")
     x <- read.csv(file_name, header = FALSE)
+    # type <- unique(x[, 1])
+
+    y <- x[c(1,ncol(x))]
+    # print(mean(y[y[,1]]))
+
+    for (k in 1:length(type)) {
+      print(mean(y[y[, 1] == type[k], -1], na.rm=TRUE))
+    }
 
     x[,-1] <- log10(x[,-1])
     for (j in 1:ncol(x)) {
       x[,j] <- ifelse(is.infinite(x[,j]),NA,x[,j])
     }
+
 
     xaxis <- 1:ncol(x[, -1])          # x 軸座標を設定
     cols <- c("red", "blue", "green", "black") # PF を赤色、C を青色、G を緑色
@@ -21,21 +30,6 @@ for (i in 1:15) {
     # 平均値と標準偏差を計算して、書き加える
     type <- unique(x[, 1])             # DEの種類を取得
     # type <- x[,1]
-    # y <- x[c(1,ncol(x))]
-    # de_with<-y[y[, 1] == type[1], -1]
-    # de_wo <-y[y[, 1] == type[2], -1]
-    # shade_with<-y[y[, 1] == type[3], -1]
-    # shade_wo<-y[y[, 1] == type[4], -1]
-    # result1 <- wilcox.exact(de_with, de_wo,paired=F)
-    # result2 <- wilcox.exact(shade_with, shade_wo, paired=F)
-    # if (result1$p.value > 0.05){
-    #   print("有意じゃない")
-    # }
-    # if (result2$p.value > 0.05){
-    #   print("有意じゃない関数")
-    #   print(i)
-    # }
-
   for (k in 1:length(type)) {
     m <- apply(x[x[, 1] == type[k], -1], 2, mean)
     s <- apply(x[x[, 1] == type[k], -1], 2, sd)
@@ -56,6 +50,6 @@ for (i in 1:15) {
   }
 
   # グラフに凡例を書き入れる
-  # legend("topleft", legend = type, pch = 1, lty = 1, col = cols)
+  legend("topleft", legend = type, pch = 1, lty = 1, col = cols)
 
 }
