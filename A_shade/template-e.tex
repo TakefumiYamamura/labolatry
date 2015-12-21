@@ -1,0 +1,83 @@
+%% Template for English Papers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \documentclass[english]{jpnsecart}                   % English Original Paper
+
+%% For JPNSEC office %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You don't need to modify them. 
+\received{2010}{8}{1}
+\stuffincharge{XX\hspace{0.5zh} XX}
+\setcounter{page}{1}
+%\setcounter{volpage}{1}
+\Vol{1}
+\No{1}
+
+%% CAUSION for amsmath package users %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackpage{amsmath}
+% equation No. should be reffered by the \eqref, not \ref
+% specify the "fleqn" as the option of documentclass command
+% ex. \documentclass[technicalpaper,fleqn]{jpnsecart}
+
+%% Title %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\etitle{Title}
+% \etitle[English Title for Headers]{English Title}
+\esubtitle{English Sub-Title}
+
+%% Authors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% when authers whose affilication is the same is succeed, 
+% use \affiliation macro for the top of the succeed authers 
+% and use \sameaffiliation for the rest of the authors.
+% Delete the following line if the number of author is less than four.
+\manyauthor 
+\author{%
+ \name{FirstName1}{LastName1}
+ \affiliation{Affiliation1 in English}%
+     {user1@jpnsec.org, http://www.jpnsec.org/~user1/}
+\and
+ \name{FirstName2}{LastName2}
+ \affiliation{Affiliation2 in English }%
+     {user2@jpnsec.org, http://www.jpnsec.org/~user2/}
+\and
+ \longname{VeryVeryLongFirstName3}{VeryVeryLongLastName3}
+ \sameaffiliation{user3@jpnsec.org, http://www.jpnsec.org/~user3/}
+\and
+ \name{FirstName4}{LastName4}
+ \sameaffiliation{user4@jpnsec.org, http://www.jpnsec.org/~user4/}
+\and
+ \name{FirstName5}{LastName5}
+ \affiliation{Affiliation1\ in English}{}
+}
+
+%% Keywords, Summary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{keyword}
+3-5 English keywords. These words should be written in lowercase
+except for abbreviations or proper nouns
+\end{keyword}
+
+\begin{summary}
+summary in English, of which length is 200-500 words.
+\end{summary}
+
+%% Body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\section{Section}
+\subsection{Subsection}
+\subsubsection{Subsubsection}
+An example of citation\cite{latex,texbook}
+\begin{acknowledgment}
+Acknowledgments
+\end{acknowledgment}
+
+\bibliography{btxsample}
+\bibliographystyle{jpnsec}
+
+\appendix
+\section{Appendix}
+
+%% Biography %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{biography}
+\profile{m}{LastName1, FirstName1}{First Author's Profile}
+\end{biography}
+
+\end{document}

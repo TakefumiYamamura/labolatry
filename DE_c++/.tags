@@ -1,0 +1,131 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+E	func.cpp	/^#define E /;"	d	file:
+E	test_func.cpp	/^#define E /;"	d	file:
+EPS	func.cpp	/^#define EPS /;"	d	file:
+EPS	test_func.cpp	/^#define EPS /;"	d	file:
+INF	func.cpp	/^#define INF /;"	d	file:
+INF	test_func.cpp	/^#define INF /;"	d	file:
+M	de_main.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+M	shade.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+M	t.cpp	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+OShift	de_main.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+OShift	shade.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+OShift	t.cpp	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+PI	func.cpp	/^#define PI /;"	d	file:
+PI	test_func.cpp	/^#define PI /;"	d	file:
+__init__	de.py	/^  def __init__(self):$/;"	m	class:test_function
+__init__	de.py	/^  def __init__(self, dim=5):$/;"	m	class:test_rosenbrock_function
+__init__	de.py	/^  def __init__(self,$/;"	m	class:differential_evolution_optimizer
+ackley_func	test_func.cpp	/^void ackley_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Ackley's  *\/$/;"	f
+adjustment	de_main.cc	/^double adjustment(double **x, int i, int func_num){$/;"	f
+adjustment	t.cpp	/^double adjustment(double **x, int i, int nx, int mx, int func_num){$/;"	f
+array_all_copy	de_main.cc	/^void array_all_copy(double** resource_array, double** to_array, int m, int n){$/;"	f
+array_all_copy	shade.cc	/^void array_all_copy(double** to_array, double** resource_array){$/;"	f
+array_all_copy	t.cpp	/^void array_all_copy(double** resource_array, double** to_array, int m, int n){$/;"	f
+array_copy	de_main.cc	/^void array_copy(double** resource_array, double** to_array, int len, int i){$/;"	f
+array_copy	shade.cc	/^void array_copy(double** to_array, int k ,double** resource_array, int i){$/;"	f
+array_copy	t.cpp	/^void array_copy(double** resource_array, double** to_array, int len, int i){$/;"	f
+asyfunc	test_func.cpp	/^void asyfunc (double *x, double *xasy, int nx, double beta)$/;"	f
+bench_mark	shade.cc	/^double bench_mark(double **x, int i, int func_num){$/;"	f
+bent_cigar_func	test_func.cpp	/^void bent_cigar_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Bent_Cigar *\/$/;"	f
+bi_rastrigin_func	test_func.cpp	/^void bi_rastrigin_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Lunacek Bi_rastrigin Function *\/$/;"	f
+cf01	test_func.cpp	/^void cf01 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 1 *\/$/;"	f
+cf02	test_func.cpp	/^void cf02 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 2 *\/$/;"	f
+cf03	test_func.cpp	/^void cf03 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 3 *\/$/;"	f
+cf04	test_func.cpp	/^void cf04 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 4 *\/$/;"	f
+cf05	test_func.cpp	/^void cf05 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 4 *\/$/;"	f
+cf06	test_func.cpp	/^void cf06 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 6 *\/$/;"	f
+cf07	test_func.cpp	/^void cf07 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 7 *\/$/;"	f
+cf08	test_func.cpp	/^void cf08 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Composition Function 8 *\/$/;"	f
+cf_cal	test_func.cpp	/^void cf_cal(double *x, double *f, int nx, double *Os,double * delta,double * bias,double * fit, int cf_num)$/;"	f
+comp	sort_test.cc	/^int comp( const void *c1, const void *c2 )$/;"	f
+crossover_binomial	de_main.cc	/^void crossover_binomial(double** x, double** v, double** u, int i, int j_rand){$/;"	f
+crossover_binomial	shade.cc	/^void crossover_binomial(double** x, double** v, double** u, int i, int j_rand, double*cr){$/;"	f
+crossover_binomial	t.cpp	/^void crossover_binomial(double** x, double** v, double** u, int i, int j_rand){$/;"	f
+dif_powers_func	test_func.cpp	/^void dif_powers_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Different Powers *\/$/;"	f
+differential_evolution_optimizer	de.py	/^class differential_evolution_optimizer(object):$/;"	c
+dim	shade.cc	/^int dim = 10;$/;"	v
+discus_func	test_func.cpp	/^void discus_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Discus *\/$/;"	f
+ellips_func	test_func.cpp	/^void ellips_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Ellipsoidal *\/$/;"	f
+escaffer6_func	test_func.cpp	/^void escaffer6_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Expanded Scaffer¡¯s F6  *\/$/;"	f
+evolve	de.py	/^  def evolve(self):$/;"	m	class:differential_evolution_optimizer
+f	de_main.cc	/^double f[2];$/;"	v
+f	t.cpp	/^double f[0];$/;"	v
+flex	de.py	/^from scitbx.array_family import flex$/;"	i
+func_flag	de_main.cc	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+func_flag	shade.cc	/^int ini_flag = 0, n_flag, func_flag;$/;"	v
+func_flag	t.cpp	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+fv	shade.cc	/^double fv[2];$/;"	v
+generate_mutant_vector	de_main.cc	/^void generate_mutant_vector(double** x, double** v, int i, int n){$/;"	f
+generate_mutant_vector	shade.cc	/^void generate_mutant_vector(double** x, double** v, int i, double* cr, double* f, double* mcr, double* mf, double** x_sort, vector<double>& archive){$/;"	f
+generate_mutant_vector	t.cpp	/^void generate_mutant_vector(double** x, double** v, int i, int n){$/;"	f
+grie_rosen_func	test_func.cpp	/^void grie_rosen_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Griewank-Rosenbrock  *\/$/;"	f
+griewank_func	test_func.cpp	/^void griewank_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Griewank's  *\/$/;"	f
+ini_flag	de_main.cc	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+ini_flag	shade.cc	/^int ini_flag = 0, n_flag, func_flag;$/;"	v
+ini_flag	t.cpp	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+katsuura_func	test_func.cpp	/^void katsuura_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Katsuura  *\/$/;"	f
+m	shade.cc	/^int m = 100;$/;"	v
+main	cauchy.cc	/^int main()$/;"	f
+main	de_main.cc	/^int main()$/;"	f
+main	ran_c_2.cc	/^  int main(){$/;"	f
+main	randomc.cc	/^int main(){$/;"	f
+main	shade.cc	/^int main()$/;"	f
+main	sort_test.cc	/^int main(void)$/;"	f
+main	t.cpp	/^int main()$/;"	f
+make_random_num	de_main.cc	/^void make_random_num(int n, int *r1, int *r2, int *r3){$/;"	f
+make_random_num	shade.cc	/^void make_random_num(int n, int *r1, int *r2, int archive_size){$/;"	f
+make_random_num	t.cpp	/^void make_random_num(int n, int *r1, int *r2, int *r3){$/;"	f
+make_random_population	de.py	/^  def make_random_population(self):$/;"	m	class:differential_evolution_optimizer
+make_w	shade.cc	/^void make_w(vector<double>& w, vector<double>& df ){$/;"	f
+n_flag	de_main.cc	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+n_flag	shade.cc	/^int ini_flag = 0, n_flag, func_flag;$/;"	v
+n_flag	t.cpp	/^int ini_flag=0,n_flag,func_flag;$/;"	v
+nrand	randomc.cc	/^double nrand()$/;"	f
+num	sort_test.cc	/^int num = 100$/;"	v
+optimize	de.py	/^  def optimize(self):$/;"	m	class:differential_evolution_optimizer
+oszfunc	test_func.cpp	/^void oszfunc (double *x, double *xosz, int nx)$/;"	f
+print_status	de.py	/^  def print_status(self, mins,means,vector,txt):$/;"	m	class:test_rosenbrock_function
+randc	shade.cc	/^double randc(double f){$/;"	f
+randn	shade.cc	/^double randn(double cr){$/;"	f
+random	de.py	/^from stdlib import random$/;"	i
+randp	shade.cc	/^double randp(){$/;"	f
+rastrigin_func	test_func.cpp	/^void rastrigin_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Rastrigin's  *\/$/;"	f
+replace	shade.cc	/^void replace(double **x, int a, int b){$/;"	f
+rosenbrock_func	test_func.cpp	/^void rosenbrock_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Rosenbrock's *\/$/;"	f
+rotatefunc	test_func.cpp	/^void rotatefunc (double *x, double *xrot, int nx,double *Mr)$/;"	f
+run	de.py	/^def run():$/;"	f
+schaffer_F7_func	test_func.cpp	/^void schaffer_F7_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Schwefel's 1.2  *\/$/;"	f
+schwefel_func	test_func.cpp	/^void schwefel_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Schwefel's  *\/$/;"	f
+score_population	de.py	/^  def score_population(self):$/;"	m	class:differential_evolution_optimizer
+selectxp	shade.cc	/^void selectxp(double ** x, double * xp){$/;"	f
+shiftfunc	test_func.cpp	/^void shiftfunc (double *x, double *xshift, int nx,double *Os)$/;"	f
+show_population	de.py	/^  def show_population(self):$/;"	m	class:differential_evolution_optimizer
+sort_by_func	shade.cc	/^void sort_by_func(double **x, int func_num){$/;"	f
+sphere_func	func.cpp	/^double sphere_func (double **x, int t, int n) \/* Sphere *\/$/;"	f
+sphere_func	test_func.cpp	/^void sphere_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Sphere *\/$/;"	f
+step_rastrigin_func	test_func.cpp	/^void step_rastrigin_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Noncontinuous Rastrigin's  *\/$/;"	f
+target	de.py	/^  def target(self, vector):$/;"	m	class:test_function
+target	de.py	/^  def target(self, vector):$/;"	m	class:test_rosenbrock_function
+test_func	sort_test.cc	/^int test_func(double ** x){$/;"	f
+test_func	test_func.cpp	/^void test_func(double *x, double *f, int nx, int mx,int func_num)$/;"	f
+test_function	de.py	/^class test_function(object):$/;"	c
+test_rosenbrock_function	de.py	/^class test_rosenbrock_function(object):$/;"	c
+update_mcr	shade.cc	/^void update_mcr(double* mcr, vector<double>& scr, vector<double>& w, int index){$/;"	f
+update_mf	shade.cc	/^void update_mf(double* mf, vector<double>& sf, vector<double>& w, int index){$/;"	f
+weierstrass_func	test_func.cpp	/^void weierstrass_func (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) \/* Weierstrass's  *\/$/;"	f
+x	randomc.cc	/^double x;$/;"	v
+x_bound	de_main.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+x_bound	shade.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+x_bound	t.cpp	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+y	de_main.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+y	shade.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+y	t.cpp	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+z	de_main.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+z	shade.cc	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v
+z	t.cpp	/^double *OShift,*M,*y,*z,*x_bound;$/;"	v

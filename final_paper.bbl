@@ -1,0 +1,9 @@
+\begin{thebibliography}{}
+
+\bibitem[a]{texbook}
+The {{\TeX}book}, Addison-Wesley (1984)
+
+\bibitem[b]{latex}
+{\LaTeX \rm:} {A} Document Preparation System, Addison-Wesley (1986)
+
+\end{thebibliography}
