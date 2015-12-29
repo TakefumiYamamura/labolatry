@@ -20,6 +20,8 @@
 %---------------------------------必須エリア-------------------------------%
 \documentclass[a4paper,11pt,oneside,openany]{jsbook}
 \usepackage{graphicx,enumerate}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 \pagestyle{plain}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
@@ -83,19 +85,35 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 行った実験・解析から得られる知見をまとめる。
 
 
-\section{原稿について}
-用紙サイズはA4版とします。以下で示す標題紙，目次，本文（注を含む）を作成
-し左綴じで製本した上で提出してください。なお教育実践・政策学コースの卒業論文規定枚数は，本文（引用・参考文献含む）のみで20枚以上です。
+\chapter{Differential Evolutionとアーカイブ}
+\section{Differential Evolution}
+まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体${i} = (1, 2, \cdots, N)$は対象問題の解ベクトル${x_i} = (x_1, x_2, \cdots, x_D)$で表現される．ここでNは集団数，Dは次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　\subsection{Parallel Best-NBlock First (PBNF, SafePBNF)}
+\index{Parallel Best-NBlock First, PBNF}
+\index{SafePBNF}
 
-\section{段落スタイルについて}
-Word\textregistered{}版のテンプレートファイルでは，目次の付与と章，節，
-項のデザインを整えるためにWord\textregistered{}の段落スタイル機能を使用
-していました。\LaTeX{}版ではtableofcontents命令とchapter, section，subsection命令を使うことで同等の出力が得られることから，これらの命令
-を使って作成を行ってください。
+\begin{algorithm}                      
+\caption{PBNF search framework}         
+\label{alg:pbnf}                          
+\begin{algorithmic}                  
+\WHILE {there is an nblock with open nodes}
+  \STATE lock; $b \leftarrow$ best free nblock; unlock
+  \WHILE {$b$ is no worse than the best free nblock or we've done fewer than $m$ expansions}
+    \STATE $n \leftarrow$ best open node in $b$
+    \IF {$f(n) \leq f(incumbent)$}
+      \STATE prune all open nodes in $b$
+    \ELSIF { $n$ is a goal }
+      \STATE $incumbent \leftarrow n$
+    \ELSE 
+      \STATE for each child $c$ of $n$
+      \STATE insert $c$ in the open list of the appropriate nblock
+    \ENDIF
+\ENDWHILE
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}　　　　　　　　　　　　　　　　　　　　　
 
-\chapter{Differential Evolutionとは}
 
-\section{実数値最適化問題とは}
 \section{進化計算について}
 \section{差分進化}
 \section{アーカイブと適応DE}
