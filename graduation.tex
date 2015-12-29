@@ -93,22 +93,20 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \index{SafePBNF}
 
 \begin{algorithm}                      
-\caption{PBNF search framework}         
+\caption{Differential Evolution}         
 \label{alg:pbnf}                          
-\begin{algorithmic}                  
-\WHILE {there is an nblock with open nodes}
-  \STATE lock; $b \leftarrow$ best free nblock; unlock
-  \WHILE {$b$ is no worse than the best free nblock or we've done fewer than $m$ expansions}
-    \STATE $n \leftarrow$ best open node in $b$
-    \IF {$f(n) \leq f(incumbent)$}
-      \STATE prune all open nodes in $b$
-    \ELSIF { $n$ is a goal }
-      \STATE $incumbent \leftarrow n$
-    \ELSE 
-      \STATE for each child $c$ of $n$
-      \STATE insert $c$ in the open list of the appropriate nblock
+\begin{algorithmic}  
+\STATE init population ${P} = (x_1, x_2, \cdots, x_N)$;
+\WHILE {the termination crirteria are not met}
+    \FOR{$i=1$ to $N$}
+        \STATE generate mutant vector {$v_i$} by mutation strategy;
+        \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
+    \ENDFOR
+    \FOR{$i=1$ to $N$}
+    \IF {$f(u_i) \leq f(x_i)$}
+      \STATE {$x_i=u_i$};
     \ENDIF
-\ENDWHILE
+    \ENDFOR
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}　　　　　　　　　　　　　　　　　　　　　
