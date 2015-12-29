@@ -58,11 +58,20 @@ Evaluating Performance Of Archive In Adaptated Differential Evolution
 
 \chapter{序論}
 \section{研究の背景}
-実数値最適化問題とは，あるD次元の実数値ベクトルとそれを評価する関数が与えられたときその評価関数を最小もしくは最大化するような関数を探す問題である．
-多くの実問題においてその評価関数は多峰性や悪スケール性が高いなど，局所解に陥りやすく，局所解を脱し，大域的な最適解を見つけることがことが求められる．
-それを可能にするする手法として差分進化法\（DifferentialEvolution\)が用いられる．
+実数値最適化問題とは，あるD次元の実数値ベクトルとそれを評価する関数が与えられたときその評価関数を最小もしくは最大化するような実数値ベクトルを探す問題である．
+
+多くの実問題においてその評価関数は多峰性や悪スケール性が高いなどの問題をかかえ，局所解を脱し，大域的な最適解を見つけることがことが求められる．
+
+そのような実数値最適化問題を対象とする確率的手法の一つとして，差分進化(Differential Evlolution:DE)\cite{Storn}が用いられる．
+
+最初のDEは，1995年にPrice, K.V.(プライス)とStorn,R.M.(ストーン)によって提案された．
+
+DEは処理手順が簡単でありながらも，典型的な実数値GAと比べても最適解に比較的素早く収束する．
+
+このためDEは現実的な最適化問題に対して多くの適用例が報告されている\cite{ExDE}.
 解ベクトルxをｎ個持つ解の集団を保持し
 DEはDEは確率的手法の一つであり，生物の進化メカニズムをまね，変化と選択に基づく世代交代により，解が進化していく進化計算の一つで有る．
+実数値最適化とはと
 
 
 この文章は教育実践・政策学コースの卒業論文の\LaTeX{}版テンプレートファイルです。
@@ -73,7 +82,6 @@ DEはDEは確率的手法の一つであり，生物の進化メカニズムを�
 このアルゴリズムではDEの性能を大きく左右するスケーリングパラメーターFや交叉率CRを適応的に変化させることで従来のDEより，高い性能をしめすことに成功している．
 \section{研究の目的}
 本研究の目的は２つある．
-
 
 \section{本論文の構成}
 この文章は教育実践・政策学コースの卒業論文の\LaTeX{}版テンプレートファイルです。
@@ -92,14 +100,33 @@ Word\textregistered{}版のテンプレートファイルでは，目次の付�
 を使って作成を行ってください。
 
 \chapter{Differential Evolutionとは}
+
 \section{実数値最適化問題とは}
 \section{進化計算について}
 \section{差分進化}
 \section{アーカイブと適応DE}
-\cahpter{適応型DifferentialEvolutionとアーカイブ}
+\chapter{適応型DifferentialEvolutionとアーカイブ}
+\chapter{アーカイブの性能比較}
+\section{重心距離による多様性維持の観察}
 \section{}
 
+\chapter{終わりに}
+\section{謝辞}
+研究室の先輩方にはミーティングや中間発表を初め有益なアドバイスをずっと頂きました．
+指導教員では福永先生には，お忙しい中必ず週に一度の個別ミーティングの機会を与えてくださり，とても丁寧にご指導していただきました．
+研究とはどういうものか，全くわかっていなかった自分に，研究のいろはを1から教えていただいたことに深く感謝します．
+研究室の先輩方，特に田邊さんには，とても助かりました．ボーナス付き
 
+である田邊さんには数々のアドバイスを頂き，１を聞くと10のことをいつも教えてくださり心から感謝しています．
+
+\section{進化計算}
+
+
+
+\chapter{Differential Evolutionとは}
+\section{進化計算}
+\chapter{Differential Evolutionとは}
+\chapter{進化計算}
 \chapter{方法}
 
 \chapter{結果}
@@ -546,7 +573,9 @@ Web上のリソースについては，書誌情報の最後に``入手先URL, �
 
 %-----------------------------参考文献記述エリア---------------------------%
 \begin{thebibliography}{10}
- \bibitem{澤田}澤田昭夫. 『論文のレトリック』 
+ \bibitem{Storn}R.Storn and K. Price. Differential evolution - a simple and efficient heuristic for global optimization over continuous spaces. Journal of Global Optimization, 11(4):341-359, 1997 
+  \bibitem{ExDE}K.V.Price, R, N.Storn and J.A. Lampinen.Differential Evolution - A Practical Approach to Global Opticization. Springer, Berlin Heidelberg, 2005.
+  \bibitem{澤田}澤田昭夫. 『論文のレトリック』 
    講談社学術文庫, 講談社, 1983, 330p.
 \end{thebibliography}
 %---------------------------------必須エリア-------------------------------%
