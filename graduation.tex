@@ -87,11 +87,25 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 
 \chapter{Differential Evolutionとアーカイブ}
 \section{Differential Evolution}
+\subsection{DEの処理手順}
 まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体${i} = (1, 2, \cdots, N)$は対象問題の解ベクトル${x_i} = (x_1, x_2, \cdots, x_D)$で表現される．ここでNは集団数，Dは次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　\subsection{Parallel Best-NBlock First (PBNF, SafePBNF)}
-\index{Parallel Best-NBlock First, PBNF}
-\index{SafePBNF}
+代表的な突然変異戦略を表1に示す．
 
+\begin{table}[htb]
+  \begin{tabular}{lr} \hline
+    突然変異戦略　& 定義  \\ \hline
+    牛丼 & 並盛 \\
+    牛丼 & 大盛 \\
+    牛丼 & 特盛 \\
+    牛皿 & 並盛 \\
+    牛皿 & 大盛 \\ \hline
+  \end{tabular}
+\end{table}
+
+下におおまかに
+各世代において，各個体${x_i}$ごとに変異個体${v_i}$を
+
+最後に本節で述べたDEアルゴリズムの全体をAlgorithm 1に示す．
 \begin{algorithm}                      
 \caption{Differential Evolution}         
 \label{alg:pbnf}                          
