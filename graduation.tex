@@ -22,6 +22,7 @@
 \usepackage{graphicx,enumerate}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{float}
 \pagestyle{plain}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
@@ -89,22 +90,23 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \section{Differential Evolution}
 \subsection{DEの処理手順}
 まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体${i} = (1, 2, \cdots, N)$は対象問題の解ベクトル${x_i} = (x_1, x_2, \cdots, x_D)$で表現される．ここでNは集団数，Dは次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
-代表的な突然変異戦略を表1に示す．
-
+代表的な突然変異戦略をTable1に示す．
 \begin{table}[htb]
-  \begin{tabular}{lr} \hline
-    突然変異戦略　& 定義  \\ \hline
-    rand/1 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
-    rand/2 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
-    best/1 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
-    best/2 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
-    current-to-rand/1 & $v_{i} = x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
-    current-to-best/1 & $v_{i} = x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-    current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-    rand-to-pbest/1  $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{r3})$ \\ \hline
-  \end{tabular}
+  \begin{center}
+    \begin{tabular}{ll} \hline
+      突然変異戦略　& 定義  \\ \hline
+      rand/1 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
+      rand/2 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
+      best/1 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
+      best/2 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
+      current-to-rand/1 & $v_{i} = x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
+      current-to-best/1 & $v_{i} = x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
+      current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
+      rand-to-pbest/1 & $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{r3})$ \\ \hline
+    \end{tabular}
+    \caption{DEにおける代表的な突然変異戦略}
+  \end{center}
 \end{table}
-
 下におおまかに
 各世代において，各個体${x_i}$ごとに変異個体${v_i}$を
 
@@ -120,9 +122,9 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
         \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
     \ENDFOR
     \FOR{$i=1$ to $N$}
-    \IF {$f(u_i) \leq f(x_i)$}
-      \STATE {$x_i=u_i$};
-    \ENDIF
+        \IF {$f(u_i) \leq f(x_i)$}
+            \STATE {$x_i=u_i$};
+        \ENDIF
     \ENDFOR
 \ENDWHILE
 \end{algorithmic}
