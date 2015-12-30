@@ -94,11 +94,14 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \begin{table}[htb]
   \begin{tabular}{lr} \hline
     突然変異戦略　& 定義  \\ \hline
-    牛丼 & 並盛 \\
-    牛丼 & 大盛 \\
-    牛丼 & 特盛 \\
-    牛皿 & 並盛 \\
-    牛皿 & 大盛 \\ \hline
+    rand/1 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
+    rand/2 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
+    best/1 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
+    best/2 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
+    current-to-rand/1 & $v_{i} = x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
+    current-to-best/1 & $v_{i} = x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
+    current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
+    rand-to-pbest/1  $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{r3})$ \\ \hline
   \end{tabular}
 \end{table}
 
