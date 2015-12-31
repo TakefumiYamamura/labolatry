@@ -90,6 +90,11 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \section{Differential Evolution}
 \subsection{DEの処理手順}
 まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体${i} = (1, 2, \cdots, N)$は対象問題の解ベクトル${x_i} = (x_1, x_2, \cdots, x_D)$で表現される．ここでNは集団数，Dは次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
+各世代Gにおいて各変異個体${v_i}$となる変異ベクトルをその集団中の複数の個体に突然変異戦略を適用することで生成する．代表的な突然変異戦略をTable1にて示す．Table1において${F\in(0,1]}$は突然変異の幅を調整する制御パラメータのひとつスケーリングファクターである．$x_{r1},x_{r2},x_{r3},x_{r4},x_{r5}$は${x_i}$と互いと異なるように集団$P = {x_1, \cdots, x_N}$からランダムに選択した個体である．$x_{best}$は各世代における最良個体であり，$x_{pbest}$は集団$P$を評価値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
+current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後述のアーカイブAの集合からランダムに選択した個体である．
+それぞれの突然変異戦略をみていくとbest/1, best/2は変異個体{$v_i$}をを最良個体$x_{best}$の付近に生成する.
+それに対しcurrent-to-best/1は対象個体から$x_{best}$にむかうように変異個体{$v_i$}を生成する．そのためrand/1やrand/2などに比べ局所的探索能力が強い戦略である．また加える差ベクトルの数が多いほど多様な{$v_i$}を生成しやすい．
+各世代において各個体${x_i}$となる，変異ベク変異ベクトルとなる{$v_i$}を
 代表的な突然変異戦略をTable1に示す．
 \begin{table}[htb]
   \begin{center}
@@ -101,8 +106,8 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
       best/2 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
       current-to-rand/1 & $v_{i} = x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
       current-to-best/1 & $v_{i} = x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-      current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-      rand-to-pbest/1 & $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{r3})$ \\ \hline
+      current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})$ \\
+      rand-to-pbest/1 & $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{Ar3})$ \\ \hline
     \end{tabular}
     \caption{DEにおける代表的な突然変異戦略}
   \end{center}
