@@ -92,10 +92,8 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体${i} = (1, 2, \cdots, N)$は対象問題の解ベクトル${x_i} = (x_1, x_2, \cdots, x_D)$で表現される．ここでNは集団数，Dは次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
 各世代Gにおいて各変異個体${v_i}$となる変異ベクトルをその集団中の複数の個体に突然変異戦略を適用することで生成する．代表的な突然変異戦略をTable1にて示す．Table1において${F\in(0,1]}$は突然変異の幅を調整する制御パラメータのひとつスケーリングファクターである．$x_{r1},x_{r2},x_{r3},x_{r4},x_{r5}$は${x_i}$と互いと異なるように集団$P = {x_1, \cdots, x_N}$からランダムに選択した個体である．$x_{best}$は各世代における最良個体であり，$x_{pbest}$は集団$P$を評価値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
 current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後述のアーカイブAの集合からランダムに選択した個体である．
-それぞれの突然変異戦略をみていくとbest/1, best/2は変異個体{$v_i$}をを最良個体$x_{best}$の付近に生成する.
+それぞれの突然変異戦略をみていくとbest/1, best/2は変異個体{$v_i$}をを最良個体$x_{best}$の付近に生成する．
 それに対しcurrent-to-best/1は対象個体から$x_{best}$にむかうように変異個体{$v_i$}を生成する．そのためrand/1やrand/2などに比べ局所的探索能力が強い戦略である．また加える差ベクトルの数が多いほど多様な{$v_i$}を生成しやすい．
-各世代において各個体${x_i}$となる，変異ベク変異ベクトルとなる{$v_i$}を
-代表的な突然変異戦略をTable1に示す．
 \begin{table}[htb]
   \begin{center}
     \begin{tabular}{ll} \hline
@@ -112,6 +110,25 @@ current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後�
     \caption{DEにおける代表的な突然変異戦略}
   \end{center}
 \end{table}
+
+
+次に親個体$x_i$と変異個体$v_i$を交叉させることで子個体$u_i$を生成する．DEの代表的な交叉手法には二項交叉(binomial crossover)と指数交叉（exponential crossover）がある．まずbinomial crossoverについて紹介する．二項交叉では交叉率$CR(0 \leq CR \leq 1)$とランダムに選択した添字$j_{rand}(1 \leq j \leq D)$に基づき，Algorithm1のように子個体$u_i$の各要素　$u_{i,j} \in u_{i}(j = 1, \cdots, D)$を決定する．
+
+\begin{algorithm}                      
+\caption{Binomial Crossover}         
+\label{alg:pbnf}                          
+\begin{algorithmic}  
+\STATE $j_{rand} = randi[1, D]$;
+\FOR{$j=1$ to $D$}
+  \IF {$rand[0,1)　\leq CR　|| j == j_{rand} $}
+    \STATE {$u_(i,j)$ = $v_(i,j)$}  
+  \ELSE
+    \STATE {$u_(i,j)$ = $x_(i,j)$}
+  \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}　
+
 下におおまかに
 各世代において，各個体${x_i}$ごとに変異個体${v_i}$を
 
