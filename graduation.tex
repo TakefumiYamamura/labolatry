@@ -3,6 +3,8 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{float}
+\usepackage{amssymb}
+\usepackage{mathabx}
 \pagestyle{plain}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
@@ -162,13 +164,46 @@ JADEはFとCRの自動調整のため，それぞれ適応メタパラメータ$
 $F_i　= 1$とし $F_i\le1qの$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．
 
 各世代の終了後に，成功したFとCRに基づき$\mu _F, \mu _{CR}$を更新する．
-次の式のうち$S_F,S_{CR}$はは成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習率である．また$mean_A$は算術平均, $mean_L$はLehmer平均である．
 
 \begin{eqnarray}
   \mu_F & = & (1 - c)\cdot\mu _F + c\cdot mean_L(S_F)\\
   \mu_{CR} & = & (1 - c)\cdot\mu _{CR} + c\cdot mean_A(S_{CR})
 \end{eqnarray}
 
+$S_F,S_{CR}$はは成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習率である．また$mean_A$は算術平均, $mean_L$はLehmer平均である．
+
+\begin{eqnarray}
+  mean_A(S) & = \frac{1}{|S|}\sum_{s\in S}s \\
+  mean_L(S) & = \frac{\sum_{s\in S}s^2}{\sum_{s\in S}s}
+\end{eqnarray}
+ここで$S=(s_1,\cdots, s_{|S|})$は$S_F,S_CR$のいずれかである．このようにパラメータを探索中に生成，更新することで，$\mu _F, \mu _{CR}$を対象問題に適したパラメータに徐々に近づける．
+
+\begin{algorithm}                      
+\caption{JADE}         
+\label{alg:pbnf}                          
+\begin{algorithmic}  
+\STATE init $\mu _F = 0.5; \mu _{CR} = 0.5$;
+\WHILE {the termination crirteria are not met}
+    \STATE $S_F = \emptyset, S_{CR} = \emptyset$;
+    \FOR{$i=1$ to $N$}
+        \STATE $F_i = randc(\mu _F, 0.1)$ \\
+        \STATE $CR_i = randn(\mu _{CR}, 0.1)$ \\
+        \STATE generate mutant vector {$v_i$} by mutation strategy;
+        \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
+    \ENDFOR
+    \FOR{$i=1$ to $N$}
+        \IF {$f(u_i) \leq f(x_i)$}
+            \STATE {$x_i=u_i$};
+            \STATE $S_F\Leftarrow {F_i}, S_CR \Leftarrow {CR_i};$
+        \ENDIF
+    \ENDFOR
+    \IF {$ S_F,S_{CR} \neq \emptyset$}
+        \STATE $\mu_F = (1 - c)\cdot\mu _F + c\cdot mean_L(S_F)$
+        \STATE $\mu_{CR} = (1 - c)\cdot\mu _{CR} + c\cdot mean_A(S_{CR})$
+    \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}　
 
 DEの探索性能はスケーリングパラメータFとクロスオーバーレイトCRにに大きく依存するものであった．これらのパラメータを適応的に変化させる手法がDEのstate of the art な手法として主流となっている，本項では適応DEの一つとしてJADEについて説明する．
 \section{Succes-History based Adaptive Differential Evolution (SHADE)}
