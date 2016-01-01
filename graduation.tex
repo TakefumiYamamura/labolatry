@@ -155,10 +155,21 @@ JADEはFとCRの自動調整のため，それぞれ適応メタパラメータ$
 
 \begin{eqnarray}
   F_i & = & randc(\mu _F, 0.1) \\
-  CR_i & = & randn(\mu _CR, 0.1)
+  CR_i & = & randn(\mu _{CR}, 0.1)
 \end{eqnarray}
 
-ここで$randc(\mu,　\sigma)$は位置パラメータ$\mu$と尺度パラメータ$\sigma$のコーシー分布に従う乱数,$randn(\mu,\sigma)$ 
+ここで$randc(\mu,　\sigma)$は位置パラメータ$\mu$と尺度パラメータ$\sigma$のコーシー分布に従う乱数,$randn(\mu,\sigma^2)$ は平均$\mu$，標準偏差$\sigma^2$の正規分布に従う乱数である．$F_i$の値が$F_i>1$の場合は
+$F_i　= 1$とし $F_i\le1qの$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．
+
+各世代の終了後に，成功したFとCRに基づき$\mu _F, \mu _{CR}$を更新する．
+次の式のうち$S_F,S_{CR}$はは成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習率である．また$mean_A$は算術平均, $mean_L$はLehmer平均である．
+
+\begin{eqnarray}
+  \mu_F & = & (1 - c)\cdot\mu _F + c\cdot mean_L(S_F)\\
+  \mu_{CR} & = & (1 - c)\cdot\mu _{CR} + c\cdot mean_A(S_{CR})
+\end{eqnarray}
+
+
 DEの探索性能はスケーリングパラメータFとクロスオーバーレイトCRにに大きく依存するものであった．これらのパラメータを適応的に変化させる手法がDEのstate of the art な手法として主流となっている，本項では適応DEの一つとしてJADEについて説明する．
 \section{Succes-History based Adaptive Differential Evolution (SHADE)}
 さきほどのJADEにつづいて本項では過去の成功したパラメータをもとに適応パラメータを変化させるSHADEについて説明する．
