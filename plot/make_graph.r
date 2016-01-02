@@ -54,6 +54,9 @@ for (i in 1:15) {
     arrows(xaxis_n, m_n + s_n, xaxis_n, m_n - s_n, angle = 90, length = 0.05, col = cols[k])
     arrows(xaxis_n, m_n - s_n, xaxis_n, m_n + s_n, angle = 90, length = 0.05, col = cols[k])
   }
+  out_put_file_name = paste("final/func", i, ".csv" , sep = "")
+  dev.copy2eps(file = "myFigure.eps")
+  # pictex(file = "plot_test.tex")
 
   # グラフに凡例を書き入れる
   # legend("topleft", legend = type, pch = 1, lty = 1, col = cols)
