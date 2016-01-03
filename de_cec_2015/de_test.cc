@@ -19,6 +19,7 @@ int ini_flag=0, n_flag,func_flag,**SS;
 
 int g_function_number;
 int g_problem_size;
+int g_pop_size;
 unsigned int g_max_num_evaluations;
 int g_th_num;
 

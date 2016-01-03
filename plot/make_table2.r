@@ -66,6 +66,8 @@ for (i in 1:15) {
   arrows(generation_number,average_distance_to_centroid_log2_max,generation_number, average_distance_to_centroid_log2_min, angle = 90, length=0.1, col = cols[2])
   arrows(generation_number,average_distance_to_centroid_log2_min,generation_number, average_distance_to_centroid_log2_max, angle = 90, length=0.1, col = cols[2])
 
+  out_put_file = paste("eps/func", i, ".eps" , sep = "")
+  pictex(file = out_put_file)
 }
 
 #黒がwith arc
