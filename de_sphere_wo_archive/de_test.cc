@@ -45,9 +45,9 @@ int main(int argc, char **argv) {
   // fp = fopen("../csvs2015/shade_with_archive_D100_P50.csv", "w" );
   // fprintf(fp, "shade_no_limited_archive, mean std\n");
   int dimension[5] = {2, 10, 30, 50, 100};
-  int population[6] = {10, 30, 50};
+  int population[3] = {10, 30, 50};
 
-  for (int mu = 0; mu < 6 ; ++mu){
+  for (int mu = 0; mu < 3 ; ++mu){
     g_pop_size = population[mu];
     g_arc_size = g_pop_size;
     for (int k = 0; k < 5; ++k){
