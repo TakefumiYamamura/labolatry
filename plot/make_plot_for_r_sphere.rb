@@ -1,7 +1,7 @@
 require 'csv'
 require 'fileutils'
 
-pop = [30, 50, 100]
+population = [10, 30, 50]
 dim = [2, 10, 30, 50, 100]
 
 def file_read(file_name, d_name)
@@ -16,7 +16,7 @@ end
 d_name = ["distance_to_centroid_de_with_archive", "distance_to_centroid_de_wo_archive"]
 
 func_num = 1
-pop = 30
+population.each do |pop|
 dim.each do |d|
   CSV.open("sphere/pop#{pop}dim#{d}.csv", "w") do |out|
     d_name.each do |dir|
@@ -27,4 +27,5 @@ dim.each do |d|
       end
     end
   end
+end
 end
