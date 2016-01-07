@@ -84,7 +84,7 @@ Fitness SHADE::run() {
   Fitness *temp_fit = (Fitness*)malloc(sizeof(Fitness) * pop_size);
 
 
-FILE *fp_val, *fp_val_length, *fp_fitness;
+FILE *fp_val, *fp_val_length, *fp_std_fitness;
   string file_path;
   char fname[100],fname2[100], fname3[100];
   // sprintf(fname, "../csvs_de_with_archive_D%d_P%d/func%d_%dth.csv", problem_size, g_pop_size, g_function_number, g_th_num) ;
@@ -94,7 +94,7 @@ FILE *fp_val, *fp_val_length, *fp_fitness;
   // fp_val = fopen(fname,"w");
   fp_val_length = fopen(fname2,"w");
   // fp_fitness = fopen(fname3,"w");
-  std_fitness = fopen(fname3,"w");
+  fp_std_fitness = fopen(fname3,"w");
 
 
   //main loop
@@ -120,7 +120,7 @@ FILE *fp_val, *fp_val_length, *fp_fitness;
       std_fitness += pow((mean_fitness - fitness[i]), 2.0);
     }
     std_fitness /= pop_size;
-    fprintf(std_fitness, "%f\n", sqrt(std_fitness));
+    fprintf(fp_std_fitness, "%f\n", sqrt(std_fitness));
     //fitnessの標準偏差std
 
     //lengthの分散
@@ -317,7 +317,7 @@ FILE *fp_val, *fp_val_length, *fp_fitness;
   }
   // fclose(fp_val);
   fclose(fp_val_length);
-  fclose(std_fitness);
+  fclose(fp_std_fitness);
 
   return bsf_fitness - optimum;
 }
