@@ -19,10 +19,11 @@
         cols <- c("red", "blue") # PF を赤色、C を青色、G を緑色
         # 準備
         plot(0, 0, type = "n", xlim = range(xaxis), ylim = range(x[, -1],na.rm=TRUE),
-             xlab = "generation number", ylab = "average distance to centroid")
+             xlab = "generation number", ylab = "std in distance to centroid")
 
         # 平均値と標準偏差を計算して、書き加える
         type <- unique(x[, 1])             # DEの種類を取得
+        print(type)
         # type <- x[,1]
         # y <- x[c(1,ncol(x))]
         # de_with<-y[y[, 1] == type[1], -1]
@@ -42,7 +43,6 @@
       for (k in 1:length(type)) {
         m <- apply(x[x[, 1] == type[k], -1], 2, mean)
         s <- apply(x[x[, 1] == type[k], -1], 2, sd)
-        # print(mean(y[y[, 1] == type[k], -1], na.rm=TRUE))
         lines(xaxis, m, col = cols[k])
         xaxis_n <- c()
         m_n <- c()

@@ -5,6 +5,8 @@
 \usepackage{float}
 \usepackage{amssymb}
 \usepackage{mathabx}
+\usepackage{longtable}
+\usepackage{supertabular}
 \pagestyle{plain}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
@@ -271,17 +273,37 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\le1qの$の場合は再�
 
 このように収束性と多様性は両者ともトレードオフの関係にあたり，収束性と多様性どちらを優先するかはその探索過程で適応的に変化する必要がある．その収束性と多様性をコントロールするパラメータであるFとCRを探索過程では適応的に変化させるのが前節でのべたJADEやSHADEであった．
 
-次章からはFやCRのように多様性維持に関わるアーカイブについても，適応的に変化させることでより良い結果が出るようになるのではないか．そもそもアーカイブが多様性の維持に対して有意な役割をもっているかを再考する．
+次章からはFやCRのように多様性維持に関わるアーカイブについても，適応的に変化させることでより良い結果が出るようになるのではないか．そもそもアーカイブが多様性の維持に対してどれほど有意な役割をもっているか解析を行う．
 
 
 \chapter{アーカイブの定性的な解析}
 \section{アーカイブによる多様性維持}
-本章ではアーカイブが多様性維持に対してどのような役割りを果たしているかをを考察する．実験では解集団における重心距離と，適応度関数$f(x)$による分散値をもとに，アーカイブが多様性の維持についてどのように役割りをはたしているか視覚的に観察する．
+本章ではアーカイブが解集団における多様性維持に対してどの程度貢献しているかを観察した．実験では解集団における重心距離の分散値と，適応度関数$f(x)$による分散値をもとに，アーカイブによる多様性の維持について視覚的に観察する．
 
+\section{実験設定}
+まず重心距離の分散値にもとづきアーカイブの多様性維持について視覚的に観察する．実験では関数最適化問題において最もシンプルな関数の一つであるsphere関数を用いて行う．sphere関数は次式で表される短鋒性の関数である．
+\begin{eqnarray}
+  f(x_1,\cdots,x_n) = \sum_{i=1}^D x_i
+\end{eqnarray}
 
-\section{重心距離に基づく多様性維持の維持の観察}
-アーカイブは解集団の多様性を維持するのに役立つとのことであった．それに対する，
+また実行可能領域は$[-100, 100]^D$で次元数は$D=2,10,30,50,100$，集団数は$P=10,30,50$，最大試行回数は1試行あたり$D*1,000$とし，試行回数は51回とした．使用したDEは突然変異戦略を式(3.2)のcurrent-to-p-best/とし，F=0.5,CR=0.5である．
+$x_{r1},$は${x_i}$と異なるように集団$P = {x_1, \cdots, x_N}$からランダムに選択した個体であり，また$x_{pbest}$は集団$P$を評価値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
 
+\begin{eqnarray}
+v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})
+\end{eqnarray}
+
+アーカイブありのDEとアーカイブ無しのDEを用いいて比較を行う．ここでいうアーカイブありのDEとは式(3.2)における$x_{Ar2}$を集団PとアーカイブAの和集合から${x_i}$と被らないようにランダムに選択し，アーカイブ無しのDEとは$x_{Ar2}$を$ｘ_{i}$と被らないように集団Pから選択したものである．
+
+多様性を図る尺度としては重心距離と適応度$f(x)$の2つの尺度を用いた．
+まずある世代tの解集団$P = {x_{t,1}, \cdots, x_{t,N}}$における重心ベクトルを$x_{t,centroid}$とする．各$x_{t,k}$と重心$x_{t,centroid}$の距離$d_{t,k}$を次のように定義する．ただし$k$は$k\in {1,2,\cdots,N}$となる整数値である．
+\begin{eqnarray}
+d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2} 
+\end{eqnarray}
+各世代ごとの重心距離の標準偏差について，51回の試行の平均値をのせたのが下記一覧である．
+表？では適応度$f(x)$を用いて，多様性を計測した．ある世代tの解集団$P = {x_{t,1}, \cdots, x_{t,N}}$の $x_{t,k}$を評価関数であるスフィア関数で評価した値$f(s_{t,k})$の標準偏差について，51回の試行の平均値を載せたのが〜である．
+
+\section{実験結果}
 \begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
@@ -289,35 +311,155 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\le1qの$の場合は再�
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{func1.eps}
-          \hspace{1.6cm} [1]通常画像
+          \includegraphics[clip, width=4.5cm]{P10D2.eps}
+          \hspace{1.2cm} [1] P=10, D=2
         \end{center}
       \end{minipage}
 
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{func2.eps}
-          \hspace{1.6cm} [2]アフィン変換(90度回転)
+          \includegraphics[clip, width=4.5cm]{P30D2.eps}
+          \hspace{1.2cm} [2] P=30, D=2
         \end{center}
       \end{minipage}
 
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{func3.eps}
-          \hspace{1.6cm} [3]グレースケール
+          \includegraphics[clip, width=4.5cm]{P50D2.eps}
+          \hspace{1.2cm} [3] P=50, D=2
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P10D10.eps}
+          \hspace{1.2cm} [4] P=10, D=10
         \end{center}
       \end{minipage}
 
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P30D10.eps}
+          \hspace{1.2cm} [5] P=30, D=10
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P50D10.eps}
+          \hspace{1.2cm} [6] P=50, D=50
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P10D30.eps}
+          \hspace{1.2cm} [7] P=10, D=30
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P30D30.eps}
+          \hspace{1.2cm} [8] P=30, D=30
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P50D30.eps}
+          \hspace{1.2cm} [9] P=50, D=30
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P10D50.eps}
+          \hspace{1.2cm} [10] P=10, D=50
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P30D50.eps}
+          \hspace{1.2cm} [11] P=30, D=50
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P50D50.eps}
+          \hspace{1.2cm} [12] P=50, D=50
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P10D100.eps}
+          \hspace{1.2cm} [13] P=10, D=100
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P30D100.eps}
+          \hspace{1.2cm} [14] P=30, D=100
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.5cm]{P50D100.eps}
+          \hspace{1.2cm} [15] P=50, D=100
+        \end{center}
+      \end{minipage}
     \end{tabular}
     \caption{画像の変換例}
     \label{fig:lena}
   \end{center}
 \end{figure}
 
-\section{アーカイブと適応DE}
-\chapter{適応型DifferentialEvolutionとアーカイブ}
+
+\section{アーカイブ改善の提案}
+\chapter{アーカイブの問題点}
+アーカイブは集団の次元数や集団数によって
+\chapter{提案手法1:アーカイブサイズの廃止}
+アーカイブのサイズは集団Pと同じサイズだけとり，それをこえると，超過した分だけ，
+
+\chapter{提案手法2:アーカイブ選択率の変更}
+アーカイブは収束性
+
+
 \chapter{アーカイブの性能比較}
 \section{重心距離による多様性維持の観察}
 アーカイブの使用によって多様性を維持出来るのであれば，アーカイブなしのDEはアーカイブありのDEに比べその収束スピードは純粋な短鋒性の関数においては遅くなるはずである．
