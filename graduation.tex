@@ -7,6 +7,8 @@
 \usepackage{mathabx}
 \usepackage{longtable}
 \usepackage{supertabular}
+\usepackage{subfigure}
+
 \pagestyle{plain}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
@@ -35,7 +37,7 @@ Evaluating And Improvement Of Performance Of Archive In Differential Evolution
 \end{center}
 \Large %17
 \begin{center}
-指導教員:　福永　アレックス
+指導教員:　福永 アレックス
 \end{center}
 \LARGE %21
 \begin{center}
@@ -67,25 +69,23 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \section{本研究の目的}
 本研究の目的は２つある．
 \begin{enumerate}
-\item Archiveが多様性の維持にどれほど役に立っているかを定性的に調査する
+\item Archiveが多様性の維持にどのように役割りをはたしているのか調査する
 \vspace{3mm}
 \newline
-Archiveには，生存選択の時に，劣解として，子個体に上書きされた親個体が保存される．変異ベクトル作成時にArchiveに保存された劣解を用いることで，解集団における多様性の維持に役立つ．本研究では，Archive使用時と未使用時における解集団の多様性を，適応度の分散と，重心からの距離の分散をみることで比較し，下位集団が多様性を維持しているかどうか定量的に分析を行う．
+Archiveには，生存選択の時に，劣解として，子個体に上書きされた親個体が保存される．変異ベクトル作成時にArchiveに保存された劣解を用いることで，解集団における多様性の維持に役立つ．本研究では，Archive使用時と未使用時における解集団の多様性を，適応度の分散と，重心からの距離の分散をみることで比較し，解集団が多様性を維持しているかどうか分析を行う．
 \newline
 
 
-\item Archiveを改良することで，探索性能を向上できないかいくつか手法を提案する提案する．
+\item Archiveを改良することで，探索性能を向上できないか新たな手法を提案する提案する．
 \vspace{3mm}
 \newline
 Archiveシステムは多くの適応DEについて使われているにも関わらず，そのシステムについての改良は他の制御パラメータであるF（Scaling Factor）やCR(Crossover Rate)に比べ試みられていない．
-JADE論文にて提唱されたArchiveシステムの改善を試みた手法とその性能評価を行う．
-
-
+Archive性能の分析をふまえた後，その改善をはかるための新たな手法を提案する．
 \end{enumerate}
 
 
 \section{本論文の構成}
-本論文は以下の通りに構成される。2 章で DEの詳細と適応DE，アーカイブの使用例について説明する3 章ではアーカイブの性能を重心距離と適応度f(x)の値をもとに観察する．4章ではアーカイブを改善したいくつかの手法について説明する．5章では本研究における知見をまとめる．
+本論文は以下の通りに構成される。2 章で DEの詳細と適応DE，アーカイブの使用例について説明する3 章ではアーカイブの性能を重心距離と適応度f(x)の値をもとに観察する．4章ではアーカイブを改善した手法について説明する．5章では本研究における知見をまとめる．
 
 \chapter{Differential Evolutionとアーカイブ}
 \section{Differential Evolution}
@@ -130,14 +130,8 @@ current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後�
 \end{algorithm}　
 
 全ての個体が子個体を生成した後，次世代に残る個体を決定する．DEでは親個体と子個体の適応度を評価関数$f(x)$を用いて比較し，評価値の良いものを次世代へ残す．
-この選択の際，current-to-pbest/1，及びrand-to-pbest/1のアーカイブ戦略を用いた場合，子個体より劣っていた親個体$x_{i}$を，アーカイブに保存する．アーカイブのサイズは集団Pのサイズと等しく，そのサイズを超えた場合，すでにあるアーカイブの中から，ランダムにその要素を取り除く．current-to-pbest，current-to-randの突然変異戦略において，アーカイブと集団Pの和集合からターゲットベクターを選択することで，解集団における多様性の維持荷役だつ．
-このアーカイブは\cite{JADE}にて提唱され，，その後も適応DEの多くでこの機構が使われ続けている．本論文ではこのアーカイブの性能を評価するとともに，
-
-
-下におおまかに
-各世代において，各個体${x_i}$ごとに変異個体${v_i}$を
-
-最後に本節で述べたDEアルゴリズムの全体をAlgorithm 1に示す．
+この選択の際，current-to-pbest/1，及びrand-to-pbest/1のアーカイブ戦略を用いた場合，子個体より劣っていた親個体$x_{i}$を，アーカイブに保存する．アーカイブのサイズは集団Pのサイズと等しく，そのサイズを超えた場合，すでにあるアーカイブの中から，ランダムにその要素を取り除く．current-to-pbest，current-to-randの突然変異戦略において，アーカイブと集団Pの和集合からターゲットベクターを選択することで，解集団における多様性の維持に役立つ．
+最後に本節で述べたDEアルゴリズムの全体をAlgorithm 2に示す．
 \begin{algorithm}                      
 \caption{Differential Evolution}         
 \label{alg:pbnf}                          
@@ -167,8 +161,7 @@ JADEはFとCRの自動調整のため，それぞれ適応メタパラメータ$
 \end{eqnarray}
 
 ここで$randc(\mu,　\sigma)$は位置パラメータ$\mu$と尺度パラメータ$\sigma$のコーシー分布に従う乱数,$randn(\mu,\sigma^2)$ は平均$\mu$，標準偏差$\sigma^2$の正規分布に従う乱数である．$F_i$の値が$F_i>1$の場合は
-$F_i　= 1$とし $F_i\le1qの$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．
-
+$F_i=1$とし $F_i\le1qの$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．
 各世代の終了後に，成功したFとCRに基づき$\mu _F, \mu _{CR}$を更新する．
 
 \begin{eqnarray}
@@ -211,7 +204,6 @@ $S_F,S_{CR}$は成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習�
 \end{algorithmic}
 \end{algorithm}　
 
-DEの探索性能はスケーリングパラメータFとクロスオーバーレイトCRにに大きく依存するものであった．これらのパラメータを適応的に変化させる手法がDEのstate of the art な手法として主流となっている，本項では適応DEの一つとしてJADEについて説明する．
 \section{Succes-History based Adaptive Differential Evolution (SHADE)}
 さきほどのJADEにつづいて本項では過去の成功したパラメータをもとに適応的にFとCRを変化させるSHADEについて説明する．
 SHADEでは大きさHの履歴メモリ$M_F,M_{CR}$を用いてパラメータ適応を行う．ここで,$M_F = (M_{F,1},\cdots,M_{F,H})$,$M_{CR}= (M_{CR,1},\cdots,M_{CR,H})$であり，すべての要素は探索開始時に0.5に初期化されている．各区世代のはじめに[1,H]の範囲からランダムに選択したメモリの番号rの要素$M_{F,r},M_{CR,r}$を用いて各個体$x_i$の$F_i$と$F_{CR}$を生成する．
@@ -230,7 +222,7 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\le1qの$の場合は再�
 \end{eqnarray}
 
 ここで,$k(1\lesseqgtr k \lesseqgtr H)$は更新するメモリの要素を決定するパラメータであり，探索開始時に1に初期化され，以降更新を行うたびに1づつ増加していく．また，$k > H$となった場合は$k = 1$とする．探索が経過するに連れて$M_F,M_{CR}$には対象問題に適したかつ，多様なパラメータ設定が保持される．
-一つのパラメータ$\mu _F, \mu _{CR}$で管理していたJADEに対し，$M_F = (M_{F,1},\cdots,M_{F,H})$,$M_{CR}= (M_{CR,1},\cdots,M_{CR,H})$とSHADEでは複数のパラメータを持つため，パラメータにおける多様性が維持しやすいのが特徴である．Algorithm3にSHADEの全体像をのせる．
+一つのパラメータ$\mu _F, \mu _{CR}$で管理していたJADEに対し，$M_F = (M_{F,1},\cdots,M_{F,H})$,$M_{CR}= (M_{CR,1},\cdots,M_{CR,H})$とSHADEでは複数のパラメータを持つため，パラメータにおける多様性が維持しやすいのが特徴である．Algorithm4にSHADEの全体像をのせる．
 
 \begin{algorithm}                      
 \caption{SHADE}         
@@ -262,8 +254,6 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\le1qの$の場合は再�
 \end{algorithmic}
 \end{algorithm}　
 
-その個体ノン赤かラ個々で生成された更新するメモリの様相を決定するパラメータであり，探索開始時に1に初期化され，囲碁更新を行う旅に1ずつ増加していく．またk>Hとなッタ倍はk=1とする．探索が進むにつれて,
-
 \section{DEの探索におけるおける収束性と多様性}
 通常のDE及び適応DEについて前節までで説明をした．そしてDEの探索性能は一般的に収束性と多様性の間のバランスを左右するパラメータによって決まる．ここでDEにおける収束性と多様性について再考する．
 
@@ -276,8 +266,8 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\le1qの$の場合は再�
 次章からはFやCRのように多様性維持に関わるアーカイブについても，適応的に変化させることでより良い結果が出るようになるのではないか．そもそもアーカイブが多様性の維持に対してどれほど有意な役割をもっているか解析を行う．
 
 
-\chapter{アーカイブの定性的な解析}
-\section{アーカイブによる多様性維持}
+\chapter{アーカイブの解析}
+\section{アーカイブによる多様性維持の観察}
 本章ではアーカイブが解集団における多様性維持に対してどの程度貢献しているかを観察した．実験では解集団における重心距離の分散値と，適応度関数$f(x)$による分散値をもとに，アーカイブによる多様性の維持について視覚的に観察する．
 
 \section{実験設定}
@@ -301,17 +291,21 @@ v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})
 d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2} 
 \end{eqnarray}
 各世代ごとの重心距離の標準偏差について，51回の試行の平均値をのせたのが下記一覧である．
-表？では適応度$f(x)$を用いて，多様性を計測した．ある世代tの解集団$P = {x_{t,1}, \cdots, x_{t,N}}$の $x_{t,k}$を評価関数であるスフィア関数で評価した値$f(s_{t,k})$の標準偏差について，51回の試行の平均値を載せたのが〜である．
+表？では適応度$f(x)$を用いて，多様性を計測した．ある世代tの解集団$P = {x_{t,1}, \cdots, x_{t,N}}$の $x_{t,k}$を評価関数であるsphere関数で評価した値$f(s_{t,k})$の標準偏差について，51回の試行の平均値を載せたのが以下の図である．
 
 \section{実験結果}
+
+
+
 \begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
 
+
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P10D2.eps}
+          \includegraphics[clip, width=4.0cm]{P10D2.eps}
           \hspace{1.2cm} [1] P=10, D=2
         \end{center}
       \end{minipage}
@@ -319,7 +313,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P30D2.eps}
+          \includegraphics[clip, width=4.0cm]{P30D2.eps}
           \hspace{1.2cm} [2] P=30, D=2
         \end{center}
       \end{minipage}
@@ -327,19 +321,22 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P50D2.eps}
+          \includegraphics[clip, width=4.0cm]{P50D2.eps}
           \hspace{1.2cm} [3] P=50, D=2
         \end{center}
       \end{minipage}
     \end{tabular}
   \end{center}
+\end{figure}
+\begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
+
 
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P10D10.eps}
+          \includegraphics[clip, width=4.0cm]{P10D10.eps}
           \hspace{1.2cm} [4] P=10, D=10
         \end{center}
       \end{minipage}
@@ -347,7 +344,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P30D10.eps}
+          \includegraphics[clip, width=4.0cm]{P30D10.eps}
           \hspace{1.2cm} [5] P=30, D=10
         \end{center}
       \end{minipage}
@@ -355,19 +352,22 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P50D10.eps}
-          \hspace{1.2cm} [6] P=50, D=50
+          \includegraphics[clip, width=4.0cm]{P50D10.eps}
+          \hspace{1.2cm} [6] P=50, D=10
         \end{center}
       \end{minipage}
     \end{tabular}
   \end{center}
+\end{figure}
+\begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
+
 
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P10D30.eps}
+          \includegraphics[clip, width=4.0cm]{P10D30.eps}
           \hspace{1.2cm} [7] P=10, D=30
         \end{center}
       \end{minipage}
@@ -375,7 +375,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P30D30.eps}
+          \includegraphics[clip, width=4.0cm]{P30D30.eps}
           \hspace{1.2cm} [8] P=30, D=30
         \end{center}
       \end{minipage}
@@ -383,19 +383,22 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P50D30.eps}
+          \includegraphics[clip, width=4.0cm]{P50D30.eps}
           \hspace{1.2cm} [9] P=50, D=30
         \end{center}
       \end{minipage}
     \end{tabular}
   \end{center}
+\end{figure}
+\begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
+
 
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P10D50.eps}
+          \includegraphics[clip, width=4.0cm]{P10D50.eps}
           \hspace{1.2cm} [10] P=10, D=50
         \end{center}
       \end{minipage}
@@ -403,7 +406,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P30D50.eps}
+          \includegraphics[clip, width=4.0cm]{P30D50.eps}
           \hspace{1.2cm} [11] P=30, D=50
         \end{center}
       \end{minipage}
@@ -411,19 +414,22 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P50D50.eps}
+          \includegraphics[clip, width=4.0cm]{P50D50.eps}
           \hspace{1.2cm} [12] P=50, D=50
         \end{center}
       \end{minipage}
     \end{tabular}
   \end{center}
+\end{figure}
+\begin{figure}[htbp]
   \begin{center}
     \begin{tabular}{c}
+
 
       % 1
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P10D100.eps}
+          \includegraphics[clip, width=4.0cm]{P10D100.eps}
           \hspace{1.2cm} [13] P=10, D=100
         \end{center}
       \end{minipage}
@@ -431,7 +437,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 2
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P30D100.eps}
+          \includegraphics[clip, width=4.0cm]{P30D100.eps}
           \hspace{1.2cm} [14] P=30, D=100
         \end{center}
       \end{minipage}
@@ -439,51 +445,42 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
       % 3
       \begin{minipage}{0.33\hsize}
         \begin{center}
-          \includegraphics[clip, width=4.5cm]{P50D100.eps}
+          \includegraphics[clip, width=4.0cm]{P50D100.eps}
           \hspace{1.2cm} [15] P=50, D=100
         \end{center}
       \end{minipage}
     \end{tabular}
-    \caption{画像の変換例}
+    \caption{重心距離による多様性維持の観察}
     \label{fig:lena}
   \end{center}
 \end{figure}
 
 
-\section{アーカイブ改善の提案}
-\chapter{アーカイブの問題点}
-アーカイブは集団の次元数や集団数によって
-\chapter{提案手法1:アーカイブサイズの廃止}
-アーカイブのサイズは集団Pと同じサイズだけとり，それをこえると，超過した分だけ，
+\section{考察}
+本節では先で得られた実験結果を基に考察する．
 
-\chapter{提案手法2:アーカイブ選択率の変更}
-アーカイブは収束性
-
-
-\chapter{アーカイブの性能比較}
-\section{重心距離による多様性維持の観察}
-アーカイブの使用によって多様性を維持出来るのであれば，アーカイブなしのDEはアーカイブありのDEに比べその収束スピードは純粋な短鋒性の関数においては遅くなるはずである．
-多峰性などの多様性維持が収束スピードの上昇に起因する関数においては，
-
-またアーカイブの機能が多様性維持であれば，大域的探索性能をあげ，局所的な探索性能を下げるはずである．
-したがって，sphere関数のような短鋒性の関数においては,局所的な探索性能が下げ，多峰性の大域的な探索が必要と思われる関数においては，その探索性能を上げると予測出来る．
-
-まずアーカイブが多様性を維持しているのか重心距離を用いて次元数D，と集団数Pを変更することによって観察する．$D = {2, 10, 30, 50, 100}, P = {10,30, 50}$とする．
-またアーカイブの機能が多様性維持であれば，大域的探索性能を上げ，局所的な探索性能を下げるはずである．
-
-重心距離の定義は以下の式とする．集団の個体数をNPとし，ある世代gの集団におけるi番目の番目の個体を$x_{i,g}　= (x_{1,i,g},\cdots, x_{D,i,g} )(i = 1,\dots,D)$とする．
-この時ある世代gの集団における重心ベクトルを
+\chapter{アーカイブ改善の提案}
+\section{提案手法:アーカイブサイズの廃止}
+既存手法では，アーカイブのサイズは集団Pと同じサイズだけとり，超過分だけランダムにアーカイブから取りのぞく．このサイズが小さいと，解更新が停滞している場合，すぐに探索の近傍の個体でアーカイブが一杯になり，アーカイブで保持される個体の多様性が失われる．
+現集団中の個体の各変数$j(j = 1, \dots,D)$の下限上限値を$[x_{min,j},x_{max,j}]^D$とする．
+$alpha(>0)$である時，各世代の終了時に,アーカイブ内の全ての個体について，$[alpha *x_{min,j},alpha*x_{max,j}]^D$の範囲に全ての変数値が収まっていれば残し，そうでなければ削除する．
+こうすることで，アーカイブのサイズがなくても，アーカイブに探索状況にあった多様な個体を保持できるのではと考えられる．
+\section{実験設定}
+ここでは突然変異戦略をcurrent-to-pbest/bin/1及びパラメータを$F=0.5, CR=0.5$としたDEと，$alpha = (0.5, 1.0, 2.0, 2.5)$とした提案手法によるアーカイブを用いた，DEとで比較実験を行う．
+評価実験にはBlack-Box Optimization Benchmarking at CEC'2015 (CEC-BBOB)の15個のベンチマーク関数を用いた．
+全てのテスト関数において実行可能領域は$[-100,100]^D$である．また，探索中に得られた最良解と最適解との誤差が$10^{-8}$以下になった場合は，誤差値は0となる．ベンチマークの詳細については\cite{CEC2015}を参考にしていただきたい．
+全てのテスト関数において次元数は$D=30$とし，1試行あたりの最大評価回数はD*10,000とした．試行回数は51回とし，この評価回数の平均値がどれほど高い精度の解であるかをもとに手法を評価する．また，有意水準0.05のWilcoxonの順位和検定を行った.
 
 
-これをこれをアーカイブが多様性を維持するのみであれば単縫製の関数にいおいてはその性能ｗ上げ，短鋒生のあｋん数においてはむしろむしろ収束スピードをを下げるはずである．　
+
+\section{実験結果}
+
+\section{考察}
+
 \chapter{終わりに}
+\section{まとめ}
 \section{謝辞}
-研究室の先輩方にはミーティングや中間発表を初め有益なアドバイスをずっと頂きました．
-指導教員となる福永先生には，お忙しい中必ず週に一度の個別ミーティングの機会を与えてくださり，とても丁寧にご指導していただきました．
-研究とはどういうものか，どのように進めれば良いのか右も左もわかっていなかった自分にそれらを一から教えてくれたことに深く感謝いたします．
-また研究室の先輩の中でも，特に田邊さんには，有益なアドバイスを幾つもしていただきました．常に1を聞くと10のことを教えてくださり，そのDE研究における知見の深さに，いつも脱帽していました．改めてここで感謝の意を示します．
-本当にすばらしい先輩や指導教員に恵まれた中，卒業論文を執筆できたことに幸福を感じます．
-修士過程でも一つでも多くのことを学ばせていただきたいと思います．
+
 
 %-----------------------------参考文献記述エリア---------------------------%
 \begin{thebibliography}{10}
@@ -491,8 +488,7 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
   \bibitem{ExDE}K.V.Price, R, N.Storn and J.A. Lampinen.Differential Evolution - A Practical Approach to Global Opticization. Springer, Berlin Heidelberg, 2005.
   \bibitem{JADE}J. Zhang and A. C. Sanderson: JADE: Adaptive DifferentialEvolution With Optional External Archive,IEEE Tran. Evol.Comput.,13–5, 945/958 (2009)
   \bibitem{SHADE}R. Tanabe and A. Fukunaga: Success-History Based Param-eter Adaptation for Differential Evolution,Proceedings of the2013 IEEE Congress on Evolutionary Computation, 71/78(2013)
-  \bibitem{澤田}澤田昭夫. 『論文のレトリック』 
-   講談社学術文庫, 講談社, 1983, 330p.
+  \bibitem{CEC2015}Q. Chen, B. Liu,  Q. Zhang, J. J. Liang, P. N. Suganthan, B. Y. Qu, "Problem Definition and Evaluation Criteria for CEC 2015 Special Session and Competition on Bound Constrained Single-Objective Computationally Expensive Numerical Optimization", Technical Report, Computational Intelligence Laboratory, Zhengzhou University, Zhengzhou, China  and  Technical Report, Nanyang Technological University, Singapore, Nov 2014.
 
 \end{thebibliography}
 %---------------------------------必須エリア-------------------------------%
