@@ -153,7 +153,7 @@ current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後�
 
 
 \section{Adaptive Differential Evolution (JADE)}
-JADE\quote{JADE}はZhangらによって2009年に提唱された．適応型DEの一つである．JADEではDEの探索性能を大きく左右する\sl{F}と\sl{CR}を通常のDEのように固定するのではなく，探索中に自動調整する．その自動調整のために適応メタパラメータ$\mu _F,\mu _{CR}$ を使用する．これらのパラメータは探索開始時に0.5に初期化する．各世代のはじめに，適応パラメータの各個体$x_i$の$F_i$と$CR_i$を，
+JADE\cite{JADE}はZhangらによって2009年に提唱された適応型DEの一つである．JADEではDEの探索性能を大きく左右する\sl{F}と\sl{CR}を通常のDEのように固定するのではなく，探索中に自動調整する．その自動調整のために適応メタパラメータ$\mu _F,\mu _{CR}$ を使用する．これらのパラメータは探索開始時に0.5に初期化する．各世代のはじめに，適応パラメータの各個体$x_i$の$F_i$と$CR_i$を，
 $\mu _F,\mu _{CR}$をもとに次の様に生成する．
 
 \begin{eqnarray}
@@ -456,6 +456,163 @@ d_{t,k} = \sqrt{\sum_{i=1}^{D} (x_{t,centroid,i} - x_{t,k,i})^2}
   \end{center}
 \end{figure}
 
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD2.eps}
+          \hspace{1.2cm} [1] P=10, D=2
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD2.eps}
+          \hspace{1.2cm} [2] P=30, D=2
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD2.eps}
+          \hspace{1.2cm} [3] P=50, D=2
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD10.eps}
+          \hspace{1.2cm} [4] P=10, D=10
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD10.eps}
+          \hspace{1.2cm} [5] P=30, D=10
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD10.eps}
+          \hspace{1.2cm} [6] P=50, D=10
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD30.eps}
+          \hspace{1.2cm} [7] P=10, D=30
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD30.eps}
+          \hspace{1.2cm} [8] P=30, D=30
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD30.eps}
+          \hspace{1.2cm} [9] P=50, D=30
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD50.eps}
+          \hspace{1.2cm} [10] P=10, D=50
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD50.eps}
+          \hspace{1.2cm} [11] P=30, D=50
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD50.eps}
+          \hspace{1.2cm} [12] P=50, D=50
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD100.eps}
+          \hspace{1.2cm} [13] P=10, D=100
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD100.eps}
+          \hspace{1.2cm} [14] P=30, D=100
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD100.eps}
+          \hspace{1.2cm} [15] P=50, D=100
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \caption{適応度による多様性維持の観察}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
 
 \section{考察}
 本節では先で得られた実験結果を基に考察する．
