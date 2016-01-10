@@ -10,7 +10,11 @@ def file_read(file_name, d_name)
     *scores = CSV.read(file)
     array << (scores.map { |e| e[0] }).unshift(d_name)
   end
-  return array
+  # p array.length
+  # p array[0].length
+  # p array.last.length
+  # p array.map { |e| e.slice(0...2000)}
+  return array.map { |e| e.slice(0...2000)}
 end
 
 d_name = ["fitness_de_with_archive", "fitness_de_wo_archive"]

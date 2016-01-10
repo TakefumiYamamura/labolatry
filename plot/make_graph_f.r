@@ -1,6 +1,7 @@
   # library(exactRankTests)
   # library(knitr)
   # library(xtable)
+  library(readr)
   dim <- c(2,10,30,50,100)
   # pop <- 30
   populations <- c(10, 30, 50)
@@ -8,22 +9,25 @@
     for (i in 1:5) {
       file_name <- paste("sphere/pop", populations[mu], "dim" , sep = "")
         file_name = paste(file_name, dim[i], ".csv" , sep = "")
-        x <- read.csv(file_name, header = FALSE)
+        # x <- read.csv(file_name, header = FALSE)
+        x <- read_csv(file_name, skip = 0)
 
         x[,-1] <- log10(x[,-1])
-        for (j in 1:ncol(x)) {
+        for (j in 2:ncol(x)) {
           x[,j] <- ifelse(is.infinite(x[,j]),NA,x[,j])
         }
 
         xaxis <- 1:ncol(x[, -1])          # x 軸座標を設定
         cols <- c("red", "blue") # PF を赤色、C を青色、G を緑色
         # 準備
-        plot(0, 0, type = "n", xlim = range(xaxis), ylim = range(x[, -1],na.rm=TRUE),
+        # plot(0, 0, type = "n", xlim = range(xaxis), ylim = range(x[, -1],na.rm=TRUE),
+        #      xlab = "generation number", ylab = "std in distance to centroid")
+        plot(0, 0, type = "n", xlim = c(1,2000), ylim = c(-6, 2),
              xlab = "generation number", ylab = "std in distance to centroid")
 
         # 平均値と標準偏差を計算して、書き加える
-        type <- unique(x[, 1])             # DEの種類を取得
-        print(type)
+        type <- unique(x[[1]])             # DEの種類を取得
+        print(x[[1]])
         # type <- x[,1]
         # y <- x[c(1,ncol(x))]
         # de_with<-y[y[, 1] == type[1], -1]
