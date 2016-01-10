@@ -48,10 +48,10 @@ int main(int argc, char **argv) {
   char fname_all[100];
   char fname_std[100];
   // sprintf(fname,"../fitness/alpha%f_P%f_D%f.csv", alpha_value, g_pop_size, g_problem_size)
-  // sprintf(fname, "../all_fitness.csv");
-  // sprintf(fname_std, "../all_std.csv");
-  // fp = fopen(fname, "w");
-  // fp_std = fopen(fname_std, "w");
+  sprintf(fname, "../normal_all_fitness.csv");
+  sprintf(fname_std, "../normal_all_std.csv");
+  fp = fopen(fname, "w");
+  fp_std = fopen(fname_std, "w");
 
   // fp = fopen("../csvs2015/shade_with_archive_D100_P50.csv", "w" );
   // fprintf(fp, "shade_no_limited_archive, mean std\n");
@@ -98,16 +98,16 @@ int main(int argc, char **argv) {
       std_bsf_fitness = sqrt(std_bsf_fitness);
 
       cout  << "\nmean = " << mean_bsf_fitness << ", std = " << std_bsf_fitness << endl;
-      // fprintf(fp, "%f", mean_bsf_fitness);
-      // fprintf(fp_std, "%f", std_bsf_fitness );
+      fprintf(fp, "%f,", mean_bsf_fitness);
+      fprintf(fp_std, "%f,", std_bsf_fitness );
       free(bsf_fitness_array);
     }
     // fclose(fp_all);
-    // fprintf(fp, "\n");
-    // fprintf(fp_std, "\n");
+    fprintf(fp, "\n");
+    fprintf(fp_std, "\n");
   // }
-  // fclose(fp);
-  // fclose(fp_std);
+  fclose(fp);
+  fclose(fp_std);
 
   return 0;
 }
