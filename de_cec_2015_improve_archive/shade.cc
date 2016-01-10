@@ -250,7 +250,7 @@ Fitness SHADE::run() {
       flag = true;
       for (int j = 0; j < problem_size; ++j)
         {
-          if (archive[i][j] < 2.0 * min_x[j] || archive[i][j] > 2.0 * max_x[j]){
+          if (archive[i][j] < g_alpha * min_x[j] || archive[i][j] > g_alpha * max_x[j]){
             flag = false;
             break;
           }

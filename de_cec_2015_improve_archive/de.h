@@ -24,6 +24,7 @@ typedef  double Fitness;
 extern int g_function_number;
 extern int g_problem_size;
 extern int g_pop_size;
+extern double g_alpha;
 
 extern unsigned int g_max_num_evaluations;
 extern int function_name;
