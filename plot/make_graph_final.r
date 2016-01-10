@@ -61,7 +61,7 @@
         arrows(xaxis_n, m_n + s_n, xaxis_n, m_n - s_n, angle = 90, length = 0.05, col = cols[k])
         arrows(xaxis_n, m_n - s_n, xaxis_n, m_n + s_n, angle = 90, length = 0.05, col = cols[k])
       }
-      eps <- paste("eps/P", populations[mu], "Dfit", sep="")
+      eps <- paste("eps/P", populations[mu], "fitD", sep="")
       out_put_file_name <- paste(eps, dim[i], ".eps" , sep = "")
       # dev.copy2eps(file = "myFigure.eps")
       dev.copy2eps(file = out_put_file_name)
