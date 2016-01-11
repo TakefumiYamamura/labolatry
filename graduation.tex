@@ -122,10 +122,10 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \begin{algorithmic}
 \STATE $j_{rand} = \rm{randi}[1, D]$;
 \FOR{$j=1$ to $D$}
-  \IF {$\rm{rand}[0,1) \leqq CR || j == j_{rand} $}
-    \STATE {$u_(i,j)$ = $v_(i,j)$}
+  \IF {$\rm{rand}[0,1) \leqq $ \OR $j == j_{rand} $}
+    \STATE $u^i_j$ := $v^i_j$;
   \ELSE
-    \STATE {$u_(i,j)$ = $x_(i,j)$}
+    \STATE $u^i_j$ := $x^i_j$;
   \ENDIF
 \ENDFOR
 \end{algorithmic}
@@ -142,7 +142,7 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \WHILE {探索終了条件を満たしていない}
     \FOR{$i=1$ to $N$}
         \STATE 突然変異戦略を用いて変異個体{$\vector{v}^i$}を生成;
-        \STATE $\vector{x}^i$と$\vector{v}^i$に交叉を適用し,子個体$\vector{u}^i$を生成; 
+        \STATE $\vector{x}^i$と$\vector{v}^i$に交叉を適用し,子個体$\vector{u}^i$を生成;
     \ENDFOR
     \FOR{$i=1$ to $N$}
         \IF {$f(\vector{u}^i) \leqq f(\vector{x}^i)$}
@@ -155,8 +155,7 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 
 
 \section{Adaptive Differential Evolution (JADE)}
-JADE \cite{JADE}はZhangらによって2009年に提唱された適応型DEの一つである．JADEではDEの探索性能を大きく左右するスケール係数$F$と交叉率$CR$を通常のDEのように固定するのではなく，探索中に自動調整する．その自動調整のために適応メタパラメータ$\mu _F,\mu _{CR}$ を使用する．これらのパラメータは探索開始時に0.5に初期化する．各世代のはじめに，適応パラメータの各個体$x_i$の$F_i$と$CR_i$を，
-$\mu _F,\mu _{CR}$をもとに次の様に生成する．
+JADE \cite{JADE}はZhangらによって2009年に提唱された適応型DEの一つである．JADEではDEの探索性能を大きく左右するスケール係数$F$と交叉率$CR$を通常のDEのように固定するのではなく，探索中に自動調整する．その自動調整のために適応メタパラメータ$\mu _F,\mu _{CR}$ を使用する．これらのパラメータは探索開始時に0.5に初期化する．各世代のはじめに，適応パラメータの各個体$\vector{x}^i$の$F_i$と$CR_i$を，$\mu _F,\mu _{CR}$をもとに次の様に生成する．
 
 \begin{eqnarray}
   F_i & = & randc(\mu _F, 0.1) \\
@@ -185,17 +184,17 @@ $S_F,S_{CR}$は成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習�
 \label{alg:pbnf}
 \begin{algorithmic}
 \STATE init $\mu _F = 0.5; \mu _{CR} = 0.5$;
-\WHILE {the termination crirteria are not met}
+\WHILE {探索終了条件を満たしていない}
     \STATE $S_F = \emptyset, S_{CR} = \emptyset$;
     \FOR{$i=1$ to $N$}
         \STATE $F_i = randc(\mu _F, 0.1)$ \\
         \STATE $CR_i = randn(\mu _{CR}, 0.1)$ \\
-        \STATE generate mutant vector {$v_i$} by mutation strategy;
-        \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
+        \STATE 突然変異戦略を用いて変異個体{$\vector{v}^i$}を生成;
+        \STATE $\vector{x}^i$と$\vector{v}^i$に交叉を適用し,子個体$\vector{u}^i$を生成;
     \ENDFOR
     \FOR{$i=1$ to $N$}
-        \IF {$f(u_i) \leqq f(x_i)$}
-            \STATE {$x_i=u_i$};
+        \IF {$f(\vector{u}^i) \leqq f(\vector{x}^i)$}
+            \STATE {$\vector{x}^i=\vector{u}^i$};
             \STATE $S_F\Leftarrow {F_i}, S_CR \Leftarrow {CR_i};$
         \ENDIF
     \ENDFOR
@@ -209,7 +208,7 @@ $S_F,S_{CR}$は成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習�
 
 \section{Succes-History based Adaptive Differential Evolution (SHADE)}
 さきほどのJADEにつづいて本項では過去の成功したパラメータをもとに適応的にFとCRを変化させるSHADEについて説明する．
-SHADEでは大きさHの履歴メモリ$M_F,M_{CR}$を用いてパラメータ適応を行う．ここで,$M_F = (M_{F,1},...,M_{F,H})$,$M_{CR}= (M_{CR,1},...,M_{CR,H})$であり，すべての要素は探索開始時に0.5に初期化されている．各区世代のはじめに[1,H]の範囲からランダムに選択したメモリの番号rの要素$M_{F,r},M_{CR,r}$を用いて各個体$x_i$の$F_i$と$F_{CR}$を生成する．
+SHADEでは大きさHの履歴メモリ$M_F,M_{CR}$を用いてパラメータ適応を行う．ここで,$M_F = (M_{F,1},...,M_{F,H})$,$M_{CR}= (M_{CR,1},...,M_{CR,H})$であり，すべての要素は探索開始時に0.5に初期化されている．各区世代のはじめに[1,H]の範囲からランダムに選択したメモリの番号rの要素$M_{F,r},M_{CR,r}$を用いて各個体$\vector{x}^i$の$F_i$と$F_{CR}$を生成する．
 
 \begin{eqnarray}
   F_i & = & randc(M_{F,r}, 0.1) \\
@@ -240,11 +239,11 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\leqq1の$の場合は再
         \STATE $F_i = randc(M_F, 0.1)$ \\
         \STATE $CR_i = randn(M_{CR}, 0.1)$ \\
         \STATE generate mutant vector {$v_i$} by mutation strategy;
-        \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
+        \STATE generate trial vector {$\vector{u}^i$} by crossing over {$\vector{x}^i$} and {$v_i$}; 
     \ENDFOR
     \FOR{$i=1$ to $N$}
-        \IF {$f(u_i) \leqq f(x_i)$}
-            \STATE {$x_i=u_i$};
+        \IF {$f(\vector{u}^i) \leqq f(\vector{x}^i)$}
+            \STATE {$\vector{x}^i=\vector{u}^i$};
             \STATE $S_F\Leftarrow {F_i}, S_CR \Leftarrow {CR_i};$
         \ENDIF
     \ENDFOR
@@ -276,17 +275,17 @@ $F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\leqq1の$の場合は再
 \section{実験設定}
 まず重心距離の分散値にもとづきアーカイブの多様性維持について視覚的に観察する．実験では関数最適化問題において最もシンプルな関数の一つであるsphere関数を用いて行う．sphere関数は次式で表される短鋒性の関数である．
 \begin{eqnarray}
-  f(x_1,...,x_n) = \sum_{i=1}^D x_i
+  f(x_1,...,x_n) = \sum_{i=1}^D \vector{x}^i
 \end{eqnarray}
 
 また実行可能領域は$[-100, 100]^D$で次元数は$D=2,10,30,50,100$，集団数は$P=10,30,50$，最大試行回数は1試行あたり$D*1,000$とし，試行回数は51回とした．使用したDEは突然変異戦略を式(3.2)のcurrent-to-p-best/とし，F=0.5,CR=0.5である．
-$x_{r1},$は${x_i}$と異なるように集団$P = {x_1, ..., x_N}$からランダムに選択した個体であり，また$x_{pbest}$は集団$P$を評価値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
+$x_{r1},$は${\vector{x}^i}$と異なるように集団$P = {x_1, ..., x_N}$からランダムに選択した個体であり，また$x_{pbest}$は集団$P$を評価値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
 
 \begin{eqnarray}
 v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})
 \end{eqnarray}
 
-アーカイブありのDEとアーカイブ無しのDEを用いいて比較を行う．ここでいうアーカイブありのDEとは式(3.2)における$x_{Ar2}$を集団PとアーカイブAの和集合から${x_i}$と被らないようにランダムに選択し，アーカイブ無しのDEとは$x_{Ar2}$を$ｘ_{i}$と被らないように集団Pから選択したものである．
+アーカイブありのDEとアーカイブ無しのDEを用いいて比較を行う．ここでいうアーカイブありのDEとは式(3.2)における$x_{Ar2}$を集団PとアーカイブAの和集合から${\vector{x}^i}$と被らないようにランダムに選択し，アーカイブ無しのDEとは$x_{Ar2}$を$ｘ_{i}$と被らないように集団Pから選択したものである．
 
 多様性を図る尺度としては重心距離と目的関数値$f(x)$の2つの尺度を用いた．
 まずある世代tの解集団$P = {x_{t,1}, ..., x_{t,N}}$における重心ベクトルを$x_{t,centroid}$とする．各$x_{t,k}$と重心$x_{t,centroid}$の距離$d_{t,k}$を次のように定義する．ただし$k$は$k\in {1,2,...,N}$となる整数値である．
