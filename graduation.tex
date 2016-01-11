@@ -52,12 +52,12 @@ Evaluating And Improvement Of Performance Of Archive In Differential Evolution
 
 \chapter{序論}  
 \section{研究の背景}
-実数値最適化問題とは，ある$D$次元の実数値ベクトル${x} = (x_1, x_2, ..., x_D)$と，それを評価する関数$f(x)$が与えられたときその評価関数を最小もしくは最大化するような実数値ベクトル$x$を探す問題である．多峰性や悪スケール性が高い評価関数において，局所解を脱し，大域的な最適解を見つつけだすことが実数値最適化問題において重要となる点の一つである．
-
+実数値最適化問題とは，ある$D$次元の実数値ベクトル$\vector{x} = (x_1, x_2, ..., x_D)$と，それを評価する関数$f(\vector{x})$が与えられたときその評価関数を最小もしくは最大化するような実数値ベクトル$\vector{x}$を探す問題である．
+対象問題が，多峰性や悪スケール性，変数分離不可などの特性を有する場合，局所解にトラップされず，大域的な最適解を見つつけだすことが実数値最適化問題において重要となる点の一つである．また多くの実問題については，対象問題が多峰性か，多峰性か，変数分離可か不可かなどといった情報が事前にわからない．このような$\vector{x}$の目的関数値$f(\vector{x})$しかしることが出来ない関数最適化をblack-box optimizationと呼ぶ．
 そのような実数値最適化問題を対象とする確率的手法の一つとして，差分進化(Differential Evlolution:DE) \cite{Storn} が用いられる．
 最初のDEは，1995年にStornらによって提案された．
-DEは処理手順が簡単でありながらも，典型的な実数値GAと比べても最適解に比較的素早く収束する．
-このためDEは現実的な最適化問題に対して多くの適用例が報告されている. \cite{ExDE} 
+DEは処理手順が簡単でありながらも，典型的な実数値GAと比べても最適解に比較的素早く収束する． \cite{Storn} \cite{ExDE}
+このためDEは現実的な最適化問題に対して多くの適用例が報告されている \cite{ExDE} ．
 
 \section{関連研究}
 DEの探索性能は用いる制御パラメータに大きく依存し，そのパラメタは集団数，スケール係数$F$，交叉率$CR$である．しかしこれらのパラメータの適切な値は使用する関数や問題設定によって異なり，実問題をとく上でこれらのパラメータをユーザーが試行錯誤する必要がある．
@@ -70,23 +70,23 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \section{本研究の目的}
 本研究の目的は２つある．
 \begin{enumerate}
-\item アーカイブが多様性の維持にどのように役割りをはたしているのか調査する
+\item アーカイブが多様性の維持にどのように役割をはたしているのか調査する
 \vspace{3mm}
 \newline
 アーカイブには，生存選択の時に，劣解として，子個体に上書きされた親個体が保存される．変異ベクトル作成時にアーカイブに保存された劣解を用いることで，解集団における多様性の維持に役立つ．本研究では，アーカイブ使用時と未使用時における解集団の多様性を，目的関数値の分散と，重心からの距離の分散をみることで比較し，解集団が多様性を維持しているかどうか分析を行う．
 \newline
 
 
-\item アーカイブを改良することで，探索性能を向上できないか新たな手法を提案する提案する．
+\item アーカイブを改良することで，探索性能を向上できないか新たな手法を提案する．
 \vspace{3mm}
 \newline
 アーカイブシステムは多くの適応DEについて使われているにも関わらず，そのシステムについての改良は他の制御パラメータであるスケール係数$F$や交叉率$CR$に比べ試みられていない．
-アーカイブ性能の分析をふまえた後，その改善をはかるための新たな手法を提案する．
+アーカイブ性能の分析をふまえた上で，その改善をはかるための新たな手法を提案する．
 \end{enumerate}
 
 
 \section{本論文の構成}
-本論文は以下の通りに構成される。2 章で DEの詳細と適応DE，アーカイブの使用例について説明する3 章ではアーカイブの性能を重心距離と目的関数値f(x)の値をもとに観察する．4章ではアーカイブを改善した手法について説明する．5章では本研究における知見をまとめる．
+本論文は以下の通りに構成される。2 章でDEの詳細と適応DE，アーカイブの使用例について説明する．3 章ではアーカイブの性能を重心距離と目的関数値$f(\vector{x})$の値をもとに観察する．4章ではアーカイブを改善した手法について説明する．5章では本研究における知見をまとめる．
 
 \chapter{Differential Evolutionとアーカイブ}
 \section{Differential Evolution}
@@ -674,8 +674,8 @@ F15&$       605.813984$&$       3020.140593$&$       2453.868306$&$       2453.8
 
 %-----------------------------参考文献記述エリア---------------------------%
 \begin{thebibliography}{10}
- \bibitem{Storn}R.Storn and K. Price. Differential evolution - a simple and efficient heuristic for global optimization over continuous spaces. Journal of Global Optimization, 11(4):341-359, 1997 
-  \bibitem{ExDE}K.V.Price, R, N.Storn and J.A. Lampinen.Differential Evolution - A Practical Approach to Global Opticization. Springer, Berlin Heidelberg, 2005.
+  \bibitem{Storn}R.Storn and K. Price. Differential evolution - a simple and efficient heuristic for global optimization over continuous spaces. Journal of Global Optimization, 11(4):341-359, 1997
+  \bibitem{ExDE}K.V.Price, R, M.Storn and J.A. Lampinen.Differential Evolution - A Practical Approach to Global Opticization. Springer, Berlin Heidelberg, 2005.
   \bibitem{JADE}J. Zhang and A. C. Sanderson: JADE: Adaptive DifferentialEvolution With Optional External Archive,IEEE Tran. Evol.Comput.,13–5, 945/958 (2009)
   \bibitem{SHADE}R. Tanabe and A. Fukunaga: Success-History Based Param-eter Adaptation for Differential Evolution,Proceedings of the2013 IEEE Congress on Evolutionary Computation, 71/78(2013)
   \bibitem{CEC2015}Q. Chen, B. Liu,  Q. Zhang, J. J. Liang, P. N. Suganthan, B. Y. Qu, "Problem Definition and Evaluation Criteria for CEC 2015 Special Session and Competition on Bound Constrained Single-Objective Computationally Expensive Numerical Optimization", Technical Report, Computational Intelligence Laboratory, Zhengzhou University, Zhengzhou, China  and  Technical Report, Nanyang Technological University, Singapore, Nov 2014.
