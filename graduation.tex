@@ -114,10 +114,10 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \end{table}
 
 
-次に親個体$\vector{x}_i$と変異個体$\vector{v}_i$を交叉させることで子個体$\vector{u}_i$を生成する．DEの代表的な交叉手法には二項交叉(binomial crossover)と指数交叉（exponential crossover）がある．まずbinomial crossoverについて紹介する．二項交叉では交叉率$CR \in [0,1]$とランダムに選択した添字$j_{rand} \in \{1, ..., D\}$に基づき，Algorithm 1のように子個体$\vector{u}^i = (u^i_1, ..., u^i_D)$の各要素$u^i_j$を決定する．
+次に親個体$\vector{x}_i$と変異個体$\vector{v}_i$を交叉させることで子個体$\vector{u}_i$を生成する．DEの代表的な交叉手法には二項交叉(binomial crossover)と指数交叉（exponential crossover）がある．以下では二項交叉について紹介する．二項交叉では交叉率$CR \in [0,1]$とランダムに選択した添字$j_{rand} \in \{1,...,D\}$に基づき，Algorithm 1のように子個体$\vector{u}^i = (u^i_1,...,u^i_D)$の各要素$u^i_j$を決定する．
 
 \begin{algorithm}
-\caption{Binomial Crossover}
+\caption{二項交叉}
 \label{alg:pbnf}
 \begin{algorithmic}
 \STATE $j_{rand} = \rm{randi}[1, D]$;
@@ -156,7 +156,7 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 
 \section{Adaptive Differential Evolution (JADE)}
 JADE \cite{JADE} はZhangらによって2009年に提唱された適応型DEの一つである．JADEではDEの探索性能を大きく左右するスケール係数$F$と交叉率$CR$を通常のDEのように固定するのではなく，探索中に自動調整する．その自動調整のために適応メタパラメータ$\mu _F,\mu _{CR}$ を使用する．これらのパラメータは探索開始時に0.5に初期化する．通常のDEでは$F$と$CR$は共通する変数であったが，JADEでは，集団の各個体\vector{x^i}ごとに適応パラメータ$F_i$，$CR_i$を持つ．
-そして世代のはじめに$F_i$と$CR_i$を，$\mu _F,\mu _{CR}$をもとに次の様に生成する．
+そして世代のはじめに$F_i$と$CR_i$を，$\mu _F,\mu _{CR}$をもとにそれぞれ式(2.1)，式(2.2)のように更新する．
 
 \begin{eqnarray}
   F_i & = & \rm{randc}(\mu _F, 0.1) \\
@@ -164,21 +164,26 @@ JADE \cite{JADE} はZhangらによって2009年に提唱された適応型DEの�
 \end{eqnarray}
 
 ここで$\rm{randc}(\mu,\sigma)$は位置パラメータ$\mu$と尺度パラメータ$\sigma$のコーシー分布に従う乱数,$randn(\mu,\sigma^2)$ は平均$\mu$，標準偏差$\sigma^2$の正規分布に従う乱数である．$F_i$の値が$F_i>1$の場合は
-$F_i=1$とし $F_i\leqq1の$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．
-各世代の終了後に，成功した\sl{F}と\sl{CR}に基づき$\mu _F, \mu _{CR}$を更新する．
+$F_i=1$とし $F_i\leqq0の$の場合は再び式2.1を用いて生成を行う．$CR_i$の値が区間より外の場合は超えた方の境界値で置き換えられる．
+コーシー分布は正規分布に比べ，よりひろがりを持つ分布である．そのためコーシー乱数を使った場合の方が，正規乱数に比べ，多様性を維持したパラメータを生成することが出来る．
+各世代の終了後に，成功した${F}$と${CR}$に基づき$\mu_F, \mu_{CR}$を更新する．これらの更新式は式(2.3)，式(2.4)となる．
 
 \begin{eqnarray}
-  \mu_F & = & (1 - c)\cdot\mu _F + c\cdot mean_L(S_F)\\
-  \mu_{CR} & = & (1 - c)\cdot\mu _{CR} + c\cdot mean_A(S_{CR})
+  \mu_F & := & (1 - c)\cdot\mu_F + c\cdot mean_L(S_F)\\
+  \mu_{CR} & := & (1 - c)\cdot\mu_{CR} + c\cdot mean_A(S_{CR})
 \end{eqnarray}
 
-$S_F,S_{CR}$は成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習率である．また$mean_A$は算術平均, $mean_L$はLehmer平均である．
+ここで$S_F,S_{CR}$とは，各世代において，生存選択を行う際に親個体よりも優れた変異個体を生成することの出来た$F_i,CR_i$の集合である．次に$c\in[0,1]$は学習率であり推奨値は0.1である．学習率$c$が小さいほど，更新前の$\cdot\mu_F,\cdot\mu_{CR}$に近い値となり，学習率$c$が大きいほど，今の世代で成功した${F}$と${CR}$の値による影響が大きくなる．
+また$\rm{mean}_A(\cdot)$は算術平均, $\rm{mean}_L(\cdot)$はLehmer平均でありそれぞれ式(2.5)，式(2.6)となる．
 
 \begin{eqnarray}
   mean_A(S) & = \frac{1}{|S|}\sum_{s\in S}s \\
   mean_L(S) & = \frac{\sum_{s\in S}s^2}{\sum_{s\in S}s}
 \end{eqnarray}
-ここで$S=(s_1,..., s_{|S|})$は$S_F,S_CR$のいずれかである．このようにパラメータを探索中に生成，更新することで，$\mu _F, \mu _{CR}$を対象問題に適したパラメータに徐々に近づける．Algorithm3はJADEのアルゴリズムの全体である．
+ここで$S=(s_1,..., s_{|S|})$は$S_F,S_CR$のいずれかである．
+JADEのパラメータ適応のメカニズムは，探索中に優れた解を生み出すことの出来たスケーリング係数$F$，交叉率$CR$に近づく形で，それらのパラメータを更新していく．
+そのため，理想的なスケーリング係数$F$，交叉率$CR$が，問題設定や探索途中で変わっていくDEにおいて，適切なパラメータを選択することがJADEにおいて可能である．
+Algorithm3はJADEのアルゴリズムの全体である．
 
 \begin{algorithm}
 \caption{JADE}
@@ -216,7 +221,7 @@ SHADEでは大きさHの履歴メモリ$M_F,M_{CR}$を用いてパラメータ�
   CR_i & = & \rm{randn}(M_{CR,r}, 0.1)
 \end{eqnarray}
 
-$F_i$の値が$F_i>1$の場合は$F_i　= 1$とし $F_i\leqq1の$の場合は再び式2.7を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．隠せだいの終了時に成功した$F_i,CR_i$の集合$S_F,S_{CR}$のLehmer平均を用いて，メモリ$M_F,M_CR$を更新する．
+$F_i$の値が$F_i>1$の場合は$F_i = 1$とし $F_i\leqq1の$の場合は再び式2.7を用いて生成を行う．$CR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き換えられる．各世代の終了時に成功した$F_i,CR_i$の集合$S_F,S_{CR}$のLehmer平均を用いて，メモリ$M_F,M_CR$を更新する．
 
 
 \begin{eqnarray}
