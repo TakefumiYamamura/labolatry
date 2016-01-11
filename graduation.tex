@@ -99,14 +99,14 @@ current-to-pbest/1とrand-to-pbest/1の${x_{Ar2}}$,${x_{Ar3}}$は集団Pと後�
   \begin{center}
     \begin{tabular}{ll} \hline
       突然変異戦略　& 定義  \\ \hline
-      rand/1 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
-      rand/2 & $v_{i} = x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
-      best/1 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
-      best/2 & $v_{i} = x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
-      current-to-rand/1 & $v_{i} = x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
-      current-to-best/1 & $v_{i} = x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-      current-to-pbest/1 & $v_{i} = x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})$ \\
-      rand-to-pbest/1 & $v_{i} = x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{Ar3})$ \\ \hline
+      rand/1 & $v_{i} := x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
+      rand/2 & $v_{i} := x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
+      best/1 & $v_{i} := x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
+      best/2 & $v_{i} := x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
+      current-to-rand/1 & $v_{i} := x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
+      current-to-best/1 & $v_{i} := x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
+      current-to-pbest/1 & $v_{i} := x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})$ \\
+      rand-to-pbest/1 & $v_{i} := x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{Ar3})$ \\ \hline
     \end{tabular}
     \caption{DEにおける代表的な突然変異戦略}
   \end{center}
@@ -179,10 +179,10 @@ $S_F,S_{CR}$は成功した$F_i,CR_i$の集合である．$c\in[0,1]$は学習�
 \end{eqnarray}
 ここで$S=(s_1,\cdots, s_{|S|})$は$S_F,S_CR$のいずれかである．このようにパラメータを探索中に生成，更新することで，$\mu _F, \mu _{CR}$を対象問題に適したパラメータに徐々に近づける．Algorithm3はJADEのアルゴリズムの全体である．
 
-\begin{algorithm}                      
-\caption{JADE}         
-\label{alg:pbnf}                          
-\begin{algorithmic}  
+\begin{algorithm}
+\caption{JADE}
+\label{alg:pbnf}
+\begin{algorithmic}
 \STATE init $\mu _F = 0.5; \mu _{CR} = 0.5$;
 \WHILE {the termination crirteria are not met}
     \STATE $S_F = \emptyset, S_{CR} = \emptyset$;
