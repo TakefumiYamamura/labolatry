@@ -101,14 +101,14 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
   \caption{DEにおける代表的な突然変異戦略}
     \begin{tabular}{ll} \hline
       突然変異戦略　& 定義  \\ \hline
-      rand/1 & $v_{i} := x_{r1} + F\cdot(x_{r2} - x_{r3})$ \\
-      rand/2 & $v_{i} := x_{r1} + F\cdot(x_{r2} - x_{r3}) + F\cdot(x_{r4} - x_{r5})$ \\
-      best/1 & $v_{i} := x_{best} + F\cdot(x_{r1} - x_{r2})$ \\
-      best/2 & $v_{i} := x_{best} + F\cdot(x_{r1} - x_{r2}) + F\cdot(x_{r3} - x_{r4})$ \\
-      current-to-rand/1 & $v_{i} := x_{i} + F\cdot(x_{r1} - x_{i}) + F\cdot(x_{r2} - x_{r3})$ \\
-      current-to-best/1 & $v_{i} := x_{i} + F\cdot(x_{best} - x_{i}) + F\cdot(x_{r1} - x_{r2})$ \\
-      current-to-$p$best/1 & $v_{i} := x_{i} + F\cdot(x_{pbest} - x_{i}) + F\cdot(x_{r1} - x_{Ar2})$ \\
-      rand-to-$p$best/1 & $v_{i} := x_{r1} + F\cdot(x_{pbest} - x_{r1}) + F\cdot(x_{r2} - x_{Ar3})$ \\ \hline
+      rand/1 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{r2} - \vector{x}_{r3})$ \\
+      rand/2 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{r2} - \vector{x}_{r3}) + F\cdot(\vector{x}_{r4} - \vector{x}_{r5})$ \\
+      best/1 & $\vector{v}_{i} := \vector{x}_{best} + F\cdot(\vector{x}_{r1} - \vector{x}_{r2})$ \\
+      best/2 & $\vector{v}_{i} := \vector{x}_{best} + F\cdot(\vector{x}_{r1} - \vector{x}_{r2}) + F\cdot(\vector{x}_{r3} - \vector{x}_{r4})$ \\
+      current-to-rand/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{r1} - \vector{x}_{i}) + F\cdot(\vector{x}_{r2} - \vector{x}_{r3})$ \\
+      current-to-best/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{best} - \vector{x}_{i}) + F\cdot(\vector{x}_{r1} - \vector{x}_{r2})$ \\
+      current-to-$p$best/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{pbest} - \vector{x}_{i}) + F\cdot(\vector{x}_{r1} - \vector{x}_{Ar2})$ \\
+      rand-to-$p$best/1 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{pbest} - \vector{x}_{r1}) + F\cdot(\vector{x}_{r2} - \vector{x}_{Ar3})$ \\ \hline
     \end{tabular}
   \end{center}
 \end{table}
@@ -130,23 +130,23 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-全ての個体が子個体を生成した後，次世代に残る個体を決定する．DEでは親個体と子個体の目的関数値を評価関数$f(x)$を用いて比較し，評価値の良いものを次世代へ残す．
-この選択の際，current-to-$p$best/1，及びrand-to-$p$best/1のアーカイブ戦略を用いた場合，子個体より劣っていた親個体$x_{i}$を，アーカイブに保存する．アーカイブのサイズは集団Pのサイズと等しく，そのサイズを超えた場合，すでにあるアーカイブの中から，ランダムにその要素を取り除く．current-to-$p$best，current-to-randの突然変異戦略において，アーカイブと集団$P$の和集合からターゲットベクターを選択することで，解集団における多様性の維持に役立つ．
+全ての個体が子個体を生成した後，次世代に残る個体を決定する．DEでは親個体と子個体の目的関数値を評価関数$f(\vector{x})$を用いて比較し，評価値の良いものを次世代へ残す．
+この選択の際，current-to-$p$best/1，及びrand-to-$p$best/1のアーカイブ戦略を用いた場合，子個体より劣っていた親個体$\vector{x}^i$を，アーカイブに保存する．アーカイブのサイズは集団$P$のサイズと等しく，そのサイズを超えた場合，すでにあるアーカイブの中から，ランダムにその要素を取り除く．current-to-$p$best，current-to-randの突然変異戦略において，アーカイブと集団$P$の和集合から親個体$\vector{x}^i$を選択することで，解集団における多様性の維持に役立つ．
 最後に本節で述べたDEアルゴリズムの全体をAlgorithm 2に示す．
 
 \begin{algorithm}
 \caption{Differential Evolution}
 \label{alg:pbnf}
 \begin{algorithmic}
-\STATE init population ${P} = (x_1, x_2, ..., x_N)$;
-\WHILE {the termination crirteria are not met}
+\STATE 集団$P={\vector{x}^1,...,\vector{x}^N}$の初期化;
+\WHILE {探索終了条件を満たしていない}
     \FOR{$i=1$ to $N$}
-        \STATE generate mutant vector {$v_i$} by mutation strategy;
-        \STATE generate trial vector {$u_i$} by crossing over {$x_i$} and {$v_i$}; 
+        \STATE 突然変異戦略を用いて変異個体{$\vector{v}^i$}を生成;
+        \STATE $\vector{x}^i$と$\vector{v}^i$に交叉を適用し,子個体$\vector{u}^i$を生成; 
     \ENDFOR
     \FOR{$i=1$ to $N$}
-        \IF {$f(u_i) \leqq f(x_i)$}
-            \STATE {$x_i=u_i$};
+        \IF {$f(\vector{u}^i) \leqq f(\vector{x}^i)$}
+            \STATE {$\vector{x}^i :=\vector{u}^i$};
         \ENDIF
     \ENDFOR
 \ENDWHILE
