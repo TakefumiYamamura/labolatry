@@ -312,7 +312,8 @@ void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, 
   int r1, r2;
   variable arc_p;
 
-  arc_p = cross_rate;
+  // arc_p = cross_rate;
+  arc_p = scaling_factor;
   bool flag;
   flag = false;
   if (arc_p > randDouble() && (arc_ind_count != 0))
@@ -332,6 +333,8 @@ void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, 
       r2 = rand() % (pop_size);
     } while ((r2 == target) || (r2 == r1));
   }
+
+  // printf("arc_p: %f\n randDouble: %f\n", arc_p, randDouble());
 
 
   int random_variable = rand() % problem_size;
