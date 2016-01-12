@@ -203,25 +203,25 @@ Fitness SHADE::run() {
       //if the gap between the error values of the best solution found and the optimal solution was 10^{−8} or smaller,
       //the error was treated as 0
       if ((children_fitness[i] - optimum) < epsilon) {
-	children_fitness[i] = optimum;
+      children_fitness[i] = optimum;
       }
 
       if (children_fitness[i] < bsf_fitness) {
-  	bsf_fitness = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  bsf_solution[j] = children[i][j];
-  	}
+        bsf_fitness = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          bsf_solution[j] = children[i][j];
+        }
       }
 
       // fprintf(fp_val_fitness, "%f\n", bsf_fitness - optimum);
 
       // if (nfe % 1000 == 0) {
-      // 	//output the error value
-      // 	cout << bsf_fitness - optimum << endl;
+      //       //output the error value
+      //       cout << bsf_fitness - optimum << endl;
       // }
 
       if (nfe >= max_num_evaluations) {
-  	break;
+        break;
       }
     }
     ////////////////////////////////////////////////////////////////////////////
@@ -231,39 +231,39 @@ Fitness SHADE::run() {
     //generation alternation
     for (int i = 0; i < pop_size; i++) {
       if (children_fitness[i] == fitness[i]) {
-  	fitness[i] = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  pop[i][j] = children[i][j];
-  	}
+        fitness[i] = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          pop[i][j] = children[i][j];
+        }
       }
       else if (children_fitness[i] < fitness[i]) {
-	//parent vectors x_i which were worse than the trial vectors u_i are preserved
-	if (arc_size > 1) {
-  	  if (arc_ind_count < arc_size) {
-	    for (int j = 0; j < problem_size; j++) {
-	      archive[arc_ind_count][j] = pop[i][j];
-	    }
-	    arc_ind_count++;
-	  }
-	  //Whenever the size of the archive exceeds, randomly selected elements are deleted to make space for the newly inserted elements
-	  else {
-	    random_selected_arc_ind = rand() % arc_size;
-	    for (int j = 0; j < problem_size; j++) {
-	      archive[random_selected_arc_ind][j] = pop[i][j];
-	    }
-	  }
-	}
+      //parent vectors x_i which were worse than the trial vectors u_i are preserved
+      if (arc_size > 1) {
+          if (arc_ind_count < arc_size) {
+          for (int j = 0; j < problem_size; j++) {
+            archive[arc_ind_count][j] = pop[i][j];
+          }
+          arc_ind_count++;
+        }
+        //Whenever the size of the archive exceeds, randomly selected elements are deleted to make space for the newly inserted elements
+        else {
+          random_selected_arc_ind = rand() % arc_size;
+          for (int j = 0; j < problem_size; j++) {
+            archive[random_selected_arc_ind][j] = pop[i][j];
+          }
+        }
+      }
 
-	dif_fitness.push_back(fabs(fitness[i] - children_fitness[i]));
-  	fitness[i] = children_fitness[i];
-  	for (int j = 0; j < problem_size; j ++) {
-  	  pop[i][j] = children[i][j];
-  	}
+      dif_fitness.push_back(fabs(fitness[i] - children_fitness[i]));
+        fitness[i] = children_fitness[i];
+        for (int j = 0; j < problem_size; j ++) {
+          pop[i][j] = children[i][j];
+        }
 
-	//successful parameters are preserved in S_F and S_CR
-	success_sf.push_back(pop_sf[i]);
-	success_cr.push_back(pop_cr[i]);
-	num_success_param++;
+      //successful parameters are preserved in S_F and S_CR
+      success_sf.push_back(pop_sf[i]);
+      success_cr.push_back(pop_cr[i]);
+      num_success_param++;
       }
     }
   
@@ -275,18 +275,18 @@ Fitness SHADE::run() {
       temp_sum_sf = 0;
      
       for (int i = 0; i < num_success_param; i++) {
-	sum_dif_fitness += dif_fitness[i];
+      sum_dif_fitness += dif_fitness[i];
       } 
 
-      for (int i = 0; i < num_success_param; i++) {	
-	weight = dif_fitness[i] / sum_dif_fitness;
+      for (int i = 0; i < num_success_param; i++) {      
+      weight = dif_fitness[i] / sum_dif_fitness;
 
-	//weighted lehmer mean
-	memory_sf[memory_pos] += weight * success_sf[i] * success_sf[i];
-	temp_sum_sf += weight * success_sf[i];
+      //weighted lehmer mean
+      memory_sf[memory_pos] += weight * success_sf[i] * success_sf[i];
+      temp_sum_sf += weight * success_sf[i];
 
-	//weighted arithmetic mean
-	memory_cr[memory_pos] += weight * success_cr[i];
+      //weighted arithmetic mean
+      memory_cr[memory_pos] += weight * success_cr[i];
       }
 
       memory_sf[memory_pos] /= temp_sum_sf;
@@ -310,35 +310,51 @@ Fitness SHADE::run() {
 
 void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count) {
   int r1, r2;
-  
-  do {
-    r1 = rand() % pop_size;
-  } while (r1 == target);
-  do {
-    r2 = rand() % (pop_size + arc_ind_count);
-  } while ((r2 == target) || (r2 == r1));
+  variable arc_p;
+
+  arc_p = scaling_factor;
+  bool flag;
+  flag = false;
+  if (arc_p > randDouble() && (arc_ind_count != 0))
+  {
+    do {
+      r1 = rand() % pop_size;
+    } while (r1 == target);
+    do {
+      r2 = rand() % (arc_ind_count);
+    } while ((r2 == target) || (r2 == r1));
+    flag = true;
+  }else{
+    do {
+      r1 = rand() % pop_size;
+    } while (r1 == target);
+    do {
+      r2 = rand() % (pop_size);
+    } while ((r2 == target) || (r2 == r1));
+  }
+
 
   int random_variable = rand() % problem_size;
   scaling_factor = 0.5; //スケーリングファクターを0.5に固定
   cross_rate = 0.5; //交叉率を0.5に固定
-  if (r2 >= pop_size) {
-    r2 -= pop_size;
+  if (flag) {
+    // r2 -= pop_size;
     for (int i = 0; i < problem_size; i++) {
       if ((randDouble() < cross_rate) || (i == random_variable)) {
-	child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - archive[r2][i]);
+      child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - archive[r2][i]);
       }
       else {
-	child[i] = pop[target][i];
+      child[i] = pop[target][i];
       }
     }
   }
   else {
     for (int i = 0; i < problem_size; i++) {
       if ((randDouble() < cross_rate) || (i == random_variable)) {
-	child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - pop[r2][i]);
+      child[i] = pop[target][i] + scaling_factor * (pop[p_best_individual][i] - pop[target][i]) + scaling_factor * (pop[r1][i] - pop[r2][i]);
       }
       else {
-	child[i] = pop[target][i];
+      child[i] = pop[target][i];
       }
     }
   }
