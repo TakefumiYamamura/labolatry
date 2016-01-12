@@ -17,10 +17,12 @@ CSV.open("../last_table.csv", "w") do |out|
   fit.length.times do |i|
     array << []
     fit[0].length.times do |j|
+      f = sprintf("%e", fit[i][j])
+      s = sprintf("%e", std[i][j])
       if i == 0
-        array[i] << "#{fit[i][j]}\(#{std[i][j]}\)"
+        array[i] << "#{f}\(#{s}\)"
       else
-        array[i] << "#{fit[i][j]}\(#{std[i][j]}\)#{sym[i-1][j]}"
+        array[i] << "#{f}\(#{s}\)#{sym[i-1][j]}"
       end
     end
   end
