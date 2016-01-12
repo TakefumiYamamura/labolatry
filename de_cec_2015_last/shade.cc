@@ -312,7 +312,7 @@ void SHADE::operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, 
   int r1, r2;
   variable arc_p;
 
-  arc_p = scaling_factor;
+  arc_p = cross_rate;
   bool flag;
   flag = false;
   if (arc_p > randDouble() && (arc_ind_count != 0))
