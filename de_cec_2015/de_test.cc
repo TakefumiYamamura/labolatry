@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
   srand((unsigned)time(NULL));
 
   //SHADE parameters
-  g_pop_size = 10;
+  g_pop_size = 30;
   g_memory_size = g_problem_size;
   g_arc_size = g_pop_size;
   FILE *fp, *fp_all, *fp_std;
