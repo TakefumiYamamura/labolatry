@@ -52,12 +52,13 @@ Evaluating And Improvement Of Performance Of Archive In Differential Evolution
 
 \chapter{序論}
 \section{研究の背景}
-実数値最適化問題とは，ある$D$次元の実数値ベクトル$\vector{x} = (x_1, x_2, ..., x_D)$と，それを評価する関数$f(\vector{x})$が与えられたときその評価関数を最小もしくは最大化するような実数値ベクトル$\vector{x}$を探す問題である．
-対象問題が，多峰性や悪スケール性，変数分離不可などの特性を有する場合，局所解にトラップされず，大域的な最適解を見つつけだすことが実数値最適化問題において重要となる点の一つである．また多くの実問題については，対象問題が多峰性か，多峰性か，変数分離可か不可かなどといった情報が事前にわからない．このような$\vector{x}$の目的関数値$f(\vector{x})$しかしることが出来ない関数最適化をblack-box optimizationと呼ぶ．
+実数値最適化問題とは，ある$D$次元の実数値ベクトル$\vector{x} = (x_1, x_2, ..., x_D)$と，それを評価する関数$f(\vector{x})$が与えられた時に，その評価関数を最小もしくは最大化するような実数値ベクトル$\vector{x}$を求める問題である．
+対象問題が，多峰性や悪スケール性，変数分離不可などの特性を有する場合，局所解にトラップされず，最適解を求めることが実数値最適化問題において重要となる点の一つである．また多くの実問題については，対象問題が単峰性か，多峰性か，及び変数分離可か不可かなどといった情報を探索の事前に知ることは困難である.このような$\vector{x}$の目的関数値$f(\vector{x})$しか利用出来ない実数値最適化問題をblack-box optimizationと呼ぶ．
 そのような実数値最適化問題を対象とする確率的手法の一つとして，差分進化(Differential Evlolution:DE) \cite{Storn} が用いられる．
-最初のDEは，1995年にStornらによって提案された．
-DEは処理手順が簡単でありながらも，典型的な実数値GAと比べても最適解に比較的素早く収束する． \cite{Storn} \cite{ExDE}
-このためDEは現実的な最適化問題に対して多くの適用例が報告されている \cite{ExDE} ．
+最初のDEは，1995年にStornとPriceらによって提案された．
+DEは単純なアルゴリズムでありながら, 他の探索手法と比べても良好な性能を有することが報告されている
+． \cite{Storn} \cite{ExDE}
+このためDEは実問題への多くの適用例が報告されている \cite{ExDE} ．
 
 \section{関連研究}
 DEの探索性能は用いる制御パラメタに大きく依存し，そのパラメタは集団数，スケール係数$F$，交叉率$CR$である．しかしこれらのパラメタの適切な値は使用する関数や問題設定によって異なり，実問題をとく上でこれらのパラメタをユーザーが試行錯誤する必要がある．
@@ -735,6 +736,13 @@ $AR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き
 
 
 \section{実験結果}
+表4.1にCEC2015ベンチマークセットにおける実験結果をしめす．表中のデータは各手法中に得られた最良解の評価値と最適値との誤差の平均と標準偏差である．また表中の記号+，-，\approxはそれぞれ通常のDEに比べて，有意に優れている，有意に劣っている，有意差がないことを表している．
+
+まず提案手法１について見てみると，従来のアーカイブを使用したDEに比べてそのほとんどが劣る結果を示す事となった．
+
+次に提案手法2について見てみると，従来のアーカイブありのときに比べ，
+
+
 \begin{table}[!tbp]
 \footnotesize
 \caption{提案手法と通常のDEの比較実験\label{ref-tb-values}} 
@@ -775,9 +783,21 @@ F15&$       605.813984$&$       3020.140593$&$       2453.868306$&$       2453.8
 \begin{thebibliography}{10}
   \bibitem{Storn}R.Storn and K. Price. Differential evolution - a simple and efficient heuristic for global optimization over continuous spaces. Journal of Global Optimization, 11(4):341-359, 1997
   \bibitem{ExDE}K.V.Price, R, M.Storn and J.A. Lampinen.Differential Evolution - A Practical Approach to Global Opticization. Springer, Berlin Heidelberg, 2005.
+  \bibitem{2} J. Zhang, V. Avasarala, A. C. Sanderson, and T. Mullen, “Differential
+evolution for discrete optimization: An experimental study on combinatorial
+auction problems,” in IEEE CEC, 2008, pp. 2794–2800.
   \bibitem{JADE}J. Zhang and A. C. Sanderson: JADE: Adaptive DifferentialEvolution With Optional External Archive,IEEE Tran. Evol.Comput.,13–5, 945/958 (2009)
   \bibitem{SHADE}R. Tanabe and A. Fukunaga: Success-History Based Param-eter Adaptation for Differential Evolution,Proceedings of the2013 IEEE Congress on Evolutionary Computation, 71/78(2013)
+  \bibitem{3}S. Das and P. N. Suganthan, “Differential evolution: A survey of the
+state-of-the-art,” IEEE Tran. Evol. Comput., vol. 15, no. 1, pp. 4–31,
+2011.
   \bibitem{CEC2015}Q. Chen, B. Liu,  Q. Zhang, J. J. Liang, P. N. Suganthan, B. Y. Qu, "Problem Definition and Evaluation Criteria for CEC 2015 Special Session and Competition on Bound Constrained Single-Objective Computationally Expensive Numerical Optimization", Technical Report, Computational Intelligence Laboratory, Zhengzhou University, Zhengzhou, China  and  Technical Report, Nanyang Technological University, Singapore, Nov 2014.
+  \bibitem{qin} A. K. Qin, V. L. Huang, and P. N. Suganthan, “Differential evolution
+algorithm with strategy adaptation for global numerical optimization,”
+IEEE Tran. Evol. Comput., vol. 13, no. 2, pp. 398–417, 2009.
+  \bibitem{maucee}J. Brest and M. S. Maucec, “Population size reduction for the differ- ˘
+ential evolution algorithm,” Applied Intelligence, vol. 29, no. 3, pp.
+228–247, 2008.
 
 \end{thebibliography}
 %---------------------------------必須エリア-------------------------------%
