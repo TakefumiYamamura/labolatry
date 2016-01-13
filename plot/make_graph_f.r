@@ -68,7 +68,7 @@
 
         # グラフに凡例を書き入れる
         type = c("DE/A", "DE/NA")
-        legend("topright", legend = type, lty = c(1,1), col = cols)
+        legend("bottomleft", legend = type, lty = c(1,1), col = cols)
         dev.copy2eps(file = out_put_file_name)
 
       }
