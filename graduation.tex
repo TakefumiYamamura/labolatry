@@ -96,11 +96,6 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
 \section{Differential Evolution}
 まず基本的なDEアルゴリズムについて説明する．DEの集団中の各個体$i \in \{1, ..., N\}$は対象問題の解ベクトル$\vector{x}^i = (x^i_1, ..., x^i_D)$で表現される．ここで$N$は集団数，$D$は次元数である．探索開始時に各個体は探索領域内にランダムに初期化される．その後，突然変異戦略による変異個体の生成，交叉による子個体の生成，生存選択を，探索の終了条件を満たすまで繰り返す．
 
-各世代$t$において各変異個体${\vector{v}^{i,t}}$となる変異ベクトルを集団中の複数の個体に突然変異戦略を適用することで生成する．代表的な突然変異戦略を表(2.1)にて示す．表(2.1)において，スケール係数${F\in(0,1]}$は突然変異の大きさを調整する制御パラメタである．$\vector{x}^{r1},\vector{x}^{r2},\vector{x}^{r3},\vector{x}^{r4},\vector{x}^{r5}$は${\vector{x}^i}$と互いと異なるように集団$\vector{P} = \{ \vector{x}^1, ..., \vector{x}^N \}$からランダムに選択した個体である．$\vector{x}^{best}$は各世代における最良個体であり，$\vector{x}^{pbest}$は集団ベクトルを目的関数値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
-current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{Ar3}}$は集団ベクトルと後述のアーカイブベクトルの集合からランダムに選択した個体である．
-それぞれの突然変異戦略において，best/1，best/2は変異個体{$\vector{v}^i$}を最良個体$\vector{x}^{best}$の付近に生成する．
-それに対しcurrent-to-best/1は対象個体から$\vector{x}^{best}$にむかうように変異個体{$\vector{v}^i$}を生成する．そのためrand/1やrand/2などに比べ局所的探索能力が強い戦略である．また加える差ベクトルの数が多いほど多様な変異個体{$\vector{v}^i$}を生成しやすい．
-
 \begin{table}[h]
   \begin{center}
   \caption{DEにおける代表的な突然変異戦略}
@@ -119,7 +114,13 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \end{table}
 
 
+各世代$t$において各変異個体${\vector{v}^{i,t}}$となる変異ベクトルを集団中の複数の個体に突然変異戦略を適用することで生成する．代表的な突然変異戦略を表(2.1)にて示す．表(2.1)において，スケール係数${F\in(0,1]}$は突然変異の大きさを調整する制御パラメタである．$\vector{x}^{r1},\vector{x}^{r2},\vector{x}^{r3},\vector{x}^{r4},\vector{x}^{r5}$は${\vector{x}^i}$と互いと異なるように集団$\vector{P} = \{ \vector{x}^1, ..., \vector{x}^N \}$からランダムに選択した個体である．$\vector{x}^{best}$は各世代における最良個体であり，$\vector{x}^{pbest}$は集団ベクトルを目的関数値の良い順に並び替え，${p\in[0,1]}とした時の上位$max$(N \times p, 2)$個体からランダムに選択した個体である．
+current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{Ar3}}$は集団ベクトルと後述のアーカイブベクトルの集合からランダムに選択した個体である．
+それぞれの突然変異戦略において，best/1，best/2は変異個体{$\vector{v}^i$}を最良個体$\vector{x}^{best}$の付近に生成する．
+それに対しcurrent-to-best/1は対象個体から$\vector{x}^{best}$にむかうように変異個体{$\vector{v}^i$}を生成する．そのためrand/1やrand/2などに比べ局所的探索能力が強い戦略である．また加える差ベクトルの数が多いほど多様な変異個体{$\vector{v}^i$}を生成しやすい．
+
 次に親個体$\vector{x}_i$と変異個体$\vector{v}_i$を交叉させることで子個体$\vector{u}_i$を生成する．DEの代表的な交叉手法には二項交叉(binomial crossover)と指数交叉（exponential crossover）がある．以下では二項交叉について紹介する．二項交叉では交叉率$CR \in [0,1]$とランダムに選択した$j_{rand} \in \{1,...,D\}$に基づき，Algorithm 1のように子個体$\vector{u}^i = (u^i_1,...,u^i_D)$の各要素$u^i_j$を決定する．
+
 
 \begin{algorithm}
 \caption{二項交叉}
@@ -135,6 +136,8 @@ current-to-$p$best/1とrand-to-$p$best/1の${\vector{x}^{Ar2}}$，${\vector{x}^{
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
+
 全ての個体が子個体を生成した後，次世代に残る個体を決定する．DEでは親個体と子個体の目的関数値を評価関数$f(\vector{x})$を用いて比較し，目的関数値の良いものを次世代へ残す．
 この選択の際，current-to-$p$best/1，及びrand-to-$p$best/1のアーカイブ戦略を用いた場合，子個体より劣っていた親個体$\vector{x}^i$を，アーカイブに保存する．アーカイブのサイズは集団ベクトルのサイズと等しく，そのサイズを超えた場合ランダムに選択したアーカイブ中の個体を超過分だけ取り除く．current-to-$p$best，current-to-$p$randの突然変異戦略において，アーカイブと集団ベクトルの和集合から親個体$\vector{x}^i$を選択することで，解集団における多様性の維持に役立つ．
 最後に本節で述べたDEアルゴリズムの全体をAlgorithm 2に示す．
@@ -819,7 +822,7 @@ $AR_i$の値が[0,1]区間より外の場合は超えた方の境界値で置き
 \begin{landscape}
 \begin{table}[!tbp]
 \footnotesize
-\caption{CEC2015ベンチマークセットにおける，DE/Aと提案手法の比較実験の結果．全てのテスト関数の次元数$D$は30次元であり，最大評価回数は，$10，000 \times D$である．また全てのデータは51回の試行の平均である．\label{ref-tb-values}} 
+\caption{CEC2015ベンチマークセットにおける，DE/Aと提案手法の比較実験の結果．全てのテスト関数の次元数$D$は30次元であり，最大評価回数は，$10，000 \times D$である．また全てのデータは51回の試行の平均である．各セルの中身は得られた最良解と最適値の誤差の平均と標準偏差である．\label{ref-tb-values}} 
 \begin{center}
 \begin{tabular}{llllllll}
 \hline\hline
