@@ -4,10 +4,6 @@
   library(readr)
   dim <- c(2,10,30,50,100)
   # pop <- 30
-  options(  X11fonts = c(
-     "-*-gothic-%s-%s-normal--%d-*-*-*-*-*-*-*"
-    ,"-adobe-symbol-*-*-*-*-%d-*-*-*-*-*-*-*"
-   ))
   populations <- c(10, 30, 50)
   for (mu in 1:3){
     for (i in 1:5) {
@@ -73,7 +69,7 @@
       eps <- paste("eps/P", populations[mu], "fitD", sep="")
       out_put_file_name <- paste(eps, dim[i], ".eps" , sep = "")
       # dev.copy2eps(file = "myFigure.eps")
-      dev.copy2eps(file = out_put_file_name,family="Japan1")
+      dev.copy2eps(file = out_put_file_name)
       # pictex(file = "plot_test.tex")
 
       # グラフに凡例を書き入れる
