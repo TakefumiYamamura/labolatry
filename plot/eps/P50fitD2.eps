@@ -1,4 +1,9 @@
 %!PS-Adobe-3.0 EPSF-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
 %%Title: R Graphics Output
 %%Creator: R Software
 %%Pages: (atend)
@@ -49,68 +54,35 @@
            >>
          ] setcolorspace } bind def
 /srgb { setcolor } bind def
-%%IncludeResource: CID fake Bold font HeiseiKakuGo-W5
-/HeiseiKakuGo-W5-Bold
-/HeiseiKakuGo-W5 /CIDFont findresource
-16 dict begin
-  /basecidfont exch def
-  /basefont-H /.basefont-H /Identity-H [ basecidfont ] composefont def
-  /basefont-V /.basefont-V /Identity-V [ basecidfont ] composefont def
-  /CIDFontName dup basecidfont exch get def
-  /CIDFontType 1 def
-  /CIDSystemInfo dup basecidfont exch get def
-  /FontInfo dup basecidfont exch get def
-  /FontMatrix [ 1 0 0 1 0 0 ] def
-  /FontBBox [
-    basecidfont /FontBBox get cvx exec
-    4 2 roll basecidfont /FontMatrix get transform
-    4 2 roll basecidfont /FontMatrix get transform
-  ] def
-  /cid 2 string def
-  /BuildGlyph {
-    gsave
-    exch begin
-      dup 256 idiv cid exch 0 exch put
-      256 mod cid exch 1 exch put
-      rootfont
-        /WMode known { rootfont /WMode get 1 eq } { false } ifelse
-      { basefont-V } { basefont-H } ifelse setfont
-      .03 setlinewidth 1 setlinejoin
-      newpath
-      0 0 moveto cid false charpath stroke
-      0 0 moveto cid show
-      currentpoint setcharwidth
-    end
-    grestore
-  } bind def
-  currentdict
-end
-/CIDFont defineresource pop
-%%IncludeResource: CID font HeiseiKakuGo-W5-EUC-H
-/HeiseiKakuGo-W5-EUC-H findfont
+%%IncludeResource: font Helvetica
+/Helvetica findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
   currentdict
   end
 /Font1 exch definefont pop
-%%IncludeResource: CID font HeiseiKakuGo-W5-EUC-H
-/HeiseiKakuGo-W5-Bold-EUC-H findfont
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
   currentdict
   end
 /Font2 exch definefont pop
-%%IncludeResource: CID font HeiseiKakuGo-W5-EUC-H
-/HeiseiKakuGo-W5-EUC-H findfont [1 0 .3 1 0 0] makefont
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
   currentdict
   end
 /Font3 exch definefont pop
-%%IncludeResource: CID font HeiseiKakuGo-W5-EUC-H
-/HeiseiKakuGo-W5-Bold-EUC-H findfont [1 0 .3 1 0 0] makefont
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
 dup length dict begin
   {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
   currentdict
   end
 /Font4 exch definefont pop
@@ -159,11 +131,11 @@ np
 0 -7.20 l
 o
 /Font1 findfont 16 s
-68.98 47.52 <30> .5 0 t
-131.94 47.52 <353030> .5 0 t
-194.90 47.52 <31303030> .5 0 t
-257.86 47.52 <31353030> .5 0 t
-320.82 47.52 <32303030> .5 0 t
+68.98 47.52 (0) .5 0 t
+131.94 47.52 (500) .5 0 t
+194.90 47.52 (1000) .5 0 t
+257.86 47.52 (1500) .5 0 t
+320.82 47.52 (2000) .5 0 t
 np
 59.04 101.48 m
 0 255.94 l
@@ -184,10 +156,10 @@ np
 59.04 357.42 m
 -7.20 0 l
 o
-41.76 101.48 <2d35> .5 90 t
-41.76 186.80 <30> .5 90 t
-41.76 272.11 <35> .5 90 t
-41.76 357.42 <3130> .5 90 t
+41.76 101.48 (-5) .5 90 t
+41.76 186.80 (0) .5 90 t
+41.76 272.11 (5) .5 90 t
+41.76 357.42 (10) .5 90 t
 np
 59.04 73.44 m
 271.72 0 l
@@ -198,8 +170,10 @@ o
 0.00 0.00 361.00 429.00 cl
 /Font1 findfont 16 s
 0 0 0 srgb
-194.90 18.72 <4e756d626572206f662067656e65726174696f6e73> .5 0 t
-12.96 221.70 <72662076616c7565> .5 90 t
+127.76 18.72 (gener) 0 ta
+-0.160 (ation n) tb
+-0.160 (umber) tb gr
+12.96 221.70 (std in fitness) .5 90 t
 59.04 73.44 330.76 369.96 cl
 1 0 0 srgb
 0.75 setlinewidth
@@ -423,23 +397,6 @@ np
 0.13 -2.54 l
 0.13 -2.35 l
 o
-/bg { 1 1 1 srgb } def
-0 0 0 srgb
-203.08 369.96 127.68 -67.68 r p3
-1 0 0 srgb
-np
-219.25 347.40 m
-32.34 0 l
-o
-0 0 1 srgb
-np
-219.25 324.84 m
-32.34 0 l
-o
-/Font1 findfont 16 s
-0 0 0 srgb
-267.76 340.36 <44452f41> 0 0 t
-267.76 317.80 <44452f4e41> 0 0 t
 ep
 %%Trailer
 %%Pages: 1
