@@ -29,6 +29,7 @@ extern int function_name;
 extern int g_pop_size;
 extern int g_memory_size;
 extern int g_arc_size;
+extern int g_th_num;
 
 void test_func(double *, double *,int,int,int);
 
