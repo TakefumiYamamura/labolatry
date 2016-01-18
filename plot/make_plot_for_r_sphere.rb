@@ -19,12 +19,30 @@ end
 
 d_name = ["distance_to_centroid_de_with_archive", "distance_to_centroid_de_wo_archive"]
 
+# func_num = 1
+# population.each do |pop|
+#   dim.each do |d|
+#     CSV.open("sphere/pop#{pop}dim#{d}.csv", "w") do |out|
+#       d_name.each do |dir|
+#         file_name = "../#{dir}/func#{func_num}_P#{pop}_D#{d}_*.csv"
+#         array = file_read(file_name, dir)
+#         array.each do |a|
+#           out << a
+#         end
+#       end
+#     end
+#   end
+# end
+
 func_num = 1
+func_nums = [10, 12]
+func_names = ["griewangk","rastrigin"]
+func_nums.each_with_index do |f_n, func_name|
 population.each do |pop|
   dim.each do |d|
-    CSV.open("sphere/pop#{pop}dim#{d}.csv", "w") do |out|
+    CSV.open("#{func_names[func_name]}/pop#{pop}dim#{d}.csv", "w") do |out|
       d_name.each do |dir|
-        file_name = "../#{dir}/func#{func_num}_P#{pop}_D#{d}_*.csv"
+        file_name = "../#{dir}/func#{f_n}_P#{pop}_D#{d}_*.csv"
         array = file_read(file_name, dir)
         array.each do |a|
           out << a
@@ -32,4 +50,5 @@ population.each do |pop|
       end
     end
   end
+end
 end
