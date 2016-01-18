@@ -7,7 +7,7 @@
   populations <- c(10, 30, 50)
   for (mu in 1:3){
     for (i in 1:5) {
-        file_name <- paste("sphere_fitness/pop", populations[mu], "dim" , sep = "")
+        file_name <- paste("griewangk_fitness/pop", populations[mu], "dim" , sep = "")
           file_name = paste(file_name, dim[i], ".csv" , sep = "")
           # x <- read.csv(file_name, header = FALSE)
           x <- read_csv(file_name, skip = 0)
@@ -66,7 +66,7 @@
 
       type = c("DE/A", "DE/NA")
       legend("topright", legend = type, lty = 1, col = cols)
-      eps <- paste("eps/P", populations[mu], "fitD", sep="")
+      eps <- paste("eps/griewangkP", populations[mu], "fitD", sep="")
       out_put_file_name <- paste(eps, dim[i], ".eps" , sep = "")
       # dev.copy2eps(file = "myFigure.eps")
       dev.copy2eps(file = out_put_file_name)
