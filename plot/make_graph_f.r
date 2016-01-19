@@ -8,7 +8,7 @@
     populations <- c(10, 30, 50)
     for (mu in 1:3){
       for (i in 1:5) {
-        file_name <- paste("griewangk/pop", populations[mu], "dim" , sep = "")
+        file_name <- paste("rastrigin/pop", populations[mu], "dim" , sep = "")
           file_name = paste(file_name, dim[i], ".csv" , sep = "")
           # x <- read.csv(file_name, header = FALSE)
           x <- read_csv(file_name, skip = 0)
@@ -62,7 +62,7 @@
           arrows(xaxis_n, m_n + s_n, xaxis_n, m_n - s_n, angle = 90, length = 0.05, col = cols[k])
           arrows(xaxis_n, m_n - s_n, xaxis_n, m_n + s_n, angle = 90, length = 0.05, col = cols[k])
         }
-        eps <- paste("eps/griewangkP", populations[mu], "D", sep="")
+        eps <- paste("eps/rastriginP", populations[mu], "D", sep="")
         out_put_file_name <- paste(eps, dim[i], ".eps" , sep = "")
         # dev.copy2eps(file = "myFigure.eps")
         # pictex(file = "plot_test.tex")

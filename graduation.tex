@@ -689,7 +689,956 @@ $        \end{center}
     \label{fig:lena}
   \end{center}
 \end{figure}
+
 \newpage
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_s$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_s$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10D2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30D2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50D2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10D10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30D10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50D10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10D30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30D30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50D30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10D50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30D50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50D50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10D100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30D100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50D100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+
+\newpage
+% \caption{目的関数値による多様性維持の調査}
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_f$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_f$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P10fitD100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P30fitD100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{P50fitD100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+
+\newpage
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_s$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_s$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10D2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30D2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50D2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10D10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30D10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50D10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10D30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30D30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50D30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10D50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30D50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50D50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10D100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30D100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50D100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+
+\newpage
+% \caption{目的関数値による多様性維持の調査}
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_f$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_f$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10fitD2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30fitD2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50fitD2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10fitD10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30fitD10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50fitD10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10fitD30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30fitD30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50fitD30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10fitD50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30fitD50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50fitD50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP10fitD100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP30fitD100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{rastriginP50fitD100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+
+\newpage
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_s$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_s$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10D2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30D2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50D2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10D10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30D10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50D10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10D30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30D30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50D30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10D50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30D50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50D50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10D100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30D100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50D100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+
+\newpage
+% \caption{目的関数値による多様性維持の調査}
+\begin{figure}[htbp]
+  \caption{横軸は評価回数の経過を1から2000世代目まで表示している．縦軸は51回試行した多様性評価指標$r_f$について，平均値を求めそれに対し，常用対数をとったものである．DE/AとDE/NAの二つのアルゴリズムを用いて，それぞれ次元数$D$を$2,10,30,50,100$とし，集団数$P$を$10,30,50$とした時の多様性評価指標$r_f$が推移する様子を示している．}
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10fitD2.eps}
+          \hspace{1.2cm}$P=10, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30fitD2.eps}
+          \hspace{1.2cm}$P=30, D=2
+ $       \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50fitD2.eps}
+          \hspace{1.2cm}$P=50, D=2
+ $       \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10fitD10.eps}
+          \hspace{1.2cm}$P=10, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30fitD10.eps}
+          \hspace{1.2cm}$P=30, D=10
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50fitD10.eps}
+          \hspace{1.2cm}$P=50, D=10
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10fitD30.eps}
+          \hspace{1.2cm}$P=10, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30fitD30.eps}
+          \hspace{1.2cm}$P=30, D=30
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50fitD30.eps}
+          \hspace{1.2cm}$P=50, D=30
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10fitD50.eps}
+          \hspace{1.2cm} $P=10, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30fitD50.eps}
+          \hspace{1.2cm} $P=30, D=50
+$        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50fitD50.eps}
+          \hspace{1.2cm} $P=50, D=50
+$        \end{center}
+      \end{minipage}
+    \end{tabular}
+  \end{center}
+\end{figure}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{tabular}{c}
+
+      % 1
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP10fitD100.eps}
+          \hspace{1.2cm} $P=10, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 2
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP30fitD100.eps}
+          \hspace{1.2cm} $P=30, D=100$
+        \end{center}
+      \end{minipage}
+
+      % 3
+      \begin{minipage}{0.33\hsize}
+        \begin{center}
+          \includegraphics[clip, width=4.0cm]{griewangkP50fitD100.eps}
+          \hspace{1.2cm} $P=50, D=100$
+        \end{center}
+      \end{minipage}
+    \end{tabular}
+    \label{fig:lena}
+  \end{center}
+\end{figure}
+\newpage
+
 
 \chapter{アーカイブ改善の提案}
 \section{提案手法 1:アーカイブサイズの廃止}
