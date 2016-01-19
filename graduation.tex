@@ -101,14 +101,14 @@ JADEでは適応戦略以外に，探索性能を強化するために過去の�
   \caption{DEにおける代表的な突然変異戦略}
     \begin{tabular}{ll} \hline
       突然変異戦略　& 定義  \\ \hline
-      rand/1 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{r2} - \vector{x}_{r3})$ \\
-      rand/2 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{r2} - \vector{x}_{r3}) + F\cdot(\vector{x}_{r4} - \vector{x}_{r5})$ \\
-      best/1 & $\vector{v}_{i} := \vector{x}_{best} + F\cdot(\vector{x}_{r1} - \vector{x}_{r2})$ \\
-      best/2 & $\vector{v}_{i} := \vector{x}_{best} + F\cdot(\vector{x}_{r1} - \vector{x}_{r2}) + F\cdot(\vector{x}_{r3} - \vector{x}_{r4})$ \\
-      current-to-rand/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{r1} - \vector{x}_{i}) + F\cdot(\vector{x}_{r2} - \vector{x}_{r3})$ \\
-      current-to-best/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{best} - \vector{x}_{i}) + F\cdot(\vector{x}_{r1} - \vector{x}_{r2})$ \\
-      current-to-$p$best/1 & $\vector{v}_{i} := \vector{x}_{i} + F\cdot(\vector{x}_{pbest} - \vector{x}_{i}) + F\cdot(\vector{x}_{r1} - \vector{x}_{Ar2})$ \\
-      rand-to-$p$best/1 & $\vector{v}_{i} := \vector{x}_{r1} + F\cdot(\vector{x}_{pbest} - \vector{x}_{r1}) + F\cdot(\vector{x}_{r2} - \vector{x}_{Ar3})$ \\ \hline
+      rand/1 & $\vector{v}^{i} := \vector{x}^{r1} + F\cdot(\vector{x}^{r2} - \vector{x}^{r3})$ \\
+      rand/2 & $\vector{v}^{i} := \vector{x}^{r1} + F\cdot(\vector{x}^{r2} - \vector{x}^{r3}) + F\cdot(\vector{x}^{r4} - \vector{x}^{r5})$ \\
+      best/1 & $\vector{v}^{i} := \vector{x}^{best} + F\cdot(\vector{x}^{r1} - \vector{x}^{r2})$ \\
+      best/2 & $\vector{v}^{i} := \vector{x}^{best} + F\cdot(\vector{x}^{r1} - \vector{x}^{r2}) + F\cdot(\vector{x}^{r3} - \vector{x}^{r4})$ \\
+      current-to-rand/1 & $\vector{v}^{i} := \vector{x}^{i} + F\cdot(\vector{x}^{r1} - \vector{x}^{i}) + F\cdot(\vector{x}^{r2} - \vector{x}^{r3})$ \\
+      current-to-best/1 & $\vector{v}^{i} := \vector{x}^{i} + F\cdot(\vector{x}^{best} - \vector{x}^{i}) + F\cdot(\vector{x}^{r1} - \vector{x}^{r2})$ \\
+      current-to-$p$best/1 & $\vector{v}^{i} := \vector{x}^{i} + F\cdot(\vector{x}^{pbest} - \vector{x}^{i}) + F\cdot(\vector{x}^{r1} - \vector{x}^{Ar2})$ \\
+      rand-to-$p$best/1 & $\vector{v}^{i} := \vector{x}^{r1} + F\cdot(\vector{x}^{pbest} - \vector{x}^{r1}) + F\cdot(\vector{x}^{r2} - \vector{x}^{Ar3})$ \\ \hline
     \end{tabular}
   \end{center}
 \end{table}
@@ -334,27 +334,22 @@ d_{k} = \sqrt{\sum_{i=1}^{D} (c_i - x_{k,i})^2}
 \end{eqnarray}
 
 解集団における重心からの距離の標準偏差と，目的関数値$f(\vector{x})$の標準偏差をしめすこれらの多様性評価指標$r_s$, $r_f$が大きければ解集団が多様性を維持出来ている事を示す．
-また実験では目的関数においてシンプルな関数の一つであるSphere関数を用いて行う．Sphere関数は式(3.6)で表される単峰性の関数である．
-Griewank関数，Rastrigin関数は
+また実験では目的関数として，Sphere関数(3.6)，Rastrigin関数(3.7)，Griewank関数(3.8)を使用した．Sphere関数は単峰性の関数であるのに対し，Rastrigin関数，及びGriewank関数は多峰性の関数である．Sphere関数及び，Rastrign関数は，設計変数間に依存関係がないのに対し，Griewank関数は設計変数間に依存関係を有する．
 
 \begin{eqnarray}
-  f(\vector{x}) = \sum_{i=1}^D x_i^2
+  f_{Sphere}(\vector{x}) = \sum_{i=1}^D x_i^2
 \end{eqnarray}
 
 \begin{eqnarray}
-F_{Rastrigin}(x) &=& 10n+\sum_{i=1}^{n}\bigl( x_i^2-10\cos( 2\pi x_i) \bigr) \label{rastrigin} \\
-& & (-5.12 \le x_i < 5.12) \nonumber \\ 
-& & min(F_{Rastrigin}(x)) = F(0, 0, \ldots, 0) = 0 \nonumber 
+f_{Rastrigin}(\vector{x}) &=& 10\cdot D+\sum_{i=1}^{D}\bigl( x_i^2-10\cos( 2\pi x_i) \bigr) \label{rastrigin}
 \end{eqnarray}
 
-\begin{eqnarray} F_{Griewank}(x) & = & 1+\sum_{i=1}^{n}\frac{x_i^2}{4000}-\prod_{i=1}^{n} \Bigl(\cos
-\bigl(\frac{x_i}{\sqrt{i}} \bigr) \Bigr) \label{griewank} \\
-& & (-512 \le x_i < 512) \nonumber \\
-& & min(F_{Griewank}(x)) = F(0, 0, \ldots, 0) = 0 \nonumber
+\begin{eqnarray} f_{Griewank}(\vector{x}) & = & 1+\sum_{i=1}^{D}\frac{x_i^2}{4000}-\prod_{i=1}^{D} \Bigl(\cos
+\bigl(\frac{x_i}{\sqrt{i}} \bigr) \Bigr) \label{griewank}
 \end{eqnarray}
 
 また実行可能領域は$[-100, 100]^D$であり，次元数$D$は$2,10,30,50,100$とした．また，集団数$P$は$10,30,50$とした．最大評価回数は1試行あたり$10,000 \times D$とし，試行回数は51回とした．使用したDEは突然変異戦略を式(3.2)のcurrent-to-$p$-bestとし，$F=0.5$，$CR=0.5$と，アーカイブを使用する時と使用しない場合で比較した．
-また以下本論文ではアーカイブを使用した際のDEをDE/A，使用しなかった際のDEをDE/NAと表現する．ここでいうDE/Aとは式(3.7)における突然変異戦略current-to-$p$-bestにおいて$\vector{x}^{Ar2}$を集団PとアーカイブAの和集合から${\vector{x}^i}$と被らないようにランダムに選択したものである．DE/NAとは$\vector{x}^{Ar2}$を$\vector{x}_{i}$と被らないように集団ベクトルから選択したものである．
+また以下本論文ではアーカイブを使用した際のDEをDE/A，使用しなかった際のDEをDE/NAと表現する．ここでいうDE/Aとは式(3.9)における突然変異戦略current-to-$p$-bestにおいて$\vector{x}^{Ar2}$を集団PとアーカイブAの和集合から${\vector{x}^i}$と被らないようにランダムに選択したものである．DE/NAとは$\vector{x}^{Ar2}$を$\vector{x}_{i}$と被らないように集団ベクトルから選択したものである．
 
 \begin{eqnarray}
 \vector{v}^{i} = \vector{x}^{i} + F\cdot(\vector{x}^{pbest} - \vector{x}^{i}) + F\cdot(\vector{x}^{r1} - \vector{x}^{Ar2})
